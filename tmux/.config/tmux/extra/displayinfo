@@ -1,0 +1,99 @@
+#! /bin/bash
+
+timer(){
+    timerFile="/tmp/.timerFile"
+    if [ -f $timerFile ]; then
+        timer=$(cat $timerFile)
+        tmpTime=$(date -d "$timer" +'%H:%M')
+        timerSec=$(date +%s -d "$tmpTime")
+        now=$(date +%s)
+        timeDiff=$(( (timerSec - now) / 60 ))
+        if [ "$timeDiff" -ge "0" ]; then
+            echo -e "#[fg=#5E81AC] $timeDiff Min"
+        else
+            #notify-send -u low "Timer" "done !!!" -i ~/.config/dwm/util/dwm_logo.png
+            #for i in {1..5}; do aplay ~/.config/dwm/util/mixkit-happy-bell-alert-601.wav > /dev/null 2>&1  ; done  
+            notify-send -u low "Timer" "done !!!" 
+            rm $timerFile
+        fi
+    fi
+}
+
+usbmon() {
+    i=1
+    #for usb in $(\df -Th | awk '/s[a-z][a-z][0-9]/ && $7!="/" {print substr($1,6)}')
+    for usb in $(\lsblk -do name,tran | awk '$2=="usb" {print $1}')    
+    do
+       [[ $i -le 1 ]] && printf "#[fg=#5E81AC]  %s" "$usb" 
+       [[ $i -gt 1 ]] && printf " %s" "$usb" 
+       (("i+=1"))
+    done
+}
+
+network() {
+    conntype=$(ip route | awk '/default/ { print substr($5,1,1) }')
+    if [ -z "$conntype" ]; then
+            echo -e "#[fg=#d75f5f]no-connection "
+    elif [ "$conntype" = "e" ]; then
+            echo -e "#[fg=#83A589] ethernet-connection "
+    elif [ "$conntype" = "w" ]; then
+            echo -e "#[fg=#83A589] wireless-connection "
+    fi
+}
+
+#battery(){
+#    for battery in /sys/class/power_supply/BAT?*; do
+#        [ -n "${capacity+x}" ] && printf " "
+#        case "$(cat "$battery/status" 2>&1)" in
+#            "Full") status="⚡" ;;
+#            "Discharging") status="D" ;;
+#            "Charging") status="🔌" ;;
+#            "Not charging") status="!  " ;;
+#            "Unknown") status="♻️  " ;;
+#            *) exit 1 ;;
+#        esac
+#        capacity="$(cat "$battery/capacity" 2>&1)"
+#        if [[ "$status" = "D" ]] ; then 
+#            if [[ "$capacity" -ge 85 ]] ; then 
+#                    status="#[fg=#00FF00]🔋" 
+#                elif [[ "$capacity" -le 85 ]] && [[ "$capacity" -ge 75 ]] ; then 
+#                    status="#[fg=#549665]🔋" 
+#                elif [[ "$capacity" -le 75 ]] && [[ "$capacity" -ge 50 ]] ; then 
+#                    status="#[fg=#549665] " 
+#                elif [[ "$capacity" -le 50 ]] && [[ "$capacity" -ge 20 ]] ; then
+#                    status="#[fg=#549665] " 
+#                elif [[ "$capacity" -le 20 ]] && [[ "$capacity" -ge 15 ]] ; then
+#                    status="#[fg=red] " 
+#                    notify-send -u critical "Plugin the power cable"
+#                else
+#                    status="#[fg=red] "
+#                    notify-send -u critical "Plugin the power cable immediately"
+#            fi
+#        fi
+#        [[ ! "$status" = "D" && "$capacity" -gt 85 && $(cat "/sys/class/power_supply/AC/online") = "1"  ]] && notify-send -u low "Unplug the power cable"
+#        printf "%s%d%%" "$status " "$capacity";
+#    done
+#}
+
+ufw(){
+    ufwstatus=$(sudo sh -c ufw status | awk '{ print $2 }')
+    if [ "$ufwstatus" = "active" ]; then
+           echo -e "#[fg=#549665] #[default]"
+    elif [ "$ufwstatus" = "inactive" ]; then
+          echo -e "#[fg=#d75f5f]  #[default]"
+    fi      
+}
+
+#VOLUME="$(amixer get Master | tail -1 | awk '{print substr($4, 2, length($4) - 3)}')"
+MEMORY=$(free -m | awk '/Mem/ {printf "%d MB\n", $3}')
+DATE_TIME=$(date +" %A %d/%m")
+CITY="Zadar" #doxxed
+WEATHER=$(curl wttr.in/$CITY\?nonce=$RANDOM\&format=3 | awk -v OFS=' ' -v city=$CITY '{printf "󰖐 %s: %s", city, $3}')
+
+
+echo -e "$(timer)#[default] \
+$(usbmon)#[default] \
+$(network)#[default] \
+#[fg=colour96]$MEMORY#[default]  \
+$DATE_TIME $(ufw) \
+#[fg=#74b2ff]$WEATHER"
