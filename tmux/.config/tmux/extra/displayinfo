@@ -24,7 +24,7 @@ usbmon() {
     #for usb in $(\df -Th | awk '/s[a-z][a-z][0-9]/ && $7!="/" {print substr($1,6)}')
     for usb in $(\lsblk -do name,tran | awk '$2=="usb" {print $1}')    
     do
-       [[ $i -le 1 ]] && printf "#[fg=#5E81AC]  %s" "$usb" 
+       [[ $i -le 1 ]] && printf "#[fg=#5E81AC] %s" "$usb" 
        [[ $i -gt 1 ]] && printf " %s" "$usb" 
        (("i+=1"))
     done
@@ -92,7 +92,7 @@ WEATHER=$(curl wttr.in/$CITY\?nonce=$RANDOM\&format=3 | awk -v OFS=' ' -v city=$
 
 
 echo -e "$(timer)#[default] \
-$(usbmon)#[default] \
+$(usbmon)#[default]  \
 $(network)#[default] \
 #[fg=colour96]$MEMORY#[default]  \
 $DATE_TIME $(ufw) \
