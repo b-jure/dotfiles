@@ -1,11 +1,21 @@
 #!/bin/bash
 
-# Package manager
+
+# CONFIGURATION VARIABLES
+#
+# pm - package manager
+# pm_install - package manager install package option/command
 pm="pacman"
 pm_install="-S"
-
-# Binary files install path
+# packages - list of packages to install using the package manager
+packages=(
+    "gcc" "git" "stow" "keychain" "xclip" "eza"
+    "fzf" "fd" "xcape" "alacritty" "fish" "neovim"
+    "polybar" "tmux" "firefox"
+)
+# binpath - path to binaries that are not managed by package manager
 binpath="/usr/local/bin"
+
 
 
 check_install_status() {
@@ -30,9 +40,8 @@ setup_rust() {
     echo "Installing rust toolchain..."
     if ! command -v rustup &>/dev/null; then
         if ! (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh); then exit 1; fi
-        check_install_status "rust"
+        check_install_status "rustup"
     fi
-    echo "done."
 }
 
 setup_gf2 () {
@@ -57,14 +66,9 @@ main() {
 
 
     # Install packages
-    params=(
-        "gcc" "git" "stow" "keychain" "xclip" "eza"
-        "fzf" "fd" "xcape" "alacritty" "fish" "neovim"
-        "polybar" "tmux"
-    )
-    len=${#params[@]}
+    len=${#packages[@]}
     for (( i=0; i<len; i++ )); do
-        if ! install_package "${params[$i]}"; then exit 1; fi
+        if ! install_package "${packages[$i]}"; then exit 1; fi
     done
     # Install rust and gf2
     setup_rust
@@ -76,10 +80,13 @@ main() {
     for cfg in "${cfgdirs[@]}"; do
         if ! stow "$cfg"; then exit 1; fi
     done
-
+    # Additionally copy over the .css files for firefox
+    echo ""; echo ""; echo "";
+    echo "Copying over firefox .css files..."
+    ./updatecss.sh
 
     # Finished
-    echo "Done, successful instalation!"
+    echo "Finished, successful instalation!"
     exit 0
 }
 
