@@ -8,7 +8,7 @@
 pm="pacman"
 pm_install="-S"
 # packages - list of packages to install using the package manager
-packages="gcc git stow keychain xclip eza fzf fd xcape alacritty fish neovim polybar tmux firefox konsole otf-firamono-nerd"
+packages="gcc git stow keychain xclip eza fzf fd xcape alacritty fish neovim polybar tmux firefox konsole otf-firamono-nerd zathura"
 # binpath - path to binaries that are not managed by package manager
 binpath="/usr/local/bin"
 
@@ -83,7 +83,6 @@ main() {
         exit 1
     fi
 
-
     # Install packages
     echo "Installing packages..."
     $pm "$pm_install" "$packages" || exit 1
@@ -105,7 +104,7 @@ main() {
     setup_interception
 
     # Now use stow
-    cfgdirs=("nvim" "tmux" "alacritty" "fish" "polybar" "xinitrc")
+    cfgdirs=("nvim" "tmux" "alacritty" "fish" "polybar" "xinitrc" "gf2" "zathura")
     for cfg in "${cfgdirs[@]}"; do
         if ! stow "$cfg"; then exit 1; fi
     done
