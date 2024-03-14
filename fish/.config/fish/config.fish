@@ -81,6 +81,7 @@ if command -v nvim >/dev/null
     end
 
     setenv EDITOR nvim
+    setenv MANPAGER "nvim +Man!"
     abbr -a e $EDITOR
     abbr -a vim $EDITOR
     abbr -a vedit $EDITOR "$HOME/.config/nvim"
@@ -132,7 +133,7 @@ set fish_cursor_visual block
 
 
 # INSERT MODE
-bind -M insert -m default \ck forward-char -m insert
+bind -M insert -m default \ce forward-char -m insert
 
 
 # DEFAULT MODE
@@ -168,40 +169,44 @@ if command -v fzf >/dev/null
 end
 
 # THEME COLORS
-# TokyoNight Color Palette
-set -l foreground c0caf5
-set -l selection 283457
-set -l comment 565f89
-set -l red f7768e
-set -l orange ff9e64
-set -l yellow e0af68
-set -l green 9ece6a
-set -l purple 9d7cd8
-set -l cyan 7dcfff
-set -l pink bb9af7
-
-# Syntax Highlighting Colors
-set -g fish_color_normal $foreground
-set -g fish_color_command $cyan
-set -g fish_color_keyword $pink
-set -g fish_color_quote $yellow
-set -g fish_color_redirection $foreground
-set -g fish_color_end $orange
-set -g fish_color_error $red
-set -g fish_color_param $purple
-set -g fish_color_comment $comment
-set -g fish_color_selection --background=$selection
-set -g fish_color_search_match --background=$selection
-set -g fish_color_operator $green
-set -g fish_color_escape $pink
-set -g fish_color_autosuggestion $comment
-
-# Completion Pager Colors
-set -g fish_pager_color_progress $comment
-set -g fish_pager_color_prefix $cyan
-set -g fish_pager_color_completion $foreground
-set -g fish_pager_color_description $comment
-set -g fish_pager_color_selected_background --background=$selection
+# Colorscheme: Lava
+set -U fish_color_normal normal
+set -U fish_color_command FF9400
+set -U fish_color_quote BF9C30
+set -U fish_color_redirection BF5B30
+set -U fish_color_end FF4C00
+set -U fish_color_error FFDD73
+set -U fish_color_param FFC000
+set -U fish_color_comment A63100
+set -U fish_color_match --background=brblue
+set -U fish_color_selection white --bold --background=brblack
+set -U fish_color_search_match bryellow --background=brblack
+set -U fish_color_history_current --bold
+set -U fish_color_operator 00a6b2
+set -U fish_color_escape 00a6b2
+set -U fish_color_cwd green
+set -U fish_color_cwd_root red
+set -U fish_color_valid_path --underline
+set -U fish_color_autosuggestion FFC473
+set -U fish_color_user brgreen
+set -U fish_color_host normal
+set -U fish_color_cancel --reverse
+set -U fish_pager_color_prefix normal --bold --underline
+set -U fish_pager_color_progress brwhite --background=cyan
+set -U fish_pager_color_completion normal
+set -U fish_pager_color_description B3A06D
+set -U fish_pager_color_selected_background --background=brblack
+set -U fish_color_keyword
+set -U fish_pager_color_background
+set -U fish_pager_color_selected_description
+set -U fish_pager_color_selected_prefix
+set -U fish_pager_color_secondary_completion
+set -U fish_color_option
+set -U fish_color_host_remote
+set -U fish_pager_color_selected_completion
+set -U fish_pager_color_secondary_description
+set -U fish_pager_color_secondary_prefix
+set -U fish_pager_color_secondary_background
 
 
 # Requires cargo
@@ -240,5 +245,5 @@ end
 
 # personal stuff
 fish_add_path -a "$HOME/.config/scripts"
-set MUSIC "$HOME/.config/personal/music"
-abbr -a music $EDITOR "$MUSIC"
+set MUSIC $HOME/.config/personal/music
+abbr -a music $EDITOR $MUSIC

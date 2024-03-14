@@ -5,19 +5,23 @@ end
 
 vim.g.mapleader = ' '
 
+map_key("n", "L", "<nop>")
+
+map_key({"n","i"}, "<M-U>", ":vertical resize +10<CR>") -- make the window bigger vertically
+map_key({"n","i"}, "<M-P>", ":vertical resize -10<CR>") -- make the window smaller vertically
+map_key({"n","i"}, "<M-O>", ":horizontal resize +6<CR>") -- make the window bigger horizontally by pressing shift and =
+map_key({"n","i"}, "<M-I>", ":horizontal resize -6<CR>") -- make the window smaller horizontally by pressing shift and -
+
+map_key('v', '<', '<gv')
+map_key('v', '>', '>gv')
+
 map_key('n', '<leader>ar', ":let @a=''<CR>")
 map_key('n', '<leader>f', ":Format<CR>")
-
--- Use h or ' to hop to marks
-map_key('n', 'h', '\'')
 
 map_key('n', '<leader>u', 'gU')
 map_key('n', 'gu', 'gUiwe')
 
 map_key('v', 'p', '"_dP');
-
-map_key("n", "<C-k>", "<cmd>cnext<CR>zz")
-map_key("n", "<C-l>", "<cmd>cprev<CR>zz")
 
 map_key('n', '<leader>vs', ':source $MYVIMRC<CR>')
 
@@ -27,6 +31,7 @@ map_key('n', '<leader>pv', vim.cmd.Ex)
 -- Delete the block
 map_key('n', 'daf', 'da}');
 
+-- Movement
 map_key({ 'n', 'v' }, 'j', 'h')
 map_key({ 'n', 'v' }, 'k', 'j')
 map_key({ 'n', 'v' }, 'l', 'k')
@@ -53,7 +58,8 @@ map_key({ 'n', 'x', 'i' }, '<left>', '<nop>')
 map_key({ 'n', 'x', 'i' }, '<right>', '<nop>')
 
 -- Exit window
-map_key({ 'n', 'x', 'v' }, "<leader>q", ':q!<CR>')
+map_key({ 'n', 'x', 'v' }, "q", ':q!<CR>')
+map_key('n', '<leader>q', 'q')
 
 -- Delete buffer
 map_key('n', "<leader>x", ":bd<CR>")
@@ -61,6 +67,7 @@ map_key('n', "<leader>x", ":bd<CR>")
 -- no highlight
 map_key({ 'n', 'x', 'v' }, "<leader>h", ':noh<CR>')
 
+-- write (save)
 map_key('n', '<leader>w', ':w<CR>')
 
 -- Insert blank line above

@@ -9,6 +9,6 @@
 
 --]] --
 require("dlroweht.settings")
-require("dlroweht.remap")
 require("dlroweht.packer")
+require("dlroweht.remap")
 require("colorizer").setup()

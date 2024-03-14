@@ -10,6 +10,8 @@ g.treesitter_ignore = { 'comment' }
 -- Set spell check (en_us)
 o.spell = true
 
+g.no_man_maps = true
+
 -- Decrease update time
 o.updatetime = 50
 
@@ -23,6 +25,8 @@ o.relativenumber = true
 o.signcolumn = 'number'
 o.cursorline = false
 o.cursorlineopt = "screenline"
+
+o.cedit = "<C-s>"
 
 -- Better editing experience
 o.expandtab = true

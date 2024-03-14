@@ -4,16 +4,6 @@ return require('packer').startup(function(use)
     -- PACKER
     use('wbthomason/packer.nvim')
 
-    -- FZF
-    use({ 'junegunn/fzf' })
-
-    -- MATCHUP
-    use {
-        'andymass/vim-matchup',
-        setup = function()
-            vim.g.matchup_matchparen_offscreen = { method = "popup" }
-        end
-    }
     -- TELESCOPE
     use({
         'nvim-telescope/telescope.nvim',
@@ -32,23 +22,6 @@ return require('packer').startup(function(use)
 
     -- DEVICONS
     use('nvim-tree/nvim-web-devicons')
-
-    -- BUFFERLINE
-    use({
-        'akinsho/bufferline.nvim',
-        tag = "*",
-        requires = 'nvim-tree/nvim-web-devicons'
-    })
-
-    -- TREESITTER
-    use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
-
-    -- TREESITTER TEXT OBJECTS PLUGIN
-    use({
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        after = "nvim-treesitter",
-        requires = "nvim-treesitter/nvim-treesitter"
-    })
 
     -- HARPOON
     use('ThePrimeagen/harpoon')
@@ -77,19 +50,16 @@ return require('packer').startup(function(use)
     -- TMUX NAVIGATOR
     use('christoomey/vim-tmux-navigator')
 
-    -- FORMATTER
-    use('mhartington/formatter.nvim')
-
     -- MARKDOWN-PREVIEW
     use({
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end
     })
 
-    -- AUTOCLOSE
-    use('m4xshen/autoclose.nvim')
+    -- FUGITIVE
+    use({'tpope/vim-fugitive'})
 
-    -- STATUS LINE
-    use { 'javiorfo/nvim-minimaline', requires = 'nvim-tree/nvim-web-devicons' }
+    -- GRUVBOX THEME
+    use { "ellisonleao/gruvbox.nvim" }
 
 end)
