@@ -226,9 +226,9 @@ end
 
 # Make ctrl act as escape on short press
 # Note: my CapsLock is mapped as Ctrl
-if not pgrep xcape >/dev/null
-    xcape -t 200 -e 'Control_L=Escape'
-end
+# if not pgrep xcape >/dev/null
+#     xcape -t 200 -e 'Control_L=Escape'
+# end
 
 
 # Requires GNU stow
