@@ -8,11 +8,7 @@
 pm="pacman"
 pm_install="-S"
 # packages - list of packages to install using the package manager
-packages=(
-    "gcc" "git" "stow" "keychain" "xclip" "eza"
-    "fzf" "fd" "xcape" "alacritty" "fish" "neovim"
-    "polybar" "tmux" "firefox" "konsole"
-)
+packages="gcc git stow keychain xclip eza fzf fd xcape alacritty fish neovim polybar tmux firefox konsole otf-firamono-nerd"
 # binpath - path to binaries that are not managed by package manager
 binpath="/usr/local/bin"
 
@@ -62,6 +58,17 @@ setup_gf2 () {
     cd .. && rm -rf gf
 }
 
+setup_interception() {
+    install_package "interception-tools"
+    install_package "interception-dual-function-keys"
+    echo ""; echo ""; echo ""
+    echo "Enabling interception (say goodbye to caps lock)..."
+    if ! cp --recursive --update interception /etc; then exit 1; fi
+    systemctl enable udevmon || exit 1
+    systemctl restart udevmon || exit 1
+    echo "MAKE SURE 'udevmon' IS ACTUALLY RUNNING, IF NOT DO THIS TO DEBUG -> 'journalctl -u udevmon'"
+}
+
 install_ff_css () {
     echo ""; echo ""; echo "";
     echo "Copying over firefox .css files..."
@@ -78,10 +85,8 @@ main() {
 
 
     # Install packages
-    len=${#packages[@]}
-    for (( i=0; i<len; i++ )); do
-        if ! install_package "${packages[$i]}"; then exit 1; fi
-    done
+    echo "Installing packages..."
+    $pm "$pm_install" "$packages" || exit 1
     
     # setup rust
     setup_rust
@@ -95,6 +100,9 @@ main() {
     setup_sl dwm
     setup_sl dmenu
     setup_sl slstatus
+
+    # interception (caps lock on tap is escape, on hold is control)
+    setup_interception
 
     # Now use stow
     cfgdirs=("nvim" "tmux" "alacritty" "fish" "polybar" "xinitrc")
