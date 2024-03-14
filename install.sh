@@ -11,7 +11,7 @@ pm_install="-S"
 packages=(
     "gcc" "git" "stow" "keychain" "xclip" "eza"
     "fzf" "fd" "xcape" "alacritty" "fish" "neovim"
-    "polybar" "tmux" "firefox"
+    "polybar" "tmux" "firefox" "konsole"
 )
 # binpath - path to binaries that are not managed by package manager
 binpath="/usr/local/bin"
@@ -22,8 +22,6 @@ check_install_status() {
     if [ "$?" -ne 0 ]; then
         echo "Errored while installing '$1', aborting!"
         exit 1
-    else 
-        echo "Successfully installed '$1'."
     fi
 }
 
@@ -44,6 +42,15 @@ setup_rust() {
     fi
 }
 
+setup_sl () {
+    echo ""; echo ""; echo ""
+    echo "Installin $1..."
+    cd "suckless/${1}" || exit 1
+    if [ -f config.h ]; then rm config.h; fi
+    make clean install
+    cd ..
+}
+
 setup_gf2 () {
     install_package "freetype2"
     echo ""; echo ""; echo ""
@@ -55,6 +62,11 @@ setup_gf2 () {
     cd .. && rm -rf gf
 }
 
+install_ff_css () {
+    echo ""; echo ""; echo "";
+    echo "Copying over firefox .css files..."
+    ./updatecss.sh
+}
 
 
 main() {
@@ -70,20 +82,28 @@ main() {
     for (( i=0; i<len; i++ )); do
         if ! install_package "${packages[$i]}"; then exit 1; fi
     done
-    # Install rust and gf2
+    
+    # setup rust
     setup_rust
+
+    # setup gf2
     setup_gf2
 
+    # setup suckless workflow
+    install_package libxinerama
+    install_package libxft
+    setup_sl dwm
+    setup_sl dmenu
+    setup_sl slstatus
 
     # Now use stow
-    cfgdirs=("nvim" "tmux" "alacritty" "fish" "formatting" "polybar")
+    cfgdirs=("nvim" "tmux" "alacritty" "fish" "polybar" "xinitrc")
     for cfg in "${cfgdirs[@]}"; do
         if ! stow "$cfg"; then exit 1; fi
     done
-    # Additionally copy over the .css files for firefox
-    echo ""; echo ""; echo "";
-    echo "Copying over firefox .css files..."
-    ./updatecss.sh
+
+    # Firefox css files
+    install_ff_css
 
     # Finished
     echo "Finished, successful instalation!"
