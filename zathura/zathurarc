@@ -1,0 +1,13 @@
+map j scroll left
+map ; scroll right
+map k scroll down
+map l scroll up
+
+map K navigate next
+map L navigate previous
+
+map n search forward
+map N search backward
+
+unmap q
+map Q quit
