@@ -9,8 +9,10 @@ static const char unknown_str[] = "n/a";
 /* maximum output string length */
 #define MAXLEN 2048
 
+#define DELIMITER "|"
+
 /* CPU temperature filepath */
-#define CPU_TEMP_FP "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input"
+#define CPU_TEMP_FP "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input"
 
 /*
  * function            description                     argument (example)
@@ -67,10 +69,10 @@ static const char unknown_str[] = "n/a";
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
 static const struct arg args[] = {
-	/* function     format          argument */
-	{ datetime,     "%s",           "%F %T" },
-	{ uptime,       "%s",           NULL },
-	{ temp,         "CPU:%s",       CPU_TEMP_FP},
-	{ ram_used,     "RAM:%s",       NULL },
-	{ disk_free,    "MEM:%s",       NULL },
+	/* function     format                      argument */
+	{ temp,         " CPU: %s ",                CPU_TEMP_FP},
+	{ disk_free,    DELIMITER " MEM: %s ",      "/" },
+	{ ram_used,     DELIMITER " RAM: %s ",      NULL },
+	{ uptime,       DELIMITER " %s ",           NULL },
+	{ datetime,     "%s ",                      "%F  %T" },
 };

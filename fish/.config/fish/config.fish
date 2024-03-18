@@ -1,5 +1,7 @@
 if status is-interactive
-    if command -a keychain >/dev/null
+    cd $HOME
+    if status is-login
+        and command -a keychain >/dev/null
         keychain --quiet $SSH_KEYS
     end
 end
@@ -8,6 +10,15 @@ end
 function fish_command_not_found
     echo "fish: Unknown command '$argv'" >&2
 end
+
+# no greeting
+function fish_greeting 
+end
+
+bind yy fish_clipboard_copy
+bind Y fish_clipboard_copy
+bind p fish_clipboard_paste
+
 
 # Override exit to automatically 'disown'
 function exit
@@ -99,7 +110,7 @@ end
 
 # Config file for alacritty
 if command -v alacritty >/dev/null
-    abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.yml"
+    abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.toml"
 end
 
 # Nice to have
@@ -135,17 +146,13 @@ set fish_cursor_visual block
 # INSERT MODE
 bind -M insert -m default \ce forward-char -m insert
 
-
 # DEFAULT MODE
-# Movement j,k,l,;
 bind -M default j backward-char
 bind -M default \; forward-char
 bind -M default k down-or-search
 bind -M default l up-or-search
 
-
 # VISUAL MODE
-# Movement j,k,l,;
 bind -M visual j backward-char
 bind -M visual \; forward-char
 bind -M visual k down-or-search
@@ -209,41 +216,39 @@ set -U fish_pager_color_secondary_prefix
 set -U fish_pager_color_secondary_background
 
 
-# Requires cargo
-if command -v cargo >/dev/null
-    mkdir -p "$HOME/.cargo/bin"
-    set -g CARGO_BIN "$HOME/.cargo/bin"
-    # Requires starship (prompt theme)
-    # You want to build the starship with rustc and
-    # then move the binary file into $CARGO_BIN
-    if command -v $CARGO_BIN/starship >/dev/null
-        setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
-        abbr -a scf $EDITOR $STARSHIP_CONFIG
-        $CARGO_BIN/starship init fish | source
-    end
+# If using Xorg
+if test -z "$WAYLAND_DISPLAY" &>/dev/null
+    abbr -a xinit sudoedit /etc/X11/xinit/xinitrc
 end
 
 
-# Make ctrl act as escape on short press
-# Note: my CapsLock is mapped as Ctrl
-# if not pgrep xcape >/dev/null
-#     xcape -t 200 -e 'Control_L=Escape'
-# end
+# Requires cargo
+if command -v cargo >/dev/null
+    if command -v starship >/dev/null
+        setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
+        abbr -a scf "$EDITOR $STARSHIP_CONFIG"
+        starship init fish | source
+    end
+end
 
 
 # Requires GNU stow
 if command -v stow >/dev/null
     set DOTFILES "$HOME/dotfiles"
-    abbr -a fcf $EDITOR "$DOTFILES/fish/.config/fish/config.fish"
-    abbr -a acf $EDITOR "$DOTFILES/alacritty/.config/alacritty/alacritty.yml"
-    abbr -a scf $EDITOR "$DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
-    abbr -a vedit $EDITOR "$DOTFILES/nvim/.config/nvim"
-    abbr -a tedit $EDITOR "$DOTFILES/tmux/.config/tmux/tmux.conf"
-    abbr -a pedit $EDITOR "$DOTFILES/polybar/.config/polybar/config.ini"
+    abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
+    abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
+    abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
+    abbr -a vedit "$EDITOR $DOTFILES/nvim/.config/nvim"
+    abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
+    abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
+    set SUCKLESS "$DOTFILES/suckless"
+    abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
+    abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
+    abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
 end
 
 
 # personal stuff
-fish_add_path -a "$HOME/.config/scripts"
+fish_add_path -a "$HOME/.config/linux-scripts"
 set MUSIC $HOME/.config/personal/music
 abbr -a music $EDITOR $MUSIC

@@ -85,7 +85,7 @@ ufw(){
 }
 
 #VOLUME="$(amixer get Master | tail -1 | awk '{print substr($4, 2, length($4) - 3)}')"
-MEMORY=$(free -m | awk '/Mem/ {printf "%d MB\n", $3}')
+#MEMORY=$(free -m | awk '/Mem/ {printf "%d MB\n", $3}')
 DATE_TIME=$(date +" %A %d/%m")
 CITY="Zadar" #doxxed
 WEATHER=$(curl wttr.in/$CITY\?nonce=$RANDOM\&format=3 | awk -v OFS=' ' -v city=$CITY '{printf "󰖐 %s: %s", city, $3}')
@@ -94,6 +94,5 @@ WEATHER=$(curl wttr.in/$CITY\?nonce=$RANDOM\&format=3 | awk -v OFS=' ' -v city=$
 echo -e "$(timer)#[default] \
 $(usbmon)#[default]  \
 $(network)#[default] \
-#[fg=colour96]$MEMORY#[default]  \
 $DATE_TIME $(ufw) \
 #[fg=#74b2ff]$WEATHER"

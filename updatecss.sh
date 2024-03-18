@@ -9,5 +9,8 @@ profiles="${firefox_path}/profiles.ini"
 grepstring=$(grep "Default=.*\.default*" "${profiles}")
 default_profile=$(cut -d "=" -f2 <<< "${grepstring}")
 
+final="${firefox_path}/${default_profile}/chrome"
+mkdir -p ${final}
+
 # Copy over '.css' files
-cp firefox/.mozilla/firefox/chrome/*.css "${firefox_path}/${default_profile}/chrome"
+cp firefox/.mozilla/firefox/chrome/*.css "${final}"
