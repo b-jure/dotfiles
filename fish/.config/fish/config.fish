@@ -252,3 +252,13 @@ end
 fish_add_path -a "$HOME/.config/linux-scripts"
 set MUSIC $HOME/.config/personal/music
 abbr -a music $EDITOR $MUSIC
+
+if command -v xset >/dev/null
+	xset r rate 200 45
+end
+
+if command -v yt-dlp >/dev/null
+	abbr -a ytd yt-dlp
+end
+
+abbr -a shutdown shutdown -h now

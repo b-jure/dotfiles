@@ -70,9 +70,9 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function     format                      argument */
-	{ temp,         " CPU: %s ",                CPU_TEMP_FP},
-	{ disk_free,    DELIMITER " MEM: %s ",      "/" },
-	{ ram_used,     DELIMITER " RAM: %s ",      NULL },
-	{ uptime,       DELIMITER " %s ",           NULL },
-	{ datetime,     "%s ",                      "%F  %T" },
+	{ disk_free,    DELIMITER " MNT / %s ",             "/" },
+	{ temp,         DELIMITER " CPU %s°C ",         CPU_TEMP_FP},
+	{ ram_used,     DELIMITER " RAM %s ",           NULL },
+	{ uptime,       DELIMITER " UP %s ",            NULL },
+	{ datetime,     DELIMITER " %s ",               "%F  %T" },
 };

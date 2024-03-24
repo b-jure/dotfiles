@@ -33,8 +33,9 @@ o.cindent = true
 -- o.autoindent = true
 o.wrap = false
 o.textwidth = 79
-vim.api.nvim_set_option_value("colorcolumn", "79", {})
+vim.api.nvim_set_option_value("colorcolumn", "80", {})
 vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+vim.opt.expandtab = false
 o.tabstop = 8
 o.shiftwidth = 0
 o.softtabstop = -1 -- If negative, shiftwidth value is used

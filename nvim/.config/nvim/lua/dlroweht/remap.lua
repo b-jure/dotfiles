@@ -5,6 +5,9 @@ end
 
 vim.g.mapleader = ' '
 
+-- remove whitespace
+map_key("n", "<leader>dw", ":%s/\\s\\+$/<CR>")
+
 map_key("n", "L", "<nop>")
 
 map_key({"n","i"}, "<M-U>", ":vertical resize +10<CR>") -- make the window bigger vertically

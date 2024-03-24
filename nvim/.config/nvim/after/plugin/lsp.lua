@@ -47,7 +47,7 @@ require('lspconfig').lua_ls.setup {
 }
 
 require('lspconfig').clangd.setup {
-    cmd = { "clangd",  "--malloc-trim" },
+    cmd = { "clangd", "--malloc-trim" },
 }
 
 lsp.setup()

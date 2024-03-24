@@ -62,4 +62,7 @@ return require('packer').startup(function(use)
     -- GRUVBOX THEME
     use { "ellisonleao/gruvbox.nvim" }
 
+    -- FORMATTER
+    use { 'mhartington/formatter.nvim' }
+
 end)

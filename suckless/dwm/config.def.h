@@ -11,9 +11,9 @@ static const char dmenufont[]       = "Berkeley Mono:size=10";
 static const char norm_fg[] = "#D5C4A1";
 static const char norm_bg[] = "#282828";
 static const char norm_border[] = "#282828";
-static const char sel_fg[] = "#cc241d";
+static const char sel_fg[] = "#fe8019";
 static const char sel_bg[] = "#1d2021";
-static const char sel_border[] = "#fbf1c7";
+static const char sel_border[] = "#fe8019";
 static const char *colors[][3]      = {
     /*               fg           bg          border                         */
     [SchemeNorm] =   { norm_fg,   norm_bg,    norm_border }, 		     // unfocused wins
@@ -30,6 +30,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
+	{ "gf2",      NULL,       NULL,       1 << 2,       0,           -1 },
 };
 
 /* layout(s) */
@@ -40,9 +41,9 @@ static const int lockfullscreen = 1;    /* 1 will force focus on the fullscreen 
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "+",      tile },    /* first entry is default */
+	{ "-",      NULL },    /* no layout function means floating behavior */
+	{ "M",      monocle },
 };
 
 /* key definitions */
@@ -59,12 +60,30 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", "#282828", "-nf", "#a89984", "-sb", "#cc241d", "-sf", "#a89984", NULL };
+static const char *shutdown[] = { "shutdown", "-h", "now", NULL };
+static const char *restart[] = { "shutdown", "-h", "-r", "now", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+/* pulseaudio volume control */
+static const char *pavcdown[] = { "pavc", "down", "10", NULL };
+static const char *pavcup[] = { "pavc", "up", "10", NULL };
+static const char *pavctoggle[] = { "pavc", "toggle", NULL };
+/* playerctl */
+static const char *playerctl_previous[] = { "playerctl", "-a", "previous", NULL };
+static const char *playerctl_next[] = { "playerctl", "-a", "next", NULL };
+static const char *playerctl_playpause[] = { "playerctl", "-a", "play-pause", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ControlMask,                  XK_backslash,   spawn,          {.v = dmenucmd } },
 	{ ControlMask,                  XK_Return,      spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_Pause,       spawn,          {.v = shutdown } },
+	{ MODKEY,                       XK_Scroll_Lock, spawn,          {.v = restart } },
+	{ MODKEY,                       XK_comma,       spawn,          {.v = pavcdown } },
+	{ MODKEY,                       XK_period,      spawn,          {.v = pavcup } },
+	{ MODKEY,                       XK_slash,       spawn,          {.v = pavctoggle } },
+	{ ControlMask,                  XK_comma,       spawn,          {.v = playerctl_previous } },
+	{ ControlMask,                  XK_period,      spawn,          {.v = playerctl_next } },
+	{ ControlMask,                  XK_slash,       spawn,          {.v = playerctl_playpause } },
 	{ MODKEY,                       XK_b,           togglebar,      {0} },
 	{ MODKEY,                       XK_j,           focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_semicolon,   focusstack,     {.i = -1 } },
@@ -74,8 +93,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Tab,         view,           {0} },
 	{ MODKEY,                       XK_f,           killclient,     {0} },
 	{ MODKEY,                       XK_t,           setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_space,       setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,           setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,       setlayout,      {0} },
 	{ ControlMask,                  XK_5,           togglefloating, {0} },
 	{ MODKEY,                       XK_0,           view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,           tag,            {.ui = ~0 } },
