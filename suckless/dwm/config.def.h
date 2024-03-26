@@ -20,7 +20,7 @@ static const char *colors[][3]      = {
     [SchemeSel]  =   { sel_fg,    sel_bg,     sel_border },		     // the focused win
 };
 
-static const char *tags[] = { "code", "web", "1", "2", "3" };
+static const char *tags[] = { "", "", "1", "2", "3" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -30,7 +30,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
-	{ "gf2",      NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "gf2",      "gf2",      "gf2",      1 << 2,       0,           -1 },
 };
 
 /* layout(s) */
