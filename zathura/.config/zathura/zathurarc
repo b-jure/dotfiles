@@ -1,21 +1,13 @@
-unmap j
 map [normal] j scroll left
-unmap ;
 map [normal] ; scroll right
-unmap k
 map [normal] k scroll down
-unmap l
 map [normal] l scroll up
 
-unmap K
 map [normal] K navigate next
-unmap L
 map [normal] L navigate previous
 
-unmap n
 map [normal] n search forward
-unmap N
 map [normal] N search backward
 
 unmap q
-map [normal] Q quit
+map [normal] q quit

@@ -1,5 +1,4 @@
 if status is-interactive
-    cd $HOME
     if status is-login
         and command -a keychain >/dev/null
         keychain --quiet $SSH_KEYS
@@ -259,6 +258,14 @@ end
 
 if command -v yt-dlp >/dev/null
 	abbr -a ytd yt-dlp
+end
+
+if command -v zathura >/dev/null
+	abbr -a zrc $EDITOR "$HOME/.config/zathura/zathurarc"
+end
+
+if command -v vifm >/dev/null
+	abbr -a vifmrc $EDITOR "$HOME/.config/vifm/vifmrc"
 end
 
 abbr -a shutdown shutdown -h now
