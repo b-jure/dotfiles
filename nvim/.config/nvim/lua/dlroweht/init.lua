@@ -12,3 +12,11 @@ require("dlroweht.settings")
 require("dlroweht.packer")
 require("dlroweht.remap")
 require("colorizer").setup()
+
+-- Great for observing log files that get
+-- constantly updated
+vim.o.updatetime = 1000 -- 1 second
+vim.api.nvim_create_autocmd({"CursorHold", "BufRead"}, {
+	pattern = {"*.dbg.txt"}, -- only for debug output files
+	command = "checktime | call feedkeys('G')",
+})

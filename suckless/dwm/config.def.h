@@ -1,19 +1,26 @@
 /* See LICENSE file for copyright and license details. */
 
+#define MY_FONT "Iosevka Custom:style=Medium:size=11"
+
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 31;       /* snap pixel */
+static const unsigned int gappih    = 0;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 0;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 0;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 0;       /* vert outer gap between windows and screen edge */
+static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Berkeley Mono:size=10" };
-static const char dmenufont[]       = "Berkeley Mono:size=10";
+static const int topbar             = 0;        /* 0 means bottom bar */
+static const char *fonts[]          = { MY_FONT };
+static const char dmenufont[]       = MY_FONT;
 
 static const char norm_fg[] = "#D5C4A1";
 static const char norm_bg[] = "#282828";
 static const char norm_border[] = "#282828";
 static const char sel_fg[] = "#fe8019";
 static const char sel_bg[] = "#1d2021";
-static const char sel_border[] = "#fe8019";
+static const char sel_border[] = "#fed008";
 static const char *colors[][3]      = {
     /*               fg           bg          border                         */
     [SchemeNorm] =   { norm_fg,   norm_bg,    norm_border }, 		     // unfocused wins
@@ -98,10 +105,10 @@ static const Key keys[] = {
 	{ ControlMask,                  XK_5,           togglefloating, {0} },
 	{ MODKEY,                       XK_0,           view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,           tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,       focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period,      focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,       tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period,      tagmon,         {.i = +1 } },
+	// { MODKEY,                       XK_comma,       focusmon,       {.i = -1 } },
+	// { MODKEY,                       XK_period,      focusmon,       {.i = +1 } },
+	// { MODKEY|ControlMask,           XK_comma,       tagmon,         {.i = -1 } },
+	// { MODKEY|ControlMask,           XK_period,      tagmon,         {.i = +1 } },
 	TAGKEYS(                        XK_bracketleft,                 0)
 	TAGKEYS(                        XK_bracketright,                1)
 	TAGKEYS(                        XK_2,                           2)
