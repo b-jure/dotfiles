@@ -115,112 +115,46 @@ end
 # Nice to have
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
-# colored man output
-# from http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
-setenv LESS_TERMCAP_mb \e'[01;31m' # begin blinking
-setenv LESS_TERMCAP_md \e'[01;38;5;74m' # begin bold
-setenv LESS_TERMCAP_me \e'[0m' # end mode
-setenv LESS_TERMCAP_se \e'[0m' # end standout-mode
-setenv LESS_TERMCAP_so \e'[38;5;246m' # begin standout-mode - info box
-setenv LESS_TERMCAP_ue \e'[0m' # end underline
-setenv LESS_TERMCAP_us \e'[04;38;5;146m' # begin underline
-
 # set SHELL env var
 setenv SHELL /usr/bin/fish
 
-# Use vi key bindings inside fish shell
 fish_vi_key_bindings
-# Emulates vim's cursor shape behavior
-# Set the normal and visual mode cursors to a block
 set fish_cursor_default block
-# Set the insert mode cursor to a line
 set fish_cursor_insert line
-# Set the replace mode cursor to an underscore
 set fish_cursor_replace_one underscore
-# The following variable can be used to configure cursor shape in
-# visual mode, but due to fish_cursor_default, is redundant here
 set fish_cursor_visual block
-
-
 # INSERT MODE
 bind -M insert -m default \ce forward-char -m insert
-
 # DEFAULT MODE
 bind -M default j backward-char
 bind -M default \; forward-char
 bind -M default k down-or-search
 bind -M default l up-or-search
-
 # VISUAL MODE
 bind -M visual j backward-char
 bind -M visual \; forward-char
 bind -M visual k down-or-search
 bind -M visual l up-or-search
 
-
 # Fish git prompt
 set __fish_git_prompt_showuntrackedfiles yes
 set __fish_git_prompt_showdirtystate yes
 
 # Requires fzf and fd
-if command -v fzf >/dev/null
-    if command -v fd >/dev/null
-        setenv FZF_DEFAULT_COMMAND "command fd --type directory --hidden --exclude '.git' ."
-        setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 20%
---bind=ctrl-k:down,ctrl-l:up"
-        setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-        setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
-        fzf_key_bindings
-    end
+if command -v fzf and command -v fd >/dev/null
+	setenv FZF_DEFAULT_COMMAND "command fd --type directory --hidden --exclude '.git' ."
+	setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 20% --bind=ctrl-k:down,ctrl-l:up"
+	setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+	setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
+	fzf_key_bindings
 end
 
 theme_gruvbox "dark"
-# THEME COLORS
-# Colorscheme: Lava
-# set -U fish_color_normal normal
-# set -U fish_color_command FF9400
-# set -U fish_color_quote BF9C30
-# set -U fish_color_redirection BF5B30
-# set -U fish_color_end FF4C00
-# set -U fish_color_error FFDD73
-# set -U fish_color_param FFC000
-# set -U fish_color_comment A63100
-# set -U fish_color_match --background=brblue
-# set -U fish_color_selection white --bold --background=brblack
-# set -U fish_color_search_match bryellow --background=brblack
-# set -U fish_color_history_current --bold
-# set -U fish_color_operator 00a6b2
-# set -U fish_color_escape 00a6b2
-# set -U fish_color_cwd green
-# set -U fish_color_cwd_root red
-# set -U fish_color_valid_path --underline
-# set -U fish_color_autosuggestion FFC473
-# set -U fish_color_user brgreen
-# set -U fish_color_host normal
-# set -U fish_color_cancel --reverse
-# set -U fish_pager_color_prefix normal --bold --underline
-# set -U fish_pager_color_progress brwhite --background=cyan
-# set -U fish_pager_color_completion normal
-# set -U fish_pager_color_description B3A06D
-# set -U fish_pager_color_selected_background --background=brblack
-# set -U fish_color_keyword
-# set -U fish_pager_color_background
-# set -U fish_pager_color_selected_description
-# set -U fish_pager_color_selected_prefix
-# set -U fish_pager_color_secondary_completion
-# set -U fish_color_option
-# set -U fish_color_host_remote
-# set -U fish_pager_color_selected_completion
-# set -U fish_pager_color_secondary_description
-# set -U fish_pager_color_secondary_prefix
-# set -U fish_pager_color_secondary_background
-
 
 # If using Xorg
 if test -z "$WAYLAND_DISPLAY" &>/dev/null
     abbr -a xinit sudoedit /etc/X11/xinit/xinitrc
 end
-
 
 # Requires cargo
 if command -v cargo >/dev/null
@@ -230,28 +164,6 @@ if command -v cargo >/dev/null
         starship init fish | source
     end
 end
-
-
-# Requires GNU stow
-if command -v stow >/dev/null
-    set DOTFILES "$HOME/dotfiles"
-    abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
-    abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
-    abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
-    abbr -a vedit "$EDITOR $DOTFILES/nvim/.config/nvim"
-    abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
-    abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
-    set SUCKLESS "$DOTFILES/suckless"
-    abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
-    abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
-    abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
-end
-
-
-# personal stuff
-fish_add_path -a "$HOME/.config/linux-scripts"
-set MUSIC $HOME/.config/personal/music
-abbr -a music $EDITOR $MUSIC
 
 if command -v xset >/dev/null
 	xset r rate 200 45
@@ -273,5 +185,31 @@ if command -v picom >/dev/null
 	abbr -a pcf sudoedit "/etc/xdg/picom.conf"
 end
 
+# fstab file
+abbr -a fsc sudoedit "/etc/fstab"
+
 # AddressSanitizer log files output
 setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
+
+# Requires GNU stow
+if command -v stow >/dev/null
+    set DOTFILES "$HOME/dotfiles"
+    abbr -a vifmc "$EDITOR $DOTFILES/vifm/vifmrc"
+    abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"
+    abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
+    abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
+    abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
+    abbr -a vedit "$EDITOR $DOTFILES/nvim/.config/nvim"
+    abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
+    abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
+    set SUCKLESS "$DOTFILES/suckless"
+    abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
+    abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
+    abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
+end
+
+
+# personal stuff
+fish_add_path -a "$HOME/.config/linux-scripts"
+set MUSIC $HOME/.config/personal/music
+abbr -a music $EDITOR $MUSIC

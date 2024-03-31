@@ -19,7 +19,7 @@ static const char norm_fg[] = "#D5C4A1";
 static const char norm_bg[] = "#282828";
 static const char norm_border[] = "#282828";
 static const char sel_fg[] = "#fe8019";
-static const char sel_bg[] = "#1d2021";
+static const char sel_bg[] = "#282828";
 static const char sel_border[] = "#fed008";
 static const char *colors[][3]      = {
     /*               fg           bg          border                         */
@@ -78,7 +78,11 @@ static const char *pavctoggle[] = { "pavc", "toggle", NULL };
 static const char *playerctl_previous[] = { "playerctl", "-a", "previous", NULL };
 static const char *playerctl_next[] = { "playerctl", "-a", "next", NULL };
 static const char *playerctl_playpause[] = { "playerctl", "-a", "play-pause", NULL };
+/* Windows key applications */
+static const char *firefox[] = { "firefox", NULL };
+static const char *gf2[] = { "gf2", NULL };
 
+#define WINKEY XK_Super_L
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ControlMask,                  XK_backslash,   spawn,          {.v = dmenucmd } },
