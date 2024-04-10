@@ -5,8 +5,11 @@ g.c_syntax_for_h = true
 
 o.termguicolors = true
 
+g.gcr = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20,o:hor50,"
+	.. "a:blinkwait300-blinkoff300-blinkon300-Cursor/lCursor,"
+	.. "sm:block-blinkwait300-blinkoff300-blinkon300"
 -- Set spell check (en_us)
-o.spell = true
+o.spell = false
 
 g.no_man_maps = true
 
@@ -20,7 +23,7 @@ o.scrolloff = 8
 o.number = true
 o.numberwidth = 5
 o.relativenumber = true
-o.signcolumn = 'number'
+o.signcolumn = "number"
 o.cursorline = false
 o.cursorlineopt = "screenline"
 
@@ -33,14 +36,14 @@ o.cindent = true
 -- o.autoindent = true
 o.wrap = false
 o.textwidth = 79
-vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+vim.opt_local.formatoptions:remove({ "c", "r", "o" })
 vim.opt.expandtab = false
 o.tabstop = 8
-o.shiftwidth = 0
+o.shiftwidth = 8
 o.softtabstop = -1 -- If negative, shiftwidth value is used
 o.list = false
 
-o.clipboard = 'unnamedplus'
+o.clipboard = "unnamedplus"
 
 o.ignorecase = true
 o.smartcase = true
@@ -49,14 +52,14 @@ o.backup = false
 o.writebackup = false
 o.undofile = false
 o.swapfile = false
-o.undodir = '.vim_undo'
+o.undodir = ".vim_undo"
 
 o.history = 100
 
 o.splitright = true
 o.splitbelow = true
 
-o.jumpoptions = 'view'
+o.jumpoptions = "view"
 
 vim.g.netrw_special_syntax = true
 vim.g.netrw_browse_split = 0
@@ -65,4 +68,4 @@ vim.g.netrw_winsize = 25
 vim.g.netrw_liststyle = 1
 
 -- Fix Identation of switch statement in c
-o.cinoptions = 'l1'
+o.cinoptions = "l1"

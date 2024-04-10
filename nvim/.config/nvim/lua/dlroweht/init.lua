@@ -7,7 +7,8 @@
    \ \_______\ \_______\ \__\\ _\\ \_______\ \____________\ \_______\ \__\ \__\   \ \__\
     \|_______|\|_______|\|__|\|__|\|_______|\|____________|\|_______|\|__|\|__|    \|__|
 
---]] --
+--]]
+--
 require("dlroweht.settings")
 require("dlroweht.packer")
 require("dlroweht.remap")
@@ -16,7 +17,12 @@ require("colorizer").setup()
 -- Great for observing log files that get
 -- constantly updated
 vim.o.updatetime = 1000 -- 1 second
-vim.api.nvim_create_autocmd({"CursorHold", "BufRead"}, {
-	pattern = {"*.dbg.txt"}, -- only for debug output files
+vim.api.nvim_create_autocmd({ "CursorHold", "BufRead" }, {
+	pattern = { "*.dbg.txt" }, -- only for debug output files
 	command = "checktime | call feedkeys('G')",
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = "*.lua",
+	command = "set tabstop=4 | set shiftwidth=4",
 })

@@ -1,8 +1,9 @@
 if status is-interactive
-    if status is-login
-        and command -a keychain >/dev/null
-        keychain --quiet $SSH_KEYS
-    end
+	theme_gruvbox "dark"
+	if status is-login
+		and command -a keychain >/dev/null
+		keychain --quiet $SSH_KEYS
+	end
 end
 
 # Override slow command-not-found handler
@@ -14,10 +15,8 @@ end
 function fish_greeting 
 end
 
-bind yy fish_clipboard_copy
-bind Y fish_clipboard_copy
-bind p fish_clipboard_paste
-
+# set SHELL env var
+setenv SHELL /usr/bin/fish
 
 # Override exit to automatically 'disown'
 function exit
@@ -28,7 +27,7 @@ end
 abbr -a se sudoedit
 
 # Check if keychain is in path
-if command -a keychain >/dev/null
+if command -v keychain >/dev/null
     begin
         set HOSTNAME (hostname)
         if test -f "$HOME/.keychain/$HOSTNAME-fish"
@@ -37,8 +36,17 @@ if command -a keychain >/dev/null
     end
 end
 
+if command -v sloccount >/dev/null
+	abbr -a loc sloccount
+end
+
+# Notification server
+if command -v dunst >/dev/null
+	abbr -a dunstrc $EDITOR "$HOME/.config/dunst/dunstrc"
+end
+
 # Debugger
-if command -a gf2 >/dev/null
+if command -v gf2 >/dev/null
     abbr -a dbg gf2
 end
 
@@ -52,7 +60,7 @@ end
 if command -v eza >/dev/null
     abbr -a l eza
     abbr -a ls eza -a
-    abbr -a lsd eza -aD
+    abbr -a lsd eza -alD
     abbr -a lsa eza -al
     abbr -a tree eza -T
     abbr -a treeg eza -T --git-ignore
@@ -67,6 +75,7 @@ if command -v git >/dev/null
     abbr -a gc git commit
     abbr -a gp git push
     abbr -a ge git config --global --edit
+    abbr -a gco git checkout
     abbr -a gd git difftool
     abbr -a gdl git difftool HEAD^ HEAD
 end
@@ -115,8 +124,91 @@ end
 # Nice to have
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 
-# set SHELL env var
-setenv SHELL /usr/bin/fish
+# Requires fzf and fd
+if command -v fzf and command -v fd >/dev/null
+	setenv FZF_DEFAULT_COMMAND "command locate /"
+	setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 30% --bind=ctrl-n:down,ctrl-p:up"
+	setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+	setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
+	fzf_key_bindings
+end
+
+# if using X
+if test -z "$WAYLAND_DISPLAY" &>/dev/null
+    abbr -a xinit sudoedit /etc/X11/xinit/xinitrc
+end
+
+# Requires cargo
+if command -v cargo >/dev/null
+    if command -v starship >/dev/null
+        setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
+        abbr -a scf "$EDITOR $STARSHIP_CONFIG"
+        starship init fish | source
+    end
+end
+
+# set keyboard key press frequency
+if command -v xset >/dev/null
+	xset r rate 200 45
+end
+
+# download youtube video/audio
+if command -v yt-dlp >/dev/null
+	abbr -a ytd yt-dlp
+end
+
+# pdf viewer
+if command -v zathura >/dev/null
+	abbr -a zrc $EDITOR "$HOME/.config/zathura/zathurarc"
+end
+
+if command -v vifm >/dev/null
+	abbr -a vifmrc $EDITOR "$HOME/.config/vifm/vifmrc"
+end
+
+# compositor
+if command -v picom >/dev/null
+	abbr -a pcf sudoedit "/etc/xdg/picom.conf"
+end
+
+if command -v transmission-remote >/dev/null
+	abbr -a trs transmission-remote
+	abbr -a trst transmission-remote -t
+	abbr -a trsl transmission-remote -l
+	abbr -a trss transmission-remote -tall --start
+	abbr -a trsr transmission_rm_finished
+end
+
+# fstab file
+abbr -a fsc sudoedit "/etc/fstab"
+
+# AddressSanitizer log files output
+setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
+
+# Requires GNU stow
+if command -v stow >/dev/null
+	set DOTFILES "$HOME/dotfiles"
+	abbr -a vifmrc "$EDITOR $DOTFILES/vifm/.config/vifm/vifmrc"
+	abbr -a dunstrc "$EDITOR $DOTFILES/dunst/.config/dunst/dunstrc"
+	abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"
+    	abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
+    	abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
+    	abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
+    	abbr -a vedit "$EDITOR $DOTFILES/nvim/.config/nvim"
+    	abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
+    	abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
+    	set SUCKLESS "$DOTFILES/suckless"
+    	abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
+    	abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
+    	abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
+end
+
+
+# personal stuff
+fish_add_path -a "$HOME/.config/linux-scripts"
+set MUSIC $HOME/.config/personal/music
+abbr -a music $EDITOR $MUSIC
+
 
 fish_vi_key_bindings
 set fish_cursor_default block
@@ -140,76 +232,8 @@ bind -M visual l up-or-search
 set __fish_git_prompt_showuntrackedfiles yes
 set __fish_git_prompt_showdirtystate yes
 
-# Requires fzf and fd
-if command -v fzf and command -v fd >/dev/null
-	setenv FZF_DEFAULT_COMMAND "command fd --type directory --hidden --exclude '.git' ."
-	setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 20% --bind=ctrl-k:down,ctrl-l:up"
-	setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-	setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
-	fzf_key_bindings
-end
+# copy-paste
+bind yy fish_clipboard_copy
+bind Y fish_clipboard_copy
+bind p fish_clipboard_paste
 
-theme_gruvbox "dark"
-
-# If using Xorg
-if test -z "$WAYLAND_DISPLAY" &>/dev/null
-    abbr -a xinit sudoedit /etc/X11/xinit/xinitrc
-end
-
-# Requires cargo
-if command -v cargo >/dev/null
-    if command -v starship >/dev/null
-        setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
-        abbr -a scf "$EDITOR $STARSHIP_CONFIG"
-        starship init fish | source
-    end
-end
-
-if command -v xset >/dev/null
-	xset r rate 200 45
-end
-
-if command -v yt-dlp >/dev/null
-	abbr -a ytd yt-dlp
-end
-
-if command -v zathura >/dev/null
-	abbr -a zrc $EDITOR "$HOME/.config/zathura/zathurarc"
-end
-
-if command -v vifm >/dev/null
-	abbr -a vifmrc $EDITOR "$HOME/.config/vifm/vifmrc"
-end
-
-if command -v picom >/dev/null
-	abbr -a pcf sudoedit "/etc/xdg/picom.conf"
-end
-
-# fstab file
-abbr -a fsc sudoedit "/etc/fstab"
-
-# AddressSanitizer log files output
-setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
-
-# Requires GNU stow
-if command -v stow >/dev/null
-    set DOTFILES "$HOME/dotfiles"
-    abbr -a vifmc "$EDITOR $DOTFILES/vifm/vifmrc"
-    abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"
-    abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
-    abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
-    abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
-    abbr -a vedit "$EDITOR $DOTFILES/nvim/.config/nvim"
-    abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
-    abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
-    set SUCKLESS "$DOTFILES/suckless"
-    abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
-    abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
-    abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
-end
-
-
-# personal stuff
-fish_add_path -a "$HOME/.config/linux-scripts"
-set MUSIC $HOME/.config/personal/music
-abbr -a music $EDITOR $MUSIC

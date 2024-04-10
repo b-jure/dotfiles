@@ -1,68 +1,73 @@
-vim.cmd [[packadd packer.nvim]]
+vim.cmd([[packadd packer.nvim]])
 
-return require('packer').startup(function(use)
-    -- PACKER
-    use('wbthomason/packer.nvim')
+return require("packer").startup(function(use)
+	-- PACKER
+	use("wbthomason/packer.nvim")
 
-    -- TELESCOPE
-    use({
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.4',
-        requires = 'nvim-lua/plenary.nvim'
-    })
+	-- FZF for telescope
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
-    -- THEMES
-    use({ 'projekt0n/github-nvim-theme' })
+	-- TELESCOPE
+	use({
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.4",
+		requires = "nvim-lua/plenary.nvim",
+	})
 
-    -- LUALINE
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    }
+	-- THEMES
+	use({ "projekt0n/github-nvim-theme" })
 
-    -- DEVICONS
-    use('nvim-tree/nvim-web-devicons')
+	-- LUALINE
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
 
-    -- HARPOON
-    use('ThePrimeagen/harpoon')
+	-- DEVICONS
+	use("nvim-tree/nvim-web-devicons")
 
-    -- COLORIZER
-    use('norcalli/nvim-colorizer.lua')
+	-- HARPOON
+	use("ThePrimeagen/harpoon")
 
-    -- LSP
-    use({
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        requires = {
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' }, -- Required
-            { -- Optional
-                'williamboman/mason.nvim',
-                run = ":MasonUpdate"
-            }, { 'williamboman/mason-lspconfig.nvim' }, -- Optional
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' }, -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' } -- Required
-        }
-    })
+	-- COLORIZER
+	use("norcalli/nvim-colorizer.lua")
 
-    -- TMUX NAVIGATOR
-    use('christoomey/vim-tmux-navigator')
+	-- LSP
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v2.x",
+		requires = {
+			-- LSP Support
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{ -- Optional
+				"williamboman/mason.nvim",
+				run = ":MasonUpdate",
+			},
+			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+			-- Autocompletion
+			{ "hrsh7th/nvim-cmp" }, -- Required
+			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+			{ "L3MON4D3/LuaSnip" }, -- Required
+		},
+	})
 
-    -- MARKDOWN-PREVIEW
-    use({
-        "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end
-    })
+	-- TMUX NAVIGATOR
+	use("christoomey/vim-tmux-navigator")
 
-    -- FUGITIVE
-    use({'tpope/vim-fugitive'})
+	-- MARKDOWN-PREVIEW
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	})
 
-    -- GRUVBOX THEME
-    use { "ellisonleao/gruvbox.nvim" }
+	-- FUGITIVE
+	use({ "tpope/vim-fugitive" })
 
-    -- FORMATTER
-    use { 'mhartington/formatter.nvim' }
+	-- GRUVBOX THEME
+	use({ "ellisonleao/gruvbox.nvim" })
 
+	-- FORMATTER
+	use({ "mhartington/formatter.nvim" })
 end)

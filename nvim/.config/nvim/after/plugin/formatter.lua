@@ -27,7 +27,15 @@ require("formatter").setup({
 			end,
 		},
 		lua = {
-			require("formatter.filetypes.lua").stylua,
+			function()
+				return {
+					exe = "stylua",
+					args = {
+						"-f ~/.config/stylua/.stylua.toml",
+					},
+					stdin = false,
+				}
+			end,
 		},
 	},
 })

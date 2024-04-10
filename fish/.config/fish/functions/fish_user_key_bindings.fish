@@ -1,5 +1,3 @@
-fzf_key_bindings
-
 bind -M default \cN history-search-forward
 bind -M default \cP history-search-backward
 

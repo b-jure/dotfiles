@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
     [SchemeSel]  =   { sel_fg,    sel_bg,     sel_border },		     // the focused win
 };
 
-static const char *tags[] = { "", "", "1", "2", "3" };
+static const char *tags[] = { "code", "www", "1", "2", "3" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -35,13 +35,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
 	{ "gf2",      "gf2",      "gf2",      1 << 2,       0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact        = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact        = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster        = 1;    /* number of clients in master area */
 static const int resizehints    = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1;    /* 1 will force focus on the fullscreen window */
@@ -55,6 +53,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod1Mask
+#define WINKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ ControlMask,                  KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -78,12 +77,21 @@ static const char *pavctoggle[] = { "pavc", "toggle", NULL };
 static const char *playerctl_previous[] = { "playerctl", "-a", "previous", NULL };
 static const char *playerctl_next[] = { "playerctl", "-a", "next", NULL };
 static const char *playerctl_playpause[] = { "playerctl", "-a", "play-pause", NULL };
+/* Windows key applications */
+static const char *firefox[] = { "firefox-developer-edition", NULL };
+static const char *gf2[] = { "gf2", NULL };
+static const char *slock[] = { "slock", NULL };
+static const char *dunst_hist[] = { "dunstctl", "history-pop", NULL };
+static const char *dunst_clear[] = { "dunstctl", "close", NULL };
 
 static const Key keys[] = {
-	/* modifier                     key        function        argument */
+	/* modifier                     key		function        argument */
 	{ ControlMask,                  XK_backslash,   spawn,          {.v = dmenucmd } },
 	{ ControlMask,                  XK_Return,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_Pause,       spawn,          {.v = shutdown } },
+	{ WINKEY,                       XK_f,		spawn,          {.v = firefox } },
+	{ WINKEY,                       XK_d,		spawn,          {.v = gf2 } },
+	{ WINKEY,                       XK_l,		spawn,          {.v = slock } },
 	{ MODKEY,                       XK_Scroll_Lock, spawn,          {.v = restart } },
 	{ MODKEY,                       XK_comma,       spawn,          {.v = pavcdown } },
 	{ MODKEY,                       XK_period,      spawn,          {.v = pavcup } },
@@ -91,6 +99,8 @@ static const Key keys[] = {
 	{ ControlMask,                  XK_comma,       spawn,          {.v = playerctl_previous } },
 	{ ControlMask,                  XK_period,      spawn,          {.v = playerctl_next } },
 	{ ControlMask,                  XK_slash,       spawn,          {.v = playerctl_playpause } },
+	{ MODKEY,			XK_h,		spawn,          {.v = dunst_hist } },
+	{ MODKEY|ControlMask,		XK_h,		spawn,          {.v = dunst_clear } },
 	{ MODKEY,                       XK_b,           togglebar,      {0} },
 	{ MODKEY,                       XK_j,           focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_semicolon,   focusstack,     {.i = -1 } },
@@ -105,10 +115,6 @@ static const Key keys[] = {
 	{ ControlMask,                  XK_5,           togglefloating, {0} },
 	{ MODKEY,                       XK_0,           view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,           tag,            {.ui = ~0 } },
-	// { MODKEY,                       XK_comma,       focusmon,       {.i = -1 } },
-	// { MODKEY,                       XK_period,      focusmon,       {.i = +1 } },
-	// { MODKEY|ControlMask,           XK_comma,       tagmon,         {.i = -1 } },
-	// { MODKEY|ControlMask,           XK_period,      tagmon,         {.i = +1 } },
 	TAGKEYS(                        XK_bracketleft,                 0)
 	TAGKEYS(                        XK_bracketright,                1)
 	TAGKEYS(                        XK_2,                           2)

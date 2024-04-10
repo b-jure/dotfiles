@@ -62,6 +62,10 @@ color = "0xebdbb2"
 
 [cursor]
 unfocused_hollow = true
+style = { blinking = "Always" }
+vi_mode_style = { blinking = "Always" }
+blink_interval = 350
+blink_timeout = 0
 
 [font]
 size = 12.0
