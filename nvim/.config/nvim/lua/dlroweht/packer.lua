@@ -70,4 +70,7 @@ return require("packer").startup(function(use)
 
 	-- FORMATTER
 	use({ "mhartington/formatter.nvim" })
+
+	-- Vi file manager
+	use({ "vifm/vifm.vim" })
 end)

@@ -1,11 +1,3 @@
-if status is-interactive
-	theme_gruvbox "dark"
-	if status is-login
-		and command -a keychain >/dev/null
-		keychain --quiet $SSH_KEYS
-	end
-end
-
 # Override slow command-not-found handler
 function fish_command_not_found
     echo "fish: Unknown command '$argv'" >&2
@@ -163,7 +155,16 @@ if command -v zathura >/dev/null
 end
 
 if command -v vifm >/dev/null
-	abbr -a vifmrc $EDITOR "$HOME/.config/vifm/vifmrc"
+	abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
+
+	# change shell directory when leaving vifm
+	function vicd
+	    set dst "$(command vifm (pwd) --choose-dir - $argv[2..-1])"
+	    if [ -z "$dst" ]; return 1; end
+	    cd "$dst"
+	end
+
+	abbr -a vf vicd
 end
 
 # compositor
@@ -237,3 +238,11 @@ bind yy fish_clipboard_copy
 bind Y fish_clipboard_copy
 bind p fish_clipboard_paste
 
+if status is-interactive
+	theme_gruvbox "dark"
+	if status is-login
+		and command -a keychain >/dev/null
+		keychain --quiet $SSH_KEYS
+	end
+	vicd
+end

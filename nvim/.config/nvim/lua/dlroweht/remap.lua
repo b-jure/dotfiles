@@ -27,7 +27,7 @@ map_key("v", "p", '"_dP')
 map_key("n", "<leader>vs", ":source $MYVIMRC<CR>")
 
 -- Remap Netrw
-map_key("n", "<leader>pv", vim.cmd.Ex)
+-- map_key("n", "<leader>pv", vim.cmd.Ex)
 
 -- Delete the block
 map_key("n", "daf", "da}")
