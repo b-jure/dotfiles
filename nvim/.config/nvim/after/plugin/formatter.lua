@@ -37,6 +37,15 @@ require("formatter").setup({
 				}
 			end,
 		},
+		js = {
+			function()
+				return {
+					exe = "clang-format",
+					args = { "-i" },
+					stdin = false,
+				}
+			end,
+		},
 	},
 })
 

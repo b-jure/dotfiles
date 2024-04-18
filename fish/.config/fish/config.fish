@@ -95,7 +95,25 @@ if command -v nvim >/dev/null
     setenv MANPAGER "nvim +Man!"
     abbr -a e $EDITOR
     abbr -a vim $EDITOR
-    abbr -a vedit $EDITOR "$HOME/.config/nvim"
+    abbr -a vimrc "$EDITOR $HOME/.config/nvim"
+end
+
+# requires vifm
+if command -v vifm >/dev/null
+	abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
+
+	# change shell directory when leaving vifm
+	function vicd --argument-names 'startdir'
+		if ! test -n "$startdir" >/dev/null
+			set startdir (pwd)
+		end
+		set dst "$(command vifm "$startdir" --choose-dir - $argv[2..-1])"
+	    	if [ -z "$dst" ]; return 1; end
+	    	cd "$dst"
+	end
+
+	abbr -a vf vicd
+	abbr -a vimrc vicd "$HOME/.config/nvim"
 end
 
 # Config file for polybar
@@ -139,11 +157,6 @@ if command -v cargo >/dev/null
     end
 end
 
-# set keyboard key press frequency
-if command -v xset >/dev/null
-	xset r rate 200 45
-end
-
 # download youtube video/audio
 if command -v yt-dlp >/dev/null
 	abbr -a ytd yt-dlp
@@ -152,19 +165,6 @@ end
 # pdf viewer
 if command -v zathura >/dev/null
 	abbr -a zrc $EDITOR "$HOME/.config/zathura/zathurarc"
-end
-
-if command -v vifm >/dev/null
-	abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
-
-	# change shell directory when leaving vifm
-	function vicd
-	    set dst "$(command vifm (pwd) --choose-dir - $argv[2..-1])"
-	    if [ -z "$dst" ]; return 1; end
-	    cd "$dst"
-	end
-
-	abbr -a vf vicd
 end
 
 # compositor
@@ -189,26 +189,51 @@ setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
 # Requires GNU stow
 if command -v stow >/dev/null
 	set DOTFILES "$HOME/dotfiles"
-	abbr -a vifmrc "$EDITOR $DOTFILES/vifm/.config/vifm/vifmrc"
-	abbr -a dunstrc "$EDITOR $DOTFILES/dunst/.config/dunst/dunstrc"
-	abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"
-    	abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
-    	abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
-    	abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
-    	abbr -a vedit "$EDITOR $DOTFILES/nvim/.config/nvim"
-    	abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
-    	abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
+	if command -v nvim >/dev/null
+		abbr -a vimrc "$EDITOR $DOTFILES/nvim/.config/nvim"
+	end
+	if command -v vifm >/dev/null
+		abbr -a vfrc "$EDITOR $DOTFILES/vifm/.config/vifm/vifmrc"
+		abbr -a vimrc "vicd $DOTFILES/nvim/.config/nvim"
+	end
+	if command -v dunst >/dev/null
+		abbr -a dunstrc "$EDITOR $DOTFILES/dunst/.config/dunst/dunstrc"
+	end
+	if command -v zathura >/dev/null
+		abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"
+	end
+	if command -v fish >/dev/null
+		abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
+		if command -v starship >/dev/null
+			abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
+		end
+	end
+	if command -v alacritty >/dev/null
+		abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
+	end
+	if command -v tmux >/dev/null
+		abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
+	end
+	if command -v polybar >/dev/null
+		abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
+	end
     	set SUCKLESS "$DOTFILES/suckless"
-    	abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
-    	abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
-    	abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
+	if command -v dwm >/dev/null
+		abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
+	end
+	if command -v dmenu >/dev/null
+		abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
+	end
+	if command -v slstatus >/dev/null
+		abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
+	end
 end
 
 
 # personal stuff
 fish_add_path -a "$HOME/.config/linux-scripts"
 set MUSIC $HOME/.config/personal/music
-abbr -a music $EDITOR $MUSIC
+abbr -a music "$EDITOR $MUSIC"
 
 
 fish_vi_key_bindings
@@ -238,11 +263,52 @@ bind yy fish_clipboard_copy
 bind Y fish_clipboard_copy
 bind p fish_clipboard_paste
 
+set -U fish_pager_color_selected_description
+
+
+# Colorscheme: Lava
+set -U fish_color_normal normal
+set -U fish_color_command FF9400
+set -U fish_color_quote BF9C30
+set -U fish_color_redirection BF5B30
+set -U fish_color_end FF4C00
+set -U fish_color_error FFDD73
+set -U fish_color_param FFC000
+set -U fish_color_comment A63100
+set -U fish_color_match --background=brblue
+set -U fish_color_selection white --bold --background=brblack
+set -U fish_color_search_match bryellow --background=brblack
+set -U fish_color_history_current --bold
+set -U fish_color_operator 00a6b2
+set -U fish_color_escape 00a6b2
+set -U fish_color_cwd green
+set -U fish_color_cwd_root red
+set -U fish_color_valid_path --underline
+set -U fish_color_autosuggestion FFC473
+set -U fish_color_user brgreen
+set -U fish_color_host normal
+set -U fish_color_cancel --reverse
+set -U fish_pager_color_prefix normal --bold --underline
+set -U fish_pager_color_progress brwhite --background=cyan
+set -U fish_pager_color_completion normal
+set -U fish_pager_color_description B3A06D
+set -U fish_pager_color_selected_background --background=brblack
+set -U fish_pager_color_secondary_prefix
+set -U fish_pager_color_background
+set -U fish_pager_color_selected_prefix
+set -U fish_pager_color_secondary_description
+set -U fish_pager_color_secondary_completion
+set -U fish_pager_color_selected_completion
+set -U fish_pager_color_secondary_background
+set -U fish_color_option
+set -U fish_color_host_remote
+set -U fish_color_keyword
+set -U fish_pager_color_selected_description
+
+
 if status is-interactive
-	theme_gruvbox "dark"
 	if status is-login
 		and command -a keychain >/dev/null
 		keychain --quiet $SSH_KEYS
 	end
-	vicd
 end

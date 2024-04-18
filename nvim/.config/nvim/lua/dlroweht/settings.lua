@@ -35,7 +35,7 @@ o.expandtab = true
 o.cindent = true
 -- o.autoindent = true
 o.wrap = false
-o.textwidth = 79
+o.textwidth = 80
 vim.opt_local.formatoptions:remove({ "c", "r", "o" })
 vim.opt.expandtab = false
 o.tabstop = 8

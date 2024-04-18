@@ -13,6 +13,7 @@ end
 -- Setup colors (color-scheme picker)
 function Cp(color)
 	color = color or "gruvbox"
+
 	if color == "gruvbox" then
 		require("gruvbox").setup({
 			terminal_colors = true,
@@ -38,8 +39,22 @@ function Cp(color)
 			dim_inactive = false,
 			transparent_mode = false,
 		})
+		vim.o.background = "dark"
+	elseif color == "no-clown-fiesta" then
+		require("no-clown-fiesta").setup({
+			transparent = false,
+			styles = {
+				comments = {},
+				functions = {},
+				keywords = {},
+				lsp = { underline = true },
+				match_paren = {},
+				type = { bold = true },
+				variable = {},
+			},
+		})
 	end
-	vim.o.background = "dark"
+
 	vim.cmd.colorscheme(color)
 	LineNumberColors()
 	-- CommentsColor("d65d0e")

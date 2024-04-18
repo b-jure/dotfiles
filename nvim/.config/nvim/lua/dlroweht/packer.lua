@@ -73,4 +73,7 @@ return require("packer").startup(function(use)
 
 	-- Vi file manager
 	use({ "vifm/vifm.vim" })
+
+	-- NO-CLOWN-FIESTA THEME
+	use({ "aktersnurra/no-clown-fiesta.nvim" })
 end)

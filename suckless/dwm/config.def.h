@@ -3,7 +3,7 @@
 #define MY_FONT "Iosevka Custom:style=Medium:size=11"
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 31;       /* snap pixel */
 static const unsigned int gappih    = 0;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 0;       /* vert inner gap between windows */
@@ -15,12 +15,12 @@ static const int topbar             = 0;        /* 0 means bottom bar */
 static const char *fonts[]          = { MY_FONT };
 static const char dmenufont[]       = MY_FONT;
 
-static const char norm_fg[] = "#D5C4A1";
+static const char norm_fg[] = "#eeeeee";
 static const char norm_bg[] = "#282828";
 static const char norm_border[] = "#282828";
-static const char sel_fg[] = "#fe8019";
+static const char sel_fg[] = "#ff8700";
 static const char sel_bg[] = "#282828";
-static const char sel_border[] = "#fed008";
+static const char sel_border[] = "#ff8700";
 static const char *colors[][3]      = {
     /*               fg           bg          border                         */
     [SchemeNorm] =   { norm_fg,   norm_bg,    norm_border }, 		     // unfocused wins
