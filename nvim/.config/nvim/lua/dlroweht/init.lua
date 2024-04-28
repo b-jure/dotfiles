@@ -26,3 +26,4 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = "*.lua",
 	command = "set tabstop=4 | set shiftwidth=4",
 })
+

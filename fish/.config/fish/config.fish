@@ -98,6 +98,11 @@ if command -v nvim >/dev/null
     abbr -a vimrc "$EDITOR $HOME/.config/nvim"
 end
 
+# requires wezterm
+if command -v wezterm >/dev/null
+	abbr -a wcf "$EDITOR $HOME/.config/wezterm/wezterm.lua"
+end
+
 # requires vifm
 if command -v vifm >/dev/null
 	abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
@@ -217,6 +222,10 @@ if command -v stow >/dev/null
 	if command -v polybar >/dev/null
 		abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
 	end
+	if command -v wezterm >/dev/null
+		abbr -a wcf "$EDITOR $DOTFILES/wezterm/.config/wezterm/wezterm.lua"
+	end
+
     	set SUCKLESS "$DOTFILES/suckless"
 	if command -v dwm >/dev/null
 		abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
@@ -241,6 +250,7 @@ set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual block
+set fish_vi_force_cursor 1
 # INSERT MODE
 bind -M insert -m default \ce forward-char -m insert
 # DEFAULT MODE

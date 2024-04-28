@@ -541,7 +541,7 @@ highlight TopLineSel	cterm=bold ctermfg=yellow ctermbg=black gui=bold guifg=#d79
 highlight Win		cterm=none ctermfg=lightwhite ctermbg=black gui=none guifg=#ebdbb2 guibg=default
 highlight Directory	cterm=bold ctermfg=blue ctermbg=black gui=bold guifg=#458588 guibg=default
 highlight CurrLine	cterm=bold,inverse ctermfg=lightyellow ctermbg=default gui=bold,inverse guifg=#fabd2f guibg=default
-highlight OtherLine	cterm=bold ctermfg=black ctermbg=cyan gui=bold guifg=default guibg=#282828
+highlight OtherLine	cterm=bold ctermfg=white ctermbg=black gui=bold guifg=default guibg=#282828
 highlight Selected	cterm=none ctermfg=lightyellow ctermbg=black gui=none guifg=#fabd2f guibg=#928374
 highlight JobLine	cterm=bold ctermfg=white ctermbg=black gui=bold guifg=116 guibg=#282828
 highlight StatusLine	cterm=bold ctermfg=white ctermbg=black gui=bold guifg=#ebddb2 guibg=#282828

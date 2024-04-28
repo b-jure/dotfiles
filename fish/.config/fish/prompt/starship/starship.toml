@@ -2,7 +2,7 @@
 
 # $all is shorthand for $username$hostname$localip$shlvl$singularity$kubernetes$directory$vcsh$fossil_branch$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$pijul_channel$docker_context$package$bun$c$cmake$cobol$daml$dart$deno$dotnet$elixir$elm$erlang$fennel$golang$gradle$haskell$haxe$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$buf$guix_shell$nix_shell$conda$meson$spack$memory_usage$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$cmd_duration$line_break$jobs$battery$time$status$container$os$shell$character
 "$schema" = "https://starship.rs/config-schema.json"
-format = "$all"
+format = "$os$username$hostname$localip$shlvl$singularity$kubernetes$directory$vcsh$fossil_branch$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$pijul_channel$docker_context$package$bun$c$cmake$cobol$daml$dart$deno$dotnet$elixir$elm$erlang$fennel$golang$gradle$haskell$haxe$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$buf$guix_shell$nix_shell$conda$meson$spack$memory_usage$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$cmd_duration$line_break$jobs$battery$time$status$container$shell$character"
 right_format = ""
 continuation_prompt = "[∙](bright-black) "
 scan_timeout = 30
@@ -100,12 +100,12 @@ commands = [
 
 [character]
 format = "$symbol "
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold green)"
-vimcmd_visual_symbol = "[❮](bold yellow)"
-vimcmd_replace_symbol = "[❮](bold purple)"
-vimcmd_replace_one_symbol = "[❮](bold purple)"
+success_symbol = "[I](bold blue)"
+error_symbol = "[I](bold red)"
+vimcmd_symbol = "[N](bold gray)"
+vimcmd_visual_symbol = "[V](bold fg:208)"
+vimcmd_replace_symbol = "[R](bold red)"
+vimcmd_replace_one_symbol = "[R](bold red)"
 disabled = false
 
 [cmake]
@@ -219,7 +219,7 @@ format = "[$path]($style)[$read_only]($read_only_style) "
 repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 style = "cyan bold"
 disabled = false
-read_only = " "
+read_only = " "
 read_only_style = "red"
 truncation_symbol = ".../"
 home_symbol = "~"
@@ -696,8 +696,8 @@ disabled = false
 
 [os]
 format = "[$symbol]($style)"
-style = "bold white"
-disabled = true
+style = "bold blue"
+disabled = false
 
 [os.symbols]
 Alpaquita = " "
@@ -978,7 +978,7 @@ disabled = true
 
 [sudo]
 format = "[as $symbol]($style)"
-symbol = "🧙 "
+symbol = " "
 style = "bold blue"
 allow_windows = false
 disabled = true

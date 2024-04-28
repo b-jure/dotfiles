@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
     [SchemeSel]  =   { sel_fg,    sel_bg,     sel_border },		     // the focused win
 };
 
-static const char *tags[] = { "code", "www", "1", "2", "3" };
+static const char *tags[] = { "code", "www", "doc", "1", "2" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -68,7 +68,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", "#282828", "-nf", "#a89984", "-sb", "#cc241d", "-sf", "#a89984", NULL };
 static const char *shutdown[] = { "shutdown", "-h", "now", NULL };
 static const char *restart[] = { "shutdown", "-h", "-r", "now", NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "wezterm", NULL };
 /* pulseaudio volume control */
 static const char *pavcdown[] = { "pavc", "down", "10", NULL };
 static const char *pavcup[] = { "pavc", "up", "10", NULL };

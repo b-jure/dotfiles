@@ -5,11 +5,7 @@ g.c_syntax_for_h = true
 
 o.termguicolors = true
 
-g.gcr = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20,o:hor50,"
-	.. "a:blinkwait300-blinkoff300-blinkon300-Cursor/lCursor,"
-	.. "sm:block-blinkwait300-blinkoff300-blinkon300"
--- Set spell check (en_us)
-o.spell = false
+o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20,o:hor50,a:blinkon350"
 
 g.no_man_maps = true
 

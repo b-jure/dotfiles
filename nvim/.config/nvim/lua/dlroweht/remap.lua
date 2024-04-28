@@ -6,7 +6,7 @@ end
 vim.g.mapleader = " "
 
 -- restart lsp
-map_key("n", "<M-r>", ":LspStop<CR>:LspStart<CR>")
+map_key("n", "<M-r>", ":LspRestart<CR>")
 
 -- disable this for whatever reason
 map_key("n", "L", "<nop>")
@@ -27,6 +27,10 @@ map_key("n", "]q", "<cmd>cp<CR>")
 -- set/unset spelling
 map_key("n", "[os", "<cmd>set spell<CR>")
 map_key("n", "]os", "<cmd>set nospell<CR>")
+
+-- enable/disable syntax highlighting
+map_key("n", "[oS", "<cmd>syntax on<CR>")
+map_key("n", "]oS", "<cmd>syntax off<CR>")
 
 -- insert space above/below cursor
 map_key("n", "<Space>[", "O<Escape>")

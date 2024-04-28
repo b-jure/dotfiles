@@ -1,0 +1,147 @@
+# i3 config file (v4)
+
+# colorscheme
+include ~/.config/i3/colorscheme.conf
+
+# modifier keys
+set $m Mod1
+set $win Mod4
+
+# workspaces
+set $ws1 1:code
+set $ws2 2:www
+set $ws3 3:doc
+set $ws4 4:1
+set $ws5 5:2
+
+# font formats
+set $myfont -*-Iosevka Custom-Medium-r-normal--0-130-0-0-p-0-iso10646-1
+set $dmenufont "Iosevka Custom:style=Medium:size=13"
+
+# font
+font $myfont
+
+# floating windows modifier (for dragging)
+floating_modifier $m
+
+# window navigation
+bindsym $m+j focus left
+bindsym $m+k focus down
+bindsym $m+l focus up
+bindsym $m+semicolon focus right
+
+# move focused window
+bindsym $m+Shift+j move left
+bindsym $m+Shift+k move down
+bindsym $m+Shift+l move up
+bindsym $m+Shift+semicolon move right
+
+# split window
+bindsym $m+v split vertical
+bindsym $m+h split horizontal
+bindsym $m+t split toggle
+
+# toggle fullscreen
+bindsym $m+f fullscreen toggle
+
+# change/toggle layouts
+bindsym $m+s layout stacking
+bindsym $m+w layout tabbed
+bindsym $m+e layout default
+bindsym $m+x layout toggle stacking tabbed splith
+
+# change focus between tiling/floating windows
+bindsym $m+space focus mode_toggle
+
+# focus parent/child container
+bindsym $m+a focus parent
+bindsym $m+d focus child
+
+# switch to workspace
+bindsym Control+bracketleft workspace $ws1
+bindsym Control+bracketright workspace $ws2
+bindsym Control+2 workspace $ws3
+bindsym Control+3 workspace $ws4
+bindsym Control+4 workspace $ws5
+
+# move container to workspace
+bindsym $m+Control+bracketleft move container to $ws1; workspace $ws1
+bindsym $m+Control+bracketright move container to $ws2; workspace $ws2
+bindsym $m+Control+2 move container to $ws3; workspace $ws3
+bindsym $m+Control+3 move container to $ws4; workspace $ws4
+bindsym $m+Control+4 move container to $ws5; workspace $ws5
+
+# move workspace to workspace
+bindsym $m+Shift+bracketleft move workspace to $ws1; workspace $ws1
+bindsym $m+Shift+bracketright move workspace to $ws2; workspace $ws2
+bindsym $m+Shift+2 move workspace to $ws3; workspace $ws3
+bindsym $m+Shift+3 move workspace to $ws4; workspace $ws4
+bindsym $m+Shift+4 move workspace to $ws5; workspace $ws5
+
+# resize container/window
+bindsym $m+Control+j resize grow left 10
+bindsym $m+Control+k resize grow down 10
+bindsym $m+Control+l resize grow up 10
+bindsym $m+Control+semicolon resize grow right 10
+
+# mark/goto
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+
+# reload/restart/exit i3
+bindsym $m+Shift+c reload
+bindsym $m+Shift+r restart
+bindsym $m+Shift+e exit
+
+# spawn new terminal
+bindsym $m+Enter exec /usr/bin/wezterm
+
+# run dmenu
+bindsym $m+backslash exec /usr/local/bin/dmenu -fn $dmenufont -nb #282828 -nf #a89984 -sb #ff8700 -sf #a89984
+
+# sound volume control
+bindsym $m+comma exec /usr/local/bin/pavc down 10
+bindsym $m+period exec /usr/local/bin/pavc up 10
+bindsym $m+slash exec /usr/local/bin/pavc toggle
+
+# playback control
+bindsym Control+comma exec /usr/bin/playerctl -a previous
+bindsym Control+period exec /usr/bin/playerctl -a next
+bindsym Control+slash exec /usr/bin/playerctl -a play-pause
+
+# dunst client
+bindsym $m+h exec /usr/bin/dunstctl history-pop
+bindsym $m+Shift+h exec /usr/bin/dunstctl close
+
+# shutdown/restart
+bindsym $m+Pause exec /usr/bin/shutdown -h now
+bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
+
+# win key programs often used
+bindsym $win+f exec /usr/bin/firefox-developer-edition
+bindsym $win+d exec /usr/local/bin/gf2
+bindsym $win+l exec /usr/local/bin/slock
+
+workspace_layout tabbed
+default_border normal 0
+smart_borders on
+
+# i3status
+bar {
+	colors {
+		background #282828
+        	statusline #282828
+        	separator #fabd2f
+
+        	focused_workspace  #282828 #282828 #ff8700
+        	active_workspace   #282828 #282828 #ffffff
+        	inactive_workspace #282828 #282828 #888888
+        	urgent_workspace   #282828 #fb4934 #ffffff
+        	binding_mode       #282828 #fb4934 #ffffff
+	}
+	font $myfont
+	mode dock
+	workspace_buttons yes
+	strip_workspace_numbers yes
+	status_command i3status
+}
