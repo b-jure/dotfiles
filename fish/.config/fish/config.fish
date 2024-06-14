@@ -139,17 +139,7 @@ if havebin fzf; and havebin locate
 end
 
 # requires X
-if test -z "$WAYLAND_DISPLAY" &>/dev/null; abbr -a xinit "sudoedit /etc/X11/xinit/xinitrc"; end
-
-# requires cargo
-# if havebin cargo
-# 	# requires starship
-# 	if havebin starship
-# 		setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
-# 		abbr -a scf "$EDITOR $STARSHIP_CONFIG"
-# 		starship init fish | source
-# 	end
-# end
+if test -z "$WAYLAND_DISPLAY" &>/dev/null; abbr -a xinit "$EDITOR $HOME/.xinit"; end
 
 # requires yt-dlp
 if havebin yt-dlp; abbr -a ytd yt-dlp; end
@@ -174,33 +164,6 @@ if havebin i3; abbr -a i3cf "$EDITOR $HOME/.config/i3/config"; end
 
 # requires i3blocks
 if havebin i3blocks; abbr -a i3bcf "$EDITOR $HOME/.config/i3blocks/config"; end
-
-# Requires GNU stow
-if command -v stow >/dev/null
-	set DOTFILES "$HOME/dotfiles"
-	if havebin nvim; abbr -a vimrc "$EDITOR $DOTFILES/nvim/.config/nvim"; end
-	if havebin vifm
-		abbr -a vfrc "$EDITOR $DOTFILES/vifm/.config/vifm/vifmrc"
-		abbr -a vimrc "vicd $DOTFILES/nvim/.config/nvim"
-	end
-	if havebin dunst; abbr -a dunstrc "$EDITOR $DOTFILES/dunst/.config/dunst/dunstrc"; end
-	if havebin zathura; abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"; end
-	if havebin fish >/dev/null
-		abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
-		if havebin starship; abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"; end
-	end
-	if havebin alacritty; abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"; end
-	if havebin tmux; abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"; end
-	if havebin polybar; abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"; end
-	if havebin wezterm; abbr -a wcf "$EDITOR $DOTFILES/wezterm/.config/wezterm/wezterm.lua"; end
-	if havebin i3; abbr -a i3cf "$EDITOR $DOTFILES/i3/.config/i3/config"; end
-	if havebin i3blocks; abbr -a i3bcf "$EDITOR $DOTFILES/i3blocks/.config/i3blocks/config"; end
-
-    	set SUCKLESS "$DOTFILES/suckless"
-	if havebin dwm; abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"; end
-	if havebin dmenu; abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"; end
-	if havebin slstatus; abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"; end
-end
 
 
 # personal stuff

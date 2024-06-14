@@ -1,0 +1,14 @@
+#!/bin/bash
+
+USER_COMP="picom" # compositor
+USER_NOTIF="dunst" # notification client
+
+[[ "$USER_WM" == "dwm" ]] && slstatus&
+[[ "$USER_COMP" == "picom" ]] && picom&
+[[ "$USER_NOTIF" == "dunst" ]] && dunst&
+
+xset r rate 200 45
+transmission-daemon -f --log-level=error&
+element-desktop --hidden &
+flameshot &
+systemctl --user start change-wallpaper.timer
