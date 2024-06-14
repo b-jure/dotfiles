@@ -7,19 +7,32 @@ end
 function fish_greeting 
 end
 
-# set SHELL env var
-setenv SHELL /usr/bin/fish
-
 # Override exit to automatically 'disown'
 function exit
     jobs -q; and disown (jobs -p)
     builtin exit
 end
 
-abbr -a se sudoedit
+setenv SHELL /usr/bin/fish
+setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
 
-# Check if keychain is in path
-if command -v keychain >/dev/null
+
+abbr --add dotdot --regex '^\.\.+$' --function multicd
+abbr -a se sudoedit
+abbr -a fcf $EDITOR "$HOME/.config/fish/config.fish"
+abbr -a fsc sudoedit "/etc/fstab"
+abbr -a srm shred -u 
+
+# helper
+function havebin -a bin; return (command -v $bin >/dev/null); end
+
+# requires wine
+if havebin wine
+	set MYGAMESDIR "$HOME/.wine/drive_c/users/$USER/Games"
+end
+
+# requires keychain
+if havebin keychain 
     begin
         set HOSTNAME (hostname)
         if test -f "$HOME/.keychain/$HOSTNAME-fish"
@@ -28,28 +41,23 @@ if command -v keychain >/dev/null
     end
 end
 
-if command -v sloccount >/dev/null
-	abbr -a loc sloccount
-end
+# requires sloccount
+if havebin; sloccount abbr -a loc sloccount; end
 
-# Notification server
-if command -v dunst >/dev/null
-	abbr -a dunstrc $EDITOR "$HOME/.config/dunst/dunstrc"
-end
+# requires dunst
+if havebin dunst; abbr -a dunstrc $EDITOR "$HOME/.config/dunst/dunstrc"; end
 
-# Debugger
-if command -v gf2 >/dev/null
-    abbr -a dbg gf2
-end
+# requires gf2
+if havebin gf2; abbr -a dbg gf2; end
 
-# Requires 'xclip'
-if command -v xclip >/dev/null
+# requires xclip
+if havebin xclip
     abbr -a xp xclip -selection cliboard -o
     abbr -a xc xclip -selection clipboard
 end
 
-# Requires eza installed
-if command -v eza >/dev/null
+# requires eza
+if havebin eza
     abbr -a l eza
     abbr -a ls eza -a
     abbr -a lsd eza -alD
@@ -59,8 +67,8 @@ if command -v eza >/dev/null
     abbr -a lsg eza -al --git-ignore
 end
 
-# Requires git
-if command -v git >/dev/null
+# requires git
+if havebin git
     abbr -a g git
     abbr -a gs git status
     abbr -a ga git add
@@ -72,18 +80,11 @@ if command -v git >/dev/null
     abbr -a gdl git difftool HEAD^ HEAD
 end
 
-# Requires python3
-if command -v python3 >/dev/null
-    abbr -a py python3
-end
+# requires python3
+if havebin python3; abbr -a py python3; end
 
-# Config file for fish
-if command -v fish >/dev/null
-    abbr -a fcf $EDITOR "$HOME/.config/fish/config.fish"
-end
-
-# Requires 'neovim'
-if command -v nvim >/dev/null
+# requires neovim
+if havebin nvim
     # set vimrc path
     setenv MYVIMRC "$HOME/.config/nvim/init.lua"
 
@@ -99,12 +100,10 @@ if command -v nvim >/dev/null
 end
 
 # requires wezterm
-if command -v wezterm >/dev/null
-	abbr -a wcf "$EDITOR $HOME/.config/wezterm/wezterm.lua"
-end
+if havebin wezterm; abbr -a wcf "$EDITOR $HOME/.config/wezterm/wezterm.lua"; end
 
 # requires vifm
-if command -v vifm >/dev/null
+if havebin vifm
 	abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
 
 	# change shell directory when leaving vifm
@@ -121,26 +120,17 @@ if command -v vifm >/dev/null
 	abbr -a vimrc vicd "$HOME/.config/nvim"
 end
 
-# Config file for polybar
-if command -v polybar >/dev/null
-    abbr -a pedit $EDITOR "$HOME/.config/polybar/config.ini"
-end
+# requires polybar
+if havebin polybar; abbr -a pedit $EDITOR "$HOME/.config/polybar/config.ini"; end
 
-# Config file for tmux
-if command -v tmux >/dev/null
-    abbr -a tedit $EDITOR "$HOME/.config/tmux/tmux.conf"
-end
+# requires tmux
+if havebin tmux; abbr -a tedit $EDITOR "$HOME/.config/tmux/tmux.conf"; end
 
-# Config file for alacritty
-if command -v alacritty >/dev/null
-    abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.toml"
-end
+# requires alacritty
+if havebin alacritty; abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.toml"; end
 
-# Nice to have
-abbr --add dotdot --regex '^\.\.+$' --function multicd
-
-# Requires fzf and fd
-if command -v fzf and command -v fd >/dev/null
+# requires fzf and locate
+if havebin fzf; and havebin locate
 	setenv FZF_DEFAULT_COMMAND "command locate /"
 	setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 30% --bind=ctrl-n:down,ctrl-p:up"
 	setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
@@ -148,36 +138,30 @@ if command -v fzf and command -v fd >/dev/null
 	fzf_key_bindings
 end
 
-# if using X
-if test -z "$WAYLAND_DISPLAY" &>/dev/null
-    abbr -a xinit sudoedit /etc/X11/xinit/xinitrc
-end
+# requires X
+if test -z "$WAYLAND_DISPLAY" &>/dev/null; abbr -a xinit "sudoedit /etc/X11/xinit/xinitrc"; end
 
-# Requires cargo
-if command -v cargo >/dev/null
-    if command -v starship >/dev/null
-        setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
-        abbr -a scf "$EDITOR $STARSHIP_CONFIG"
-        starship init fish | source
-    end
-end
+# requires cargo
+# if havebin cargo
+# 	# requires starship
+# 	if havebin starship
+# 		setenv STARSHIP_CONFIG "$HOME/.config/fish/prompt/starship/starship.toml"
+# 		abbr -a scf "$EDITOR $STARSHIP_CONFIG"
+# 		starship init fish | source
+# 	end
+# end
 
-# download youtube video/audio
-if command -v yt-dlp >/dev/null
-	abbr -a ytd yt-dlp
-end
+# requires yt-dlp
+if havebin yt-dlp; abbr -a ytd yt-dlp; end
 
-# pdf viewer
-if command -v zathura >/dev/null
-	abbr -a zrc $EDITOR "$HOME/.config/zathura/zathurarc"
-end
+# requires zathura
+if havebin zathura; abbr -a zrc "$EDITOR $HOME/.config/zathura/zathurarc"; end
 
-# compositor
-if command -v picom >/dev/null
-	abbr -a pcf sudoedit "/etc/xdg/picom.conf"
-end
+# requires picom
+if havebin picom; abbr -a pcf sudoedit "/etc/xdg/picom.conf"; end
 
-if command -v transmission-remote >/dev/null
+# requires transmission-remote
+if havebin transmission-remote
 	abbr -a trs transmission-remote
 	abbr -a trst transmission-remote -t
 	abbr -a trsl transmission-remote -l
@@ -185,57 +169,37 @@ if command -v transmission-remote >/dev/null
 	abbr -a trsr transmission_rm_finished
 end
 
-# fstab file
-abbr -a fsc sudoedit "/etc/fstab"
+# requires i3
+if havebin i3; abbr -a i3cf "$EDITOR $HOME/.config/i3/config"; end
 
-# AddressSanitizer log files output
-setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
+# requires i3blocks
+if havebin i3blocks; abbr -a i3bcf "$EDITOR $HOME/.config/i3blocks/config"; end
 
 # Requires GNU stow
 if command -v stow >/dev/null
 	set DOTFILES "$HOME/dotfiles"
-	if command -v nvim >/dev/null
-		abbr -a vimrc "$EDITOR $DOTFILES/nvim/.config/nvim"
-	end
-	if command -v vifm >/dev/null
+	if havebin nvim; abbr -a vimrc "$EDITOR $DOTFILES/nvim/.config/nvim"; end
+	if havebin vifm
 		abbr -a vfrc "$EDITOR $DOTFILES/vifm/.config/vifm/vifmrc"
 		abbr -a vimrc "vicd $DOTFILES/nvim/.config/nvim"
 	end
-	if command -v dunst >/dev/null
-		abbr -a dunstrc "$EDITOR $DOTFILES/dunst/.config/dunst/dunstrc"
-	end
-	if command -v zathura >/dev/null
-		abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"
-	end
-	if command -v fish >/dev/null
+	if havebin dunst; abbr -a dunstrc "$EDITOR $DOTFILES/dunst/.config/dunst/dunstrc"; end
+	if havebin zathura; abbr -a zrc "$EDITOR $DOTFILES/zathura/.config/zathura/zathurarc"; end
+	if havebin fish >/dev/null
 		abbr -a fcf "$EDITOR $DOTFILES/fish/.config/fish/config.fish"
-		if command -v starship >/dev/null
-			abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"
-		end
+		if havebin starship; abbr -a scf "$EDITOR $DOTFILES/fish/.config/fish/prompt/starship/starship.toml"; end
 	end
-	if command -v alacritty >/dev/null
-		abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"
-	end
-	if command -v tmux >/dev/null
-		abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"
-	end
-	if command -v polybar >/dev/null
-		abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"
-	end
-	if command -v wezterm >/dev/null
-		abbr -a wcf "$EDITOR $DOTFILES/wezterm/.config/wezterm/wezterm.lua"
-	end
+	if havebin alacritty; abbr -a acf "$EDITOR $DOTFILES/alacritty/.config/alacritty/alacritty.toml"; end
+	if havebin tmux; abbr -a tedit "$EDITOR $DOTFILES/tmux/.config/tmux/tmux.conf"; end
+	if havebin polybar; abbr -a pedit "$EDITOR $DOTFILES/polybar/.config/polybar/config.ini"; end
+	if havebin wezterm; abbr -a wcf "$EDITOR $DOTFILES/wezterm/.config/wezterm/wezterm.lua"; end
+	if havebin i3; abbr -a i3cf "$EDITOR $DOTFILES/i3/.config/i3/config"; end
+	if havebin i3blocks; abbr -a i3bcf "$EDITOR $DOTFILES/i3blocks/.config/i3blocks/config"; end
 
     	set SUCKLESS "$DOTFILES/suckless"
-	if command -v dwm >/dev/null
-		abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"
-	end
-	if command -v dmenu >/dev/null
-		abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"
-	end
-	if command -v slstatus >/dev/null
-		abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"
-	end
+	if havebin dwm; abbr -a dwmc "$EDITOR $SUCKLESS/dwm/config.def.h"; end
+	if havebin dmenu; abbr -a dmenuc "$EDITOR $SUCKLESS/dmenu/config.def.h"; end
+	if havebin slstatus; abbr -a slstatusc "$EDITOR $SUCKLESS/slstatus/config.def.h"; end
 end
 
 
@@ -246,32 +210,37 @@ abbr -a music "$EDITOR $MUSIC"
 
 
 fish_vi_key_bindings
-set fish_cursor_default block
-set fish_cursor_insert line
-set fish_cursor_replace_one underscore
-set fish_cursor_visual block
+set fish_cursor_default block blink
+set fish_cursor_insert line blink
+set fish_cursor_replace_one underscore blink
+set fish_cursor_visual block blink
 set fish_vi_force_cursor 1
+
 # INSERT MODE
 bind -M insert -m default \ce forward-char -m insert
+
 # DEFAULT MODE
 bind -M default j backward-char
 bind -M default \; forward-char
 bind -M default k down-or-search
 bind -M default l up-or-search
+bind -M default yy fish_clipboard_copy
+bind -M default Y fish_clipboard_copy
+bind -M default p fish_clipboard_paste
+
 # VISUAL MODE
 bind -M visual j backward-char
 bind -M visual \; forward-char
 bind -M visual k down-or-search
 bind -M visual l up-or-search
+bind -M visual y fish_clipboard_copy
+bind -M visual Y fish_clipboard_copy
+bind -M visual p fish_clipboard_paste
+
 
 # Fish git prompt
 set __fish_git_prompt_showuntrackedfiles yes
 set __fish_git_prompt_showdirtystate yes
-
-# copy-paste
-bind yy fish_clipboard_copy
-bind Y fish_clipboard_copy
-bind p fish_clipboard_paste
 
 set -U fish_pager_color_selected_description
 
@@ -317,8 +286,7 @@ set -U fish_pager_color_selected_description
 
 
 if status is-interactive
-	if status is-login
-		and command -a keychain >/dev/null
+	if status is-login; and havebin keychain
 		keychain --quiet $SSH_KEYS
 	end
 end

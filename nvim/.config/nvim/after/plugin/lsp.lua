@@ -52,6 +52,7 @@ end)
 vim.diagnostic.config({ virtual_text = true })
 
 require("lspconfig").lua_ls.setup({
+	autostart = false,
 	settings = {
 		Lua = {
 			runtime = {
@@ -76,7 +77,8 @@ require("lspconfig").lua_ls.setup({
 })
 
 require("lspconfig").clangd.setup({
-	cmd = { "clangd", "--malloc-trim" },
+	cmd = { "clangd", "--malloc-trim", "--query-driver=/usr/bin/gcc" },
+	autostart = false,
 })
 
 lsp.setup()

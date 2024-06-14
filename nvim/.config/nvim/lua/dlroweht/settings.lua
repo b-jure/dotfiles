@@ -2,12 +2,12 @@ local o = vim.o
 local g = vim.g
 
 g.c_syntax_for_h = true
+g.c_no_curly_error = true
+g.no_man_maps = true
 
 o.termguicolors = true
 
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20,o:hor50,a:blinkon350"
-
-g.no_man_maps = true
 
 -- Decrease update time
 o.updatetime = 50

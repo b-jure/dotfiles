@@ -49,4 +49,4 @@ require("formatter").setup({
 	},
 })
 
-vim.keymap.set("n", "<leader>f", ":Format<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader>f", ":Format<CR>", { noremap = true, silent = true })

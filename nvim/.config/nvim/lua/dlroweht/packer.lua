@@ -14,20 +14,18 @@ return require("packer").startup(function(use)
 		requires = "nvim-lua/plenary.nvim",
 	})
 
-	-- THEMES
-	use({ "projekt0n/github-nvim-theme" })
-
-	-- LUALINE
+	-- HARPOON
 	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
-	-- DEVICONS
+	-- ICONS
 	use("nvim-tree/nvim-web-devicons")
 
-	-- HARPOON
-	use("ThePrimeagen/harpoon")
+	-- OIL
+	use("stevearc/oil.nvim")
 
 	-- COLORIZER
 	use("norcalli/nvim-colorizer.lua")
@@ -54,6 +52,12 @@ return require("packer").startup(function(use)
 	-- TMUX NAVIGATOR
 	use("christoomey/vim-tmux-navigator")
 
+	-- LUA LINE
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
+
 	-- MARKDOWN-PREVIEW
 	use({
 		"iamcco/markdown-preview.nvim",
@@ -71,9 +75,7 @@ return require("packer").startup(function(use)
 	-- FORMATTER
 	use({ "mhartington/formatter.nvim" })
 
-	-- Vi file manager
-	use({ "vifm/vifm.vim" })
-
-	-- NO-CLOWN-FIESTA THEME
-	use({ "aktersnurra/no-clown-fiesta.nvim" })
+	-- RUST TOOLS
+	use({ "simrat39/rust-tools.nvim" })
+	use({ "mfussenegger/nvim-dap" })
 end)

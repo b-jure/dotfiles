@@ -28,6 +28,10 @@ map_key("n", "]q", "<cmd>cp<CR>")
 map_key("n", "[os", "<cmd>set spell<CR>")
 map_key("n", "]os", "<cmd>set nospell<CR>")
 
+-- recenter and invert jumping to misspelled word
+map_key("n", "]s", "[szz")
+map_key("n", "[s", "]szz")
+
 -- enable/disable syntax highlighting
 map_key("n", "[oS", "<cmd>syntax on<CR>")
 map_key("n", "]oS", "<cmd>syntax off<CR>")

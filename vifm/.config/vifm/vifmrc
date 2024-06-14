@@ -668,6 +668,11 @@ nnoremap <silent> <c-l>		:if paneisat('top')    | execute '!tmux select-pane -U 
 nnoremap <silent> <insert>	:if paneisat('right')  | execute '!tmux select-pane -R %i' | else | execute 'wincmd l' | endif<cr>
 nnoremap <silent> <bs>		:if paneisat('left')   | execute '!tmux select-pane -L %i' | else | execute 'wincmd h' | endif<cr>
 
+nnoremap <silent> <c-w>j	:if paneisat('left')   | execute '!tmux select-pane -L %i' | else | execute 'wincmd h' | endif<cr>
+nnoremap <silent> <c-w>k	:if paneisat('bottom') | execute '!tmux select-pane -D %i' | else | execute 'wincmd j' | endif<cr>
+nnoremap <silent> <c-w>l	:if paneisat('top')    | execute '!tmux select-pane -U %i' | else | execute 'wincmd k' | endif<cr>
+nnoremap <silent> <c-w>;	:if paneisat('right')  | execute '!tmux select-pane -R %i' | else | execute 'wincmd l' | endif<cr>
+
 " fzf global/local search
 nnoremap <c-t> :FZFlocate<cr>
 nnoremap <c-f> :FZFfind<cr>

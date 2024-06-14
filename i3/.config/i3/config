@@ -15,8 +15,8 @@ set $ws4 4:1
 set $ws5 5:2
 
 # font formats
-set $myfont -*-Iosevka Custom-Medium-r-normal--0-130-0-0-p-0-iso10646-1
-set $dmenufont "Iosevka Custom:style=Medium:size=13"
+set $myfont pango:Iosevka Custom Medium 11
+set $dmenufont "Iosevka Custom:style=Medium:size=11"
 
 # font
 font $myfont
@@ -44,6 +44,9 @@ bindsym $m+t split toggle
 # toggle fullscreen
 bindsym $m+f fullscreen toggle
 
+# kill window
+bindsym $m+q kill
+
 # change/toggle layouts
 bindsym $m+s layout stacking
 bindsym $m+w layout tabbed
@@ -58,25 +61,18 @@ bindsym $m+a focus parent
 bindsym $m+d focus child
 
 # switch to workspace
-bindsym Control+bracketleft workspace $ws1
-bindsym Control+bracketright workspace $ws2
-bindsym Control+2 workspace $ws3
-bindsym Control+3 workspace $ws4
-bindsym Control+4 workspace $ws5
+bindsym $m+bracketleft workspace $ws1
+bindsym $m+bracketright workspace $ws2
+bindsym $m+2 workspace $ws3
+bindsym $m+3 workspace $ws4
+bindsym $m+4 workspace $ws5
 
 # move container to workspace
-bindsym $m+Control+bracketleft move container to $ws1; workspace $ws1
-bindsym $m+Control+bracketright move container to $ws2; workspace $ws2
-bindsym $m+Control+2 move container to $ws3; workspace $ws3
-bindsym $m+Control+3 move container to $ws4; workspace $ws4
-bindsym $m+Control+4 move container to $ws5; workspace $ws5
-
-# move workspace to workspace
-bindsym $m+Shift+bracketleft move workspace to $ws1; workspace $ws1
-bindsym $m+Shift+bracketright move workspace to $ws2; workspace $ws2
-bindsym $m+Shift+2 move workspace to $ws3; workspace $ws3
-bindsym $m+Shift+3 move workspace to $ws4; workspace $ws4
-bindsym $m+Shift+4 move workspace to $ws5; workspace $ws5
+bindsym $m+Control+bracketleft move container to workspace $ws1; workspace $ws1
+bindsym $m+Control+bracketright move container to workspace $ws2; workspace $ws2
+bindsym $m+Control+2 move container to workspace $ws3; workspace $ws3
+bindsym $m+Control+3 move container to workspace $ws4; workspace $ws4
+bindsym $m+Control+4 move container to workspace $ws5; workspace $ws5
 
 # resize container/window
 bindsym $m+Control+j resize grow left 10
@@ -85,19 +81,17 @@ bindsym $m+Control+l resize grow up 10
 bindsym $m+Control+semicolon resize grow right 10
 
 # mark/goto
-bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
-bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+bindsym $m+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+bindsym $m+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 # reload/restart/exit i3
 bindsym $m+Shift+c reload
 bindsym $m+Shift+r restart
-bindsym $m+Shift+e exit
-
 # spawn new terminal
-bindsym $m+Enter exec /usr/bin/wezterm
+bindsym $m+Return exec /usr/bin/wezterm
 
 # run dmenu
-bindsym $m+backslash exec /usr/local/bin/dmenu -fn $dmenufont -nb #282828 -nf #a89984 -sb #ff8700 -sf #a89984
+bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $dmenufont -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 
 # sound volume control
 bindsym $m+comma exec /usr/local/bin/pavc down 10
@@ -109,18 +103,28 @@ bindsym Control+comma exec /usr/bin/playerctl -a previous
 bindsym Control+period exec /usr/bin/playerctl -a next
 bindsym Control+slash exec /usr/bin/playerctl -a play-pause
 
-# dunst client
-bindsym $m+h exec /usr/bin/dunstctl history-pop
-bindsym $m+Shift+h exec /usr/bin/dunstctl close
-
 # shutdown/restart
 bindsym $m+Pause exec /usr/bin/shutdown -h now
 bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
 
-# win key programs often used
+# dunst
+bindsym $win+n exec /usr/bin/dunstctl history-pop
+bindsym $win+$m+n exec /usr/bin/dunstctl close
+# flameshot
+bindsym $win+s exec /usr/bin/flameshot gui
+# firefox
 bindsym $win+f exec /usr/bin/firefox-developer-edition
+# debugger
 bindsym $win+d exec /usr/local/bin/gf2
-bindsym $win+l exec /usr/local/bin/slock
+# matrix client
+bindsym $win+m exec /usr/bin/element-desktop
+# AMD gpu/cpu control
+bindsym $win+r exec sudo /usr/bin/corectrl --toggle-window-visibility
+# ffmpeg desktop recording
+bindsym $win+v exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
+bindsym $win+q exec pkill ffmpeg
+# screen lock
+bindsym $win+l --release exec /usr/local/bin/slock
 
 workspace_layout tabbed
 default_border normal 0
@@ -143,5 +147,5 @@ bar {
 	mode dock
 	workspace_buttons yes
 	strip_workspace_numbers yes
-	status_command i3status
+	status_command i3blocks
 }
