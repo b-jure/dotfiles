@@ -4,7 +4,7 @@ return require("packer").startup(function(use)
 	-- PACKER
 	use("wbthomason/packer.nvim")
 
-	-- FZF for telescope
+	-- FZF (for telescope)
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
 	-- TELESCOPE
@@ -14,12 +14,16 @@ return require("packer").startup(function(use)
 		requires = "nvim-lua/plenary.nvim",
 	})
 
-	-- HARPOON
-	use({
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		requires = { { "nvim-lua/plenary.nvim" } },
-	})
+	-- NONECKPAIN
+	use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
+
+    -- LEAP
+    use({
+        "ggandor/leap.nvim",
+        config = function()
+            require("leap").create_default_mappings()
+        end
+    })
 
 	-- ICONS
 	use("nvim-tree/nvim-web-devicons")
@@ -75,7 +79,17 @@ return require("packer").startup(function(use)
 	-- FORMATTER
 	use({ "mhartington/formatter.nvim" })
 
-	-- RUST TOOLS
-	use({ "simrat39/rust-tools.nvim" })
-	use({ "mfussenegger/nvim-dap" })
+	-- ORG MODE
+	use({
+		"nvim-orgmode/orgmode",
+		config = function()
+			require("orgmode").setup({})
+		end,
+	})
+
+	use({
+		"goolord/alpha-nvim",
+		-- dependencies = { 'echasnovski/mini.icons' },
+		requires = { "nvim-tree/nvim-web-devicons" },
+	})
 end)

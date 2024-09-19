@@ -14,60 +14,124 @@ function exit
 end
 
 setenv SHELL /usr/bin/fish
-setenv ASAN_OPTIONS "log_path=/tmp/asan.log"
+setenv ASAN_OPTIONS "log_path=stderr"
+
+
+# helper
+function havebin -a bin
+    return (command -v $bin >/dev/null)
+end
+
+
+if havebin nvim
+    # set vimrc path
+    setenv MYVIMRC "$HOME/.config/nvim/init.lua"
+
+    if test -n "$NVIM_LISTEN_ADDRESS"
+        set -x MANPAGER "/usr/local/bin/nvr -c 'Man!' -o -"
+    end
+
+    setenv EDITOR nvim
+    setenv MANPAGER "nvim +Man!"
+    abbr -a e $EDITOR
+    abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
+    abbr -a vim $EDITOR
+    abbr -a vimrc "$EDITOR $HOME/.config/nvim"
+    set orgfile "$HOME/notes/org/refile.org"
+    function note
+        if ! test -e $orgfile > /dev/null
+            printf "#+title: \$\n#+author: B. Jure\n" > $orgfile
+        end
+        $EDITOR $orgfile
+    end
+    abbr -a rmnote rm $orgfile
+end
 
 
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 abbr -a se sudoedit
-abbr -a fcf $EDITOR "$HOME/.config/fish/config.fish"
+abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
 abbr -a fsc sudoedit "/etc/fstab"
 abbr -a srm shred -u 
 
-# helper
-function havebin -a bin; return (command -v $bin >/dev/null); end
 
-# requires wine
+function memtop
+    set psout ps -eo user,pid,ppid,cmd,pmem,rss --no-headers --sort=-rss
+    $psout | awk '{if ($2 ~ /^[0-9]+$/ && $6/1024 >= 1) {\\
+        printf "PID: %s, PPID: %s, Memory consumed (RSS): %.2f MB, Command: ",\\
+        $2, $3, $6/1024; for (i=4; i<=NF; i++) printf "%s ", $i; printf "\n"}}' | head
+end
+
+
 if havebin wine
-	set MYGAMESDIR "$HOME/.wine/drive_c/users/$USER/Games"
+    set MYGAMESDIR "$HOME/.wine/drive_c/users/$USER/Games"
 end
 
-# requires keychain
-if havebin keychain 
-    begin
-        set HOSTNAME (hostname)
-        if test -f "$HOME/.keychain/$HOSTNAME-fish"
-            source "$HOME/.keychain/$HOSTNAME-fish"
-        end
+
+if havebin mbsync
+    abbr -a mbsyncrc "$EDITOR $HOME/.mbsyncrc"
+end
+
+
+if havebin neomutt
+    abbr -a mutt neomutt
+    abbr -a muttrc "$EDITOR $HOME/.config/neomutt/neomuttrc"
+end
+
+
+# Run ssh-agent and avoid running multiple agents
+function sshauth
+    if not havebin ssh-agent
+        echo "Can't find ssh-agent!"
+        return
     end
+    set sshdir "$HOME/.ssh"
+    set -a sshkeys "$sshdir/id_ed25519_aur"
+    set -a sshkeys "$sshdir/id_ed25519_gh"
+    if not test -S "$sshdir/ssh_auth_sock"
+        eval (ssh-agent -c)
+        ln -sf "$SSH_AUTH_SOCK" "$sshdir/ssh_auth_sock"
+    end
+    export SSH_AUTH_SOCK="$sshdir/ssh_auth_sock"
+    ssh-add -l > /dev/null; or ssh-add $sshkeys # do not quote 'sshkeys' !
 end
 
-# requires sloccount
-if havebin; sloccount abbr -a loc sloccount; end
 
-# requires dunst
-if havebin dunst; abbr -a dunstrc $EDITOR "$HOME/.config/dunst/dunstrc"; end
+if havebin sloccount 
+    abbr -a loc sloccount
+end
 
-# requires gf2
-if havebin gf2; abbr -a dbg gf2; end
 
-# requires xclip
+if havebin dunst
+    abbr -a dunstrc $EDITOR "$HOME/.config/dunst/dunstrc"
+end
+
+
+if havebin gf2
+    abbr -a dbg gf2
+end
+
+
 if havebin xclip
     abbr -a xp xclip -selection cliboard -o
     abbr -a xc xclip -selection clipboard
 end
 
-# requires eza
+
 if havebin eza
     abbr -a l eza
     abbr -a ls eza -a
+    # only dirs
     abbr -a lsd eza -alD
+    # only files
+    abbr -a lsf eza -alf
     abbr -a lsa eza -al
     abbr -a tree eza -T
     abbr -a treeg eza -T --git-ignore
     abbr -a lsg eza -al --git-ignore
 end
 
-# requires git
+
 if havebin git
     abbr -a g git
     abbr -a gs git status
@@ -80,96 +144,123 @@ if havebin git
     abbr -a gdl git difftool HEAD^ HEAD
 end
 
-# requires python3
-if havebin python3; abbr -a py python3; end
 
-# requires neovim
-if havebin nvim
-    # set vimrc path
-    setenv MYVIMRC "$HOME/.config/nvim/init.lua"
+if havebin python3
+    abbr -a py python3
+end
 
-    if test -n "$NVIM_LISTEN_ADDRESS"
-      set -x MANPAGER "/usr/local/bin/nvr -c 'Man!' -o -"
+
+if havebin wezterm
+    abbr -a wcf "$EDITOR $HOME/.config/wezterm/wezterm.lua"
+end
+
+
+if havebin vifm
+    abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
+
+    # change shell directory when leaving vifm
+    function vicd --argument-names 'startdir'
+        if ! test -n "$startdir" >/dev/null
+            set startdir (pwd)
+        end
+        set dst "$(command vifm "$startdir" --choose-dir - $argv[2..-1])"
+        if [ -z "$dst" ]
+            return 1
+        end
+        cd "$dst"
     end
 
-    setenv EDITOR nvim
-    setenv MANPAGER "nvim +Man!"
-    abbr -a e $EDITOR
-    abbr -a vim $EDITOR
-    abbr -a vimrc "$EDITOR $HOME/.config/nvim"
+    abbr -a vf vicd
+    abbr -a vimrc vicd "$HOME/.config/nvim"
 end
 
-# requires wezterm
-if havebin wezterm; abbr -a wcf "$EDITOR $HOME/.config/wezterm/wezterm.lua"; end
 
-# requires vifm
-if havebin vifm
-	abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
-
-	# change shell directory when leaving vifm
-	function vicd --argument-names 'startdir'
-		if ! test -n "$startdir" >/dev/null
-			set startdir (pwd)
-		end
-		set dst "$(command vifm "$startdir" --choose-dir - $argv[2..-1])"
-	    	if [ -z "$dst" ]; return 1; end
-	    	cd "$dst"
-	end
-
-	abbr -a vf vicd
-	abbr -a vimrc vicd "$HOME/.config/nvim"
+if havebin polybar
+    abbr -a pedit $EDITOR "$HOME/.config/polybar/config.ini"
 end
 
-# requires polybar
-if havebin polybar; abbr -a pedit $EDITOR "$HOME/.config/polybar/config.ini"; end
 
-# requires tmux
-if havebin tmux; abbr -a tedit $EDITOR "$HOME/.config/tmux/tmux.conf"; end
-
-# requires alacritty
-if havebin alacritty; abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.toml"; end
-
-# requires fzf and locate
-if havebin fzf; and havebin locate
-	setenv FZF_DEFAULT_COMMAND "command locate /"
-	setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 30% --bind=ctrl-n:down,ctrl-p:up"
-	setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-	setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
-	fzf_key_bindings
+if havebin tmux
+    abbr -a tedit $EDITOR "$HOME/.config/tmux/tmux.conf"
 end
 
-# requires X
-if test -z "$WAYLAND_DISPLAY" &>/dev/null; abbr -a xinit "$EDITOR $HOME/.xinit"; end
 
-# requires yt-dlp
-if havebin yt-dlp; abbr -a ytd yt-dlp; end
+if havebin alacritty
+    abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.toml"
+end
 
-# requires zathura
-if havebin zathura; abbr -a zrc "$EDITOR $HOME/.config/zathura/zathurarc"; end
 
-# requires picom
-if havebin picom; abbr -a pcf sudoedit "/etc/xdg/picom.conf"; end
+if havebin fzf
+    and havebin locate
+    setenv FZF_DEFAULT_COMMAND "command locate /"
+    setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up"
+    setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+    setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
+    fzf_key_bindings
+end
 
-# requires transmission-remote
+if test -z "$WAYLAND_DISPLAY" &>/dev/null
+    abbr -a xinit "$EDITOR $HOME/.xinit"
+end
+
+
+if havebin yt-dlp
+    abbr -a ytd yt-dlp
+end
+
+
+if havebin zathura
+    abbr -a zrc "$EDITOR $HOME/.config/zathura/zathurarc"
+end
+
+
+if havebin picom
+    abbr -a pcf sudoedit "/etc/xdg/picom.conf"
+end
+
+
 if havebin transmission-remote
-	abbr -a trs transmission-remote
-	abbr -a trst transmission-remote -t
-	abbr -a trsl transmission-remote -l
-	abbr -a trss transmission-remote -tall --start
-	abbr -a trsr transmission_rm_finished
+    abbr -a trs transmission-remote
+    abbr -a trst transmission-remote -t
+    abbr -a trsl transmission-remote -l
+    abbr -a trss transmission-remote -tall --start
+    abbr -a trsr transmission_rm_finished
 end
 
-# requires i3
-if havebin i3; abbr -a i3cf "$EDITOR $HOME/.config/i3/config"; end
 
-# requires i3blocks
-if havebin i3blocks; abbr -a i3bcf "$EDITOR $HOME/.config/i3blocks/config"; end
+if havebin i3
+    abbr -a i3cf "$EDITOR $HOME/.config/i3/config"
+end
+
+
+if havebin i3blocks
+    abbr -a i3bcf "$EDITOR $HOME/.config/i3blocks/config"
+end
+
+
+if havebin emacs
+    fish_add_path -a "$HOME/.config/emacs/bin"
+end
 
 
 # personal stuff
 fish_add_path -a "$HOME/.config/linux-scripts"
 set MUSIC $HOME/.config/personal/music
 abbr -a music "$EDITOR $MUSIC"
+
+
+if havebin rg
+    and havebin fzf
+    set FZFOPTS 'fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up'
+    function fnote
+        $EDITOR $(rg -n --type=org -l ".*" "$HOME/notes/org" |
+        fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
+    end
+    function rfc
+        $EDITOR $(rg -n -l ".*" "/usr/share/doc/rfc/pdf" "/usr/share/doc/rfc/txt" |
+        fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
+    end
+end
 
 
 fish_vi_key_bindings
@@ -249,7 +340,6 @@ set -U fish_pager_color_selected_description
 
 
 if status is-interactive
-	if status is-login; and havebin keychain
-		keychain --quiet $SSH_KEYS
-	end
+    and status is-login
+    sshauth
 end

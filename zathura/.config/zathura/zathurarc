@@ -1,3 +1,7 @@
+# Settings
+set selection-clipboard clipboard
+
+# Mappings (normal mode)
 map [normal] j scroll left
 map [normal] ; scroll right
 map [normal] k scroll down
@@ -12,25 +16,33 @@ map [normal] N search backward
 unmap q
 map [normal] q quit
 
-set default-bg                  "#1d2021"
-set default-fg                  "#3c3836"
-set statusbar-fg                "#bdae93"
-set statusbar-bg                "#504945"
-set inputbar-bg                 "#1d2021"
-set inputbar-fg                 "#fbf1c7"
-set notification-bg             "#1d2021"
-set notification-fg             "#fbf1c7"
-set notification-error-bg       "#1d2021"
-set notification-error-fg       "#fb4934"
-set notification-warning-bg     "#1d2021"
-set notification-warning-fg     "#fb4934"
-set highlight-color             "#fabd2f"
-set highlight-active-color      "#83a598"
-set completion-bg               "#3c3836"
-set completion-fg               "#83a598"
-set completion-highlight-fg     "#fbf1c7"
-set completion-highlight-bg     "#83a598"
-set recolor-lightcolor          "#1d2021"
-set recolor-darkcolor           "#ebdbb2"
-set recolor                     "true"
-set recolor-keephue             "false"
+# Mappings (index mode)
+map [index] j navigate_index collapse
+map [index] ; navigate_index expand
+map [index] k navigate_index down
+map [index] l navigate_index up
+
+
+# GRUVBOX COLORSCHEME
+#set default-bg                  "#1d2021"
+#set default-fg                  "#3c3836"
+#set statusbar-fg                "#bdae93"
+#set statusbar-bg                "#504945"
+#set inputbar-bg                 "#1d2021"
+#set inputbar-fg                 "#fbf1c7"
+#set notification-bg             "#1d2021"
+#set notification-fg             "#fbf1c7"
+#set notification-error-bg       "#1d2021"
+#set notification-error-fg       "#fb4934"
+#set notification-warning-bg     "#1d2021"
+#set notification-warning-fg     "#fb4934"
+#set highlight-color             "#fabd2f"
+#set highlight-active-color      "#83a598"
+#set completion-bg               "#3c3836"
+#set completion-fg               "#83a598"
+#set completion-highlight-fg     "#fbf1c7"
+#set completion-highlight-bg     "#83a598"
+#set recolor-lightcolor          "#1d2021"
+#set recolor-darkcolor           "#ebdbb2"
+#set recolor                     "true"
+#set recolor-keephue             "false"

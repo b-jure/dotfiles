@@ -46,6 +46,15 @@ require("formatter").setup({
 				}
 			end,
 		},
+		sh = {
+			function()
+				return {
+					exe = "shfmt",
+					args = { "-w" },
+					stdin = false,
+				}
+			end,
+		},
 	},
 })
 

@@ -25,7 +25,7 @@ border_bottom=0
 border_left=0
 
 [memory]
-command=free --mebi | awk 'FNR==2{ printf "%i<span color=\"#fb4934\"> MiB</span>\n", $3 }'
+command=free --mebi | awk 'FNR==2{ printf "%i<span color=\"#fb4934\">M</span>\n", $3 }'
 interval=2
 label=<span color="#fb4934">RAM: </span>
 border=#fb4934
@@ -57,7 +57,7 @@ border_left=0
 [root]
 command=df -h / | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#f1fa8c\">G</span>\n", $4 }'
 interval=5
-label=<span color="#f1fa8c">NVME:</span>
+label=<span color="#f1fa8c">NVME: </span>
 border=#f1fa8c
 border_top=0
 border_right=0
@@ -67,7 +67,7 @@ border_left=0
 [hdd]
 command=df -h /mnt/hdd | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#f1fa8c\">G</span>\n", $4 }'
 interval=5
-label=<span color="#f1fa8c">HDD:</span>
+label=<span color="#f1fa8c">HDD: </span>
 border=#f1fa8c
 border_top=0
 border_right=0
@@ -77,7 +77,7 @@ border_left=0
 [volume]
 command=pulseaudio-ctl full-status | awk '{ printf "%i<span color=\"#bd93f9\">%</span>\n", $1 }'
 interval=1
-label=<span color="#bd93f9">VOL:</span>
+label=<span color="#bd93f9">VOL: </span>
 border=#bd93f9
 border_top=0
 border_right=0
@@ -97,7 +97,7 @@ border_left=0
 [time_cst]
 command=TZ="Europe/Zagreb" date '+%H : %M %Z' | awk '{ printf "%s<span color=\"#50fa7b\">%s</span>%s \n", $1, $2, $3 }'
 interval=1
-label=<span color="#50fa7b">TIME:</span>
+label=<span color="#50fa7b">TIME: </span>
 border=#50fa7b
 border_top=0
 border_right=0

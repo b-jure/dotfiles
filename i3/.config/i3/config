@@ -7,16 +7,19 @@ include ~/.config/i3/colorscheme.conf
 set $m Mod1
 set $win Mod4
 
+# headphones (sink device name)
+set $sinkdev "alsa_output.pci-0000_0b_00.4.analog-stereo"
+
 # workspaces
 set $ws1 1:code
 set $ws2 2:www
-set $ws3 3:doc
-set $ws4 4:1
-set $ws5 5:2
+set $ws3 3:1
+set $ws4 4:2
+set $ws5 5:3
 
 # font formats
 set $myfont pango:Iosevka Custom Medium 11
-set $dmenufont "Iosevka Custom:style=Medium:size=11"
+set $dmenufont "Iosevka Custom:style=Medium:size=12"
 
 # font
 font $myfont
@@ -61,8 +64,8 @@ bindsym $m+a focus parent
 bindsym $m+d focus child
 
 # switch to workspace
-bindsym $m+bracketleft workspace $ws1
-bindsym $m+bracketright workspace $ws2
+bindsym Ctrl+bracketleft workspace $ws1
+bindsym Ctrl+bracketright workspace $ws2
 bindsym $m+2 workspace $ws3
 bindsym $m+3 workspace $ws4
 bindsym $m+4 workspace $ws5
@@ -87,46 +90,45 @@ bindsym $m+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 # reload/restart/exit i3
 bindsym $m+Shift+c reload
 bindsym $m+Shift+r restart
+bindsym $m+Shift+e exit
 # spawn new terminal
 bindsym $m+Return exec /usr/bin/wezterm
 
 # run dmenu
 bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $dmenufont -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
+# run passmenu
+bindsym $m+Shift+backslash exec /usr/bin/passmenu
 
 # sound volume control
-bindsym $m+comma exec /usr/local/bin/pavc down 10
-bindsym $m+period exec /usr/local/bin/pavc up 10
-bindsym $m+slash exec /usr/local/bin/pavc toggle
+bindsym $m+comma exec /usr/local/bin/pavc down 10 $sinkdev
+bindsym $m+period exec /usr/local/bin/pavc up 10 $sinkdev
+bindsym $m+slash exec /usr/local/bin/pavc toggle $sinkdev
 
 # playback control
 bindsym Control+comma exec /usr/bin/playerctl -a previous
 bindsym Control+period exec /usr/bin/playerctl -a next
 bindsym Control+slash exec /usr/bin/playerctl -a play-pause
 
-# shutdown/restart
+# toggle keyboard layout (hr/us)
+bindsym $m+0 exec /home/dlroweht/.config/linux-scripts/togglelayout.sh
+
+# windows key binds
 bindsym $m+Pause exec /usr/bin/shutdown -h now
 bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
-
-# dunst
 bindsym $win+n exec /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec /usr/bin/dunstctl close
-# flameshot
 bindsym $win+s exec /usr/bin/flameshot gui
-# firefox
 bindsym $win+f exec /usr/bin/firefox-developer-edition
-# debugger
-bindsym $win+d exec /usr/local/bin/gf2
-# matrix client
+bindsym $win+d exec /usr/bin/discord
 bindsym $win+m exec /usr/bin/element-desktop
-# AMD gpu/cpu control
-bindsym $win+r exec sudo /usr/bin/corectrl --toggle-window-visibility
-# ffmpeg desktop recording
-bindsym $win+v exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
-bindsym $win+q exec pkill ffmpeg
-# screen lock
-bindsym $win+l --release exec /usr/local/bin/slock
+bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
+bindsym $win+r exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
+bindsym $win+$m+r exec pkill ffmpeg
+bindsym $win+l exec /usr/bin/lutris
+bindsym $win+Shift+l --release exec /usr/local/bin/slock
 
 workspace_layout tabbed
+title_align center
 default_border normal 0
 smart_borders on
 

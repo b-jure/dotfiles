@@ -2,17 +2,13 @@ local function map_key(modes, k, v)
 	vim.keymap.set(modes, k, v, { noremap = true, silent = true })
 end
 
+
 -- <leader> key
 vim.g.mapleader = " "
 
--- restart lsp
-map_key("n", "<M-r>", ":LspRestart<CR>")
-
--- disable this for whatever reason
-map_key("n", "L", "<nop>")
 
 -- enter command mode but in neovim window
-map_key("n", "<C-f>", ":<C-s>i")
+--map_key("n", "<C-f>", ":<C-s>i")
 
 -- resize panes
 map_key({ "n", "i" }, "<M-U>", "<Esc>:vertical resize +10<CR>") -- make the window bigger vertically
@@ -94,3 +90,22 @@ map_key("n", "<leader>w", ":w<CR>")
 
 -- Fix * (cursor stays stays on the first match)
 map_key("n", "*", "*N")
+
+-- sort
+map_key("v", "<C-s>", "<cmd>!sort<CR>")
+
+-- to upper
+map_key("n", "<leader>U", "gUiwe")
+-- to lower
+map_key("n", "<leader>u", "guiwe")
+
+-- resize panes
+map_key("n", "<C-w><", "<cmd>15winc <<CR>")
+map_key("n", "<C-w>>", "<cmd>15winc ><CR>")
+
+-- delete remap
+map_key("n", "dl", "dk")
+map_key("n", "dk", "dj")
+
+-- swap between 2 most recent buffers
+map_key("n", "<leader><leader>", "<C-6>")

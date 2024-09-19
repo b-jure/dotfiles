@@ -21,17 +21,14 @@ config.window_close_confirmation = "NeverPrompt"
 -- config.term = "wezterm"
 config.warn_about_missing_glyphs = false
 config.font = wezterm.font_with_fallback({
-	{ family = "Iosevka Custom", weight = "Medium" },
-	{ family = "FiraCode Nerd Font" },
-	{ family = "Berkeley Mono", weight = "Regular" },
-	{ family = "NotoSansM Nerd Font" },
-	{ family = "PragmataPro" },
-	{ family = "DejaVu Sans" },
-	{ family = "DejaVu Sans Mono" },
-	{ family = "DejaVuSansM Nerd Font Mono" },
-	{ family = "Symbols Nerd Font" },
-	{ family = "Symbols Nerd Font Mono" },
+	{ family = "Iosevka", weight = "Regular" },
+	-- { family = "Berkeley Mono", weight = "Regular" },
 })
-config.font_size = 14
+config.font_size = 13
+
+config.keys = {
+	{ key = "=", mods = "CTRL", action = wezterm.action.IncreaseFontSize },
+	{ key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize },
+}
 
 return config

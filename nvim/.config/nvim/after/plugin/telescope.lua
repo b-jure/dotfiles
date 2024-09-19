@@ -1,4 +1,15 @@
 require("telescope").setup({
+    defaults = {
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "-s"
+        },
+    },
 	pickers = {
 		buffers = {
 			show_all_buffers = true,
@@ -8,7 +19,7 @@ require("telescope").setup({
 			mappings = {
 				i = {
 					["<c-d>"] = "delete_buffer",
-					["<c-e>"] = "confirm_selection"
+					["<c-e>"] = "confirm_selection",
 				},
 			},
 			extensions = {
@@ -28,26 +39,28 @@ require("telescope").load_extension("fzf")
 
 local builtin = require("telescope.builtin")
 
-vim.keymap.set("n", "<leader>pn", function()
+local function keymap(mode, keybind, action)
+	vim.keymap.set(mode, keybind, action, { noremap = true, silent = true })
+end
+
+local opencfgfiles = function()
 	builtin.find_files({ cwd = vim.fn.stdpath("config") })
-end, { desc = "[S]earch [N]eovim files" })
+end
 
-vim.keymap.set("n", "<leader>pk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-
-vim.keymap.set("n", "<C-p>", builtin.find_files, { noremap = true, silent = true })
-
-vim.keymap.set("n", "<leader>pb", builtin.buffers, { desc = "[pb] Find existing buffers" })
-
-vim.keymap.set("n", "<leader>ph", builtin.help_tags, { desc = "[ph] Sarch help tags" })
-
-vim.keymap.set("n", "<leader>pd", builtin.diagnostics, { desc = "[pd] Search diagnostics" })
-
-vim.keymap.set("n", "<leader>ps", builtin.live_grep, { desc = "[ps] Live grep" })
-
-vim.keymap.set("n", "<leader>pr", function()
+local grepregstring = function()
 	return builtin.grep_string({ search = vim.fn.getreg('""') })
-end, { desc = "[pr] Grep string in primary register" })
+end
 
-vim.keymap.set("n", "<leader>pm", function()
+local openmanpages = function()
 	return builtin.man_pages({ sections = { "2", "3" } })
-end)
+end
+
+keymap("n", "<leader>pp", opencfgfiles)
+-- keymap("n", "<leader>pk", builtin.keymaps) ** doesn't work anymore ??? **
+keymap("n", "<C-p>", builtin.find_files)
+-- keymap("n", "<leader>pb", builtin.buffers) ** doesn't work anymore ??? **
+keymap("n", "<leader>ph", builtin.help_tags)
+keymap("n", "<leader>pd", builtin.diagnostics)
+keymap("n", "<leader>ps", builtin.live_grep)
+keymap("n", "<leader>pr", grepregstring)
+keymap("n", "<leader>pm", openmanpages)

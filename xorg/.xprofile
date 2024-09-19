@@ -1,14 +1,18 @@
-#!/bin/bash
+#!/bin/sh
 
-USER_COMP="picom" # compositor
-USER_NOTIF="dunst" # notification client
+export GTK_THEME="Adwaita:dark"
+export QT_STYLE_OVERRIDE="Adwaita-Dark"
+export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
 
-[[ "$USER_WM" == "dwm" ]] && slstatus&
-[[ "$USER_COMP" == "picom" ]] && picom&
-[[ "$USER_NOTIF" == "dunst" ]] && dunst&
-
-xset r rate 200 45
-transmission-daemon -f --log-level=error&
-element-desktop --hidden &
-flameshot &
+[[ "$USER_WM" == "dwm" ]] && slstatus &
+command -v picom && picom &
+command -v dunst && dunst &
+command -v transmission-daemon && transmission-daemon -f --log-level=error &
+command -v element-desktop && element-desktop --hidden &
+command -v flameshot && flameshot &
+command -v nm-applet && nm-applet &
 systemctl --user start change-wallpaper.timer
+xset r rate 150 60
+setxkbmap -option ''
+xset -dpms
+xset s off
