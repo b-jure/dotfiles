@@ -1,0 +1,132 @@
+# Settings
+set from = "jurebagic99@gmail.com"
+set real_name = "Jure Bagić"
+set ssl_starttls = yes
+set ssl_force_tls = yes
+#set header_cache = "$HOME/.cache/mutt/headers"
+#set message_cachedir = "$HOME/.cache/mutt/bodies"
+set pager_index_lines = 5
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set move = no
+set mail_check = 30
+set imap_keepalive = 900
+set sleep_time = 0
+set wait_key = no
+set fast_reply
+set fcc_attach
+set forward_format = "Fwd: %s"
+set forward_decode
+set forward_quote
+set mime_forward
+set attribution = "On %d, %n wrote:"
+set reply_to
+set reverse_name
+set include
+set text_flowed
+set sig_dashes
+unset markers
+set charset = "utf-8"
+set uncollapse_jump
+set sort_re
+set sort = reverse-threads
+set sort_aux = last-date-received
+set reply_regex = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regex = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set send_charset = "utf-8:iso-8859-1:us-ascii" # send in utf-8
+set sidebar_visible
+set sidebar_short_path
+set sidebar_folder_indent
+set sidebar_format = "%B %* [%?N?%N / ?%S]"
+set mail_check_stats
+set signature = "/home/dlroweht/.config/neomutt/signature"
+set editor = "nvim"
+set mailcap_path = "/home/dlroweht/.config/neomutt/mailcap"
+set pgp_default_key = E294E9CF200824F952CB012F8569027842D5DA35
+set crypt_use_gpgme = yes
+set crypt_auto_sign = yes
+set crypt_reply_sign = yes
+set crypt_reply_encrypt = yes
+set crypt_reply_sign_encrypted = yes
+set crypt_verify_sig = yes
+set crypt_opportunistic_encrypt = no
+set query_command="khard email --parsable '%s'"
+
+# startup-hook 'echo `/home/dlroweht/.config/neomutt/sync.sh`'
+
+auto_view application/pgp-encrypted
+auto_view text/html
+
+# Colors
+source colors.neomuttrc
+
+# Gmail
+source "gpg -dq ~/.config/neomutt/passwords.gpg |" # for encrypted smtp_pass
+set smtp_url    = "smtps://jurebagic99@gmail.com@smtp.gmail.com:465"
+set mbox_type   = Maildir
+#set folder      = "imaps://jurebagic99@gmail.com@imap.gmail.com:993"
+set folder      = "/home/dlroweht/.mail/gmail/jurebagic99"
+set spool_file  = "+Inbox"
+set record      = "+[Gmail]/Sent Mail"
+set postponed   = "+[Gmail]/Drafts"
+set trash       = "+[Gmail]/Trash"
+unset record # Gmail already records sent mails
+# mailboxes
+named-mailboxes Inbox "+Inbox"
+named-mailboxes Sent "+[Gmail]/Sent Mail"
+named-mailboxes Drafts "+[Gmail]/Drafts"
+named-mailboxes Trash "+[Gmail]/Trash"
+named-mailboxes Linux-Kernel "+/Linux-Kernel"
+named-mailboxes Lua "+/Lua"
+named-mailboxes Isync-devel "+/Isync-devel"
+
+
+# Keybinds
+macro index O "<shell-escape>mbsync -Va<enter>" "run mbsync to sync all mail"
+macro index A \
+    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "mark all new as read"
+macro attach s '<save-entry> <bol>~/docs/attachments/<eol>' 'save attachment'
+# urlscan
+macro index,pager \cb "<pipe-message> urlscan<Enter>" \
+          "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" \
+          "call urlscan to extract URLs out of a message"
+# unbind
+bind editor <Tab> complete-query
+bind index,pager i noop
+bind index,pager g noop
+bind index \Cf noop
+bind index,pager M noop
+bind index,pager C noop
+bind index \Cu noop
+bind index \Cd noop
+bind index,pager,generic k noop
+bind index,pager,generic l noop
+bind index,pager,generic j noop
+bind index,generic G noop
+bind pager K noop
+bind pager L noop
+bind index,pager \; noop
+bind pager,attach j exit
+# bind
+bind attach <return> view-mailcap
+bind attach \; view-mailcap
+bind index k next-entry
+bind index l previous-entry
+bind index \; select-entry
+bind pager gg top
+bind index gg first-entry
+bind pager G bottom
+bind index G last-entry
+bind index,pager \Cu half-up
+bind index,pager \Cd half-down
+bind pager k next-line
+bind pager l previous-line
+bind pager K next-entry
+bind pager L previous-entry
+bind index,pager \Ck sidebar-next
+bind index,pager \Cl sidebar-prev
+bind index,pager \Ce sidebar-open
+bind index,pager \Ch sidebar-toggle-visible
