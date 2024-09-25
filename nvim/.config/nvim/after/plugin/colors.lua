@@ -13,7 +13,6 @@ end
 -- Setup colors (color-scheme picker)
 function Cp(color)
 	color = color or "gruvbox"
-
 	if color == "gruvbox" then
 		require("gruvbox").setup({
 			terminal_colors = true,

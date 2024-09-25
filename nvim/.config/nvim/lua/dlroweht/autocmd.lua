@@ -59,17 +59,19 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	pattern = { "*.h", "*.c" },
 	callback = function()
-		vim.cmd("silent!ctags -R &")
+		vim.cmd("silent!ctags *&")
 	end,
 })
 
 -- When using `dd` in the quickfix list, remove the item from the quickfix list.
 local function remove_qf_item()
-	local cur_qf_idx = vim.fn.line(".") - 1
+	local cur_qf_idx = vim.fn.line(".")
 	local qf_all = vim.fn.getqflist()
 	table.remove(qf_all, cur_qf_idx)
 	vim.fn.setqflist(qf_all, "r")
-	vim.fn.execute(tostring(cur_qf_idx + 1) .. "cfirst")
+    if cur_qf_idx > 1 then
+        vim.fn.execute(tostring(cur_qf_idx) .. "cfirst")
+    end
 	vim.cmd("copen")
 end
 

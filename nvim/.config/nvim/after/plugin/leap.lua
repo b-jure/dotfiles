@@ -1,1 +1,5 @@
-require('leap.user').set_repeat_keys('<enter>', '<backspace>')
+local leap = require("leap")
+leap.opts.case_sensitive = true
+leap.opts.substitute_chars = { ['\r'] = '¬' }
+vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
+vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')

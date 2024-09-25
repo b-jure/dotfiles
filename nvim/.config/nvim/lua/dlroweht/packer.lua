@@ -18,12 +18,7 @@ return require("packer").startup(function(use)
 	use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
 
     -- LEAP
-    use({
-        "ggandor/leap.nvim",
-        config = function()
-            require("leap").create_default_mappings()
-        end
-    })
+    use("ggandor/leap.nvim")
 
 	-- ICONS
 	use("nvim-tree/nvim-web-devicons")
@@ -92,4 +87,6 @@ return require("packer").startup(function(use)
 		-- dependencies = { 'echasnovski/mini.icons' },
 		requires = { "nvim-tree/nvim-web-devicons" },
 	})
+
+    use("max397574/better-escape.nvim")
 end)

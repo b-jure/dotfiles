@@ -34,16 +34,6 @@ border_right=0
 border_bottom=0
 border_left=0
 
-#[mediaplayer]
-#command=playerctl metadata --format "{{ title }}"
-#interval=2
-#label=<span color="#bd93f9"> </span>
-#border=#bd93f9
-#border_top=1
-#border_right=0
-#border_bottom=0
-#border_left=0
-
 #[arch_update]
 #command=checkupdates | wc -l
 #interval=once
@@ -84,18 +74,8 @@ border_right=0
 border_bottom=0
 border_left=0
 
-# [time_pst]
-# command=TZ=":US/Pacific" date '+%I : %M %Z' | awk '{ printf "%s<span color=\"#8be9fd\">%s</span>%s<span color=\"#8be9fd\"> %s</span>\n", $1, $2, $3, $4 }'
-# interval=1
-# label=<span color="#8be9fd"> </span>
-# border=#8be9fd
-# border_top=0
-# border_right=0
-# border_bottom=0
-# border_left=0
-
 [time_cst]
-command=TZ="Europe/Zagreb" date '+%H : %M %Z' | awk '{ printf "%s<span color=\"#50fa7b\">%s</span>%s \n", $1, $2, $3 }'
+command=TZ="Europe/Zagreb" date '+%H : %M %Z' | awk '{ printf "%s<span color=\"#50fa7b\">%s</span>%s\n", $1, $2, $3 }'
 interval=1
 label=<span color="#50fa7b">TIME: </span>
 border=#50fa7b
@@ -104,22 +84,22 @@ border_right=0
 border_bottom=0
 border_left=0
 
-# [time_est]
-# command=TZ=":US/Eastern" date '+%I : %M %Z' | awk '{ printf "%s<span color=\"#f1fa8c\">%s</span>%s<span color=\"#f1fa8c\"> %s</span>\n", $1, $2, $3, $4 }'
-# interval=1
-# label=<span color="#f1fa8c"> </span>
-# border=#f1fa8c
-# border_top=0
-# border_right=0
-# border_bottom=0
-# border_left=0
+[date]
+command=LC_ALL="zh_CN.UTF-8" date '+%b %d %a' | awk '{ printf "%s <span color=\"#ff5555\">%s %s</span>\n", $1, $2, $3 }'
+interval=60
+label=
+border=#ff5555
+border_top=0
+border_right=0
+border_bottom=0
+border_left=0
 
-#[date]
-#command=LC_ALL="zh_CN.UTF-8" date '+%Y %B %d %A' | awk '{ printf "%s <span color=\"#ff5555\">%s %s</span> %s <span color=\"#ff5555\">%s %s</span>\n", $1, $2, $3, $4, $5, $6 }'
-#interval=60
-#label=<span color="#ff5555"> </span>
-#border=#ff5555
-#border_top=0
-#border_right=0
-#border_bottom=0
-#border_left=0
+[ffmpeg]
+command=ps -e | grep ffmpeg &>/dev/null && printf "<span color=\"#fb4934\">+ </span>\n" || printf "<span color=\"#fb4934\">- </span>\n"
+interval=2
+label=<span color="#ff00bf">R: </span>
+border=#50fa7b
+border_top=0
+border_right=0
+border_bottom=0
+border_left=0

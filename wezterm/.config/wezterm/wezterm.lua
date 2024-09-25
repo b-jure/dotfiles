@@ -27,6 +27,7 @@ config.font = wezterm.font_with_fallback({
 config.font_size = 13
 
 config.keys = {
+	{ key = "0", mods = "CTRL", action = wezterm.action.ResetFontSize },
 	{ key = "=", mods = "CTRL", action = wezterm.action.IncreaseFontSize },
 	{ key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize },
 }

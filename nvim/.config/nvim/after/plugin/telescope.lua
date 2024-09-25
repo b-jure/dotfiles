@@ -57,7 +57,7 @@ end
 
 keymap("n", "<leader>pp", opencfgfiles)
 -- keymap("n", "<leader>pk", builtin.keymaps) ** doesn't work anymore ??? **
-keymap("n", "<C-p>", builtin.find_files)
+keymap("n", "<M-p>", builtin.find_files)
 -- keymap("n", "<leader>pb", builtin.buffers) ** doesn't work anymore ??? **
 keymap("n", "<leader>ph", builtin.help_tags)
 keymap("n", "<leader>pd", builtin.diagnostics)
