@@ -73,3 +73,5 @@ g.netrw_liststyle = 1
 
 -- Fix Identation of switch statement in c
 o.cinoptions = "l1"
+
+g.title = true

@@ -56,8 +56,13 @@ bindsym $m+w layout tabbed
 bindsym $m+e layout default
 bindsym $m+x layout toggle stacking tabbed splith
 
+# scratchpad
+bindsym $m+minus move scratchpad
+bindsym $m+plus scratchpad show
+
 # change focus between tiling/floating windows
-bindsym $m+space focus mode_toggle
+bindsym Mod1+Shift+space floating toggle
+# bindsym $m+space focus mode_toggle
 
 # focus parent/child container
 bindsym $m+a focus parent

@@ -109,3 +109,5 @@ map_key("n", "dk", "dj")
 
 -- swap between 2 most recent buffers
 map_key("n", "<leader><leader>", "<C-6>")
+
+map_key("n", "<leader>ld", "<cmd>!open ~/docs/latex/texlive-en.html &<CR>")

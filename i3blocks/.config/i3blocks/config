@@ -5,8 +5,8 @@ separator_block_width=15
 markup=pango
 
 [gpu_stats]
-command= radeontop --limit 1 --dump - | awk 'FNR==2 { gsub(/[A-Za-z%,]/, ""); printf "%3.0f<span color=\"#fb4934\"> %</span>\n", $5 }'
-label=<span color="#fb4934"><b>GPU:</b></span>
+command= radeontop --limit 1 --dump - | awk 'FNR==2 { gsub(/[A-Za-z%,]/, ""); printf "%3.0f<span color=\"#fb4934\">%]</span>\n", $5 }'
+label=<span color="#fb4934"><b>GPU[</b></span>
 interval=2
 border=#fb4934
 border_top=0
@@ -15,9 +15,9 @@ border_bottom=0
 border_left=0
 
 [cpu_stats]
-command=sar -u 1 1 | awk 'FNR == 5 { printf "%3.0f<span color=\"#fb4934\"> %</span>\n", $3 }'
+command=sar -u 1 1 | awk 'FNR == 5 { printf "%3.0f<span color=\"#fb4934\">%]</span>\n", $3 }'
 interval=2
-label=<span color="#fb4934"><b>CPU:</b></span>
+label=<span color="#fb4934"><b>CPU[</b></span>
 border=#fb4934
 border_top=0
 border_right=0
@@ -25,9 +25,9 @@ border_bottom=0
 border_left=0
 
 [memory]
-command=free --mebi | awk 'FNR==2{ printf "%i<span color=\"#fb4934\">M</span>\n", $3 }'
+command=free --mebi | awk 'FNR==2{ printf "%5.0f<span color=\"#fb4934\">M]</span>\n", $3 }'
 interval=2
-label=<span color="#fb4934">RAM: </span>
+label=<span color="#fb4934">RAM[</span>
 border=#fb4934
 border_top=0
 border_right=0
@@ -45,9 +45,9 @@ border_left=0
 #border_left=0
 
 [root]
-command=df -h / | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#f1fa8c\">G</span>\n", $4 }'
+command=df -h / | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#f1fa8c\">G]</span>\n", $4 }'
 interval=5
-label=<span color="#f1fa8c">NVME: </span>
+label=<span color="#f1fa8c">NVME[</span>
 border=#f1fa8c
 border_top=0
 border_right=0
@@ -55,9 +55,9 @@ border_bottom=0
 border_left=0
 
 [hdd]
-command=df -h /mnt/hdd | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#f1fa8c\">G</span>\n", $4 }'
+command=df -h /mnt/hdd | awk 'FNR==2 { gsub(/[A-Za-z]/, ""); printf "%i<span color=\"#f1fa8c\">G]</span>\n", $4 }'
 interval=5
-label=<span color="#f1fa8c">HDD: </span>
+label=<span color="#f1fa8c">HDD[</span>
 border=#f1fa8c
 border_top=0
 border_right=0
@@ -65,9 +65,9 @@ border_bottom=0
 border_left=0
 
 [volume]
-command=pulseaudio-ctl full-status | awk '{ printf "%i<span color=\"#bd93f9\">%</span>\n", $1 }'
+command=pulseaudio-ctl full-status | awk '{ printf "<span color=\"#bd93f9\">V[%i%]</span>\n", $1 }'
 interval=1
-label=<span color="#bd93f9">VOL: </span>
+label=
 border=#bd93f9
 border_top=0
 border_right=0
@@ -75,9 +75,9 @@ border_bottom=0
 border_left=0
 
 [time_cst]
-command=TZ="Europe/Zagreb" date '+%H : %M %Z' | awk '{ printf "%s<span color=\"#50fa7b\">%s</span>%s\n", $1, $2, $3 }'
-interval=1
-label=<span color="#50fa7b">TIME: </span>
+command=TZ="Europe/Zagreb" date '+%H : %M %Z' | awk '{ printf "<span color=\"#50fa7b\">T[%s%s%s]</span>\n", $1, $2, $3 }'
+interval=10
+label=
 border=#50fa7b
 border_top=0
 border_right=0
@@ -85,7 +85,7 @@ border_bottom=0
 border_left=0
 
 [date]
-command=LC_ALL="zh_CN.UTF-8" date '+%b %d %a' | awk '{ printf "%s <span color=\"#ff5555\">%s %s</span>\n", $1, $2, $3 }'
+command=LC_ALL="zh_CN.UTF-8" date '+%b %d %a' | awk '{ printf "D[%s <span color=\"#ff5555\">%s %s</span>]\n", $1, $2, $3 }'
 interval=60
 label=
 border=#ff5555
@@ -95,9 +95,19 @@ border_bottom=0
 border_left=0
 
 [ffmpeg]
-command=ps -e | grep ffmpeg &>/dev/null && printf "<span color=\"#fb4934\">+ </span>\n" || printf "<span color=\"#fb4934\">- </span>\n"
+command=ps -e | grep ffmpeg &>/dev/null && printf "<span color=\"#fb4934\">[+]</span>\n" || printf "<span color=\"#fb4934\">[-]</span>\n"
 interval=2
 label=<span color="#ff00bf">R: </span>
+border=#50fa7b
+border_top=0
+border_right=0
+border_bottom=0
+border_left=0
+
+[kblayout]
+command=xkb-switch | awk '{ printf "<span color=\"#fb4934\">[%s]</span> \n", $1 }'
+interval=2
+label=<span color="#ff00bf">KB: </span>
 border=#50fa7b
 border_top=0
 border_right=0

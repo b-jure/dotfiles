@@ -37,6 +37,7 @@ if havebin nvim
     abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
     abbr -a vim $EDITOR
     abbr -a vimrc "$EDITOR $HOME/.config/nvim"
+
     set orgfile "$HOME/notes/org/refile.org"
     function note
         if ! test -e $orgfile > /dev/null
@@ -45,6 +46,11 @@ if havebin nvim
         $EDITOR $orgfile
     end
     abbr -a rmnote rm $orgfile
+
+    set texdir "$HOME/tex"
+    set texfile "$HOME/tex/new.tex"
+    abbr -a texf nvim $texfile
+    abbr -a rmtexf rm $texfile
 end
 
 
@@ -53,6 +59,21 @@ abbr -a se sudoedit
 abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
 abbr -a fsc sudoedit "/etc/fstab"
 abbr -a srm shred -u 
+
+
+if havebin wget
+    abbr -a wgetall wget --wait=1 \
+                         --level=inf \
+                         --limit-rate=20M \
+                         --recursive \
+                         --page-requisite \
+                         --user-agent=Mozilla \
+                         --no-parent \
+                         --convert-links \
+                         --adjust-extension \
+                         --no-clobber \
+                         -e robots=off
+end
 
 
 function memtop
@@ -257,7 +278,11 @@ if havebin rg
         fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
     end
     function rfc
-        $EDITOR $(rg -n -l ".*" "/usr/share/doc/rfc/pdf" "/usr/share/doc/rfc/txt" |
+        $EDITOR $(rg -n -l ".*" "/usr/share/doc/rfc/txt" |
+        fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
+    end
+    function rfcp
+        open $(rg -n -l ".*" "/usr/share/doc/rfc/pdf" |
         fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
     end
 end

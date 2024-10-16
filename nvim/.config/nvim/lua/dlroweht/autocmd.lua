@@ -55,14 +55,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
--- Remake ctags
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	pattern = { "*.h", "*.c" },
-	callback = function()
-		vim.cmd("silent!ctags *&")
-	end,
-})
-
 -- When using `dd` in the quickfix list, remove the item from the quickfix list.
 local function remove_qf_item()
 	local cur_qf_idx = vim.fn.line(".")

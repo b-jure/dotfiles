@@ -6,8 +6,8 @@ require("oil").setup({
 	-- See :help oil-columns
 	columns = {
 		"icon",
-		-- "permissions",
-		-- "size",
+		"permissions",
+		"size",
 		-- "mtime",
 	},
 	-- Buffer-local options to use for oil buffers
