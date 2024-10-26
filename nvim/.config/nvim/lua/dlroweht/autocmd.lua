@@ -1,11 +1,5 @@
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 
--- Changes tab size for lua files
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	pattern = { "*.lua", "*.org" },
-	command = "set tabstop=4 | set shiftwidth=4",
-})
-
 vim.o.updatetime = 2000
 vim.api.nvim_create_autocmd({ "CursorHold", "BufRead" }, {
 	pattern = { "*.dbg.txt" }, -- only for debug output files

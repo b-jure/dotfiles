@@ -27,6 +27,11 @@ font $myfont
 # floating windows modifier (for dragging)
 floating_modifier $m
 
+# gaps
+gaps inner 8
+gaps outer 1
+smart_gaps on
+
 # window navigation
 bindsym $m+j focus left
 bindsym $m+k focus down
@@ -123,18 +128,18 @@ bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
 bindsym $win+n exec /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec /usr/bin/dunstctl close
 bindsym $win+s exec /usr/bin/flameshot gui
-bindsym $win+f exec /usr/bin/firefox-developer-edition
+bindsym $win+f exec GTK_CSD=0 /usr/bin/firefox-developer-edition
 bindsym $win+d exec /usr/bin/discord
 bindsym $win+m exec /usr/bin/element-desktop
 bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
 bindsym $win+r exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
 bindsym $win+$m+r exec pkill ffmpeg
-bindsym $win+l exec /usr/bin/lutris
+bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
 bindsym $win+Shift+l --release exec /usr/local/bin/slock
 
 workspace_layout tabbed
 title_align center
-default_border normal 0
+default_border pixel 2
 smart_borders on
 
 # i3status

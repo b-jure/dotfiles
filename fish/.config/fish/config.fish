@@ -213,7 +213,7 @@ end
 
 if havebin fzf
     and havebin locate
-    setenv FZF_DEFAULT_COMMAND "command locate /"
+    setenv FZF_DEFAULT_COMMAND "command locate $HOME"
     setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up"
     setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
     setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
@@ -365,6 +365,5 @@ set -U fish_pager_color_selected_description
 
 
 if status is-interactive
-    and status is-login
     sshauth
 end

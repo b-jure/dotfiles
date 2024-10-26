@@ -75,3 +75,7 @@ g.netrw_liststyle = 1
 o.cinoptions = "l1"
 
 g.title = true
+
+-- TODO: revert to 'true' after wezterm-mux pull request is merged
+-- https://github.com/wez/wezterm/pull/6186
+o.termsync = false
