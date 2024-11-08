@@ -19,7 +19,7 @@ set $ws5 5:3
 
 # font formats
 set $myfont pango:Iosevka Custom Medium 11
-set $dmenufont "Iosevka Custom:style=Medium:size=12"
+set $font "Iosevka Custom:style=Medium:size=12"
 
 # font
 font $myfont
@@ -104,8 +104,12 @@ bindsym $m+Shift+e exit
 # spawn new terminal
 bindsym $m+Return exec /usr/bin/wezterm
 
+# run rofi
+bindsym $m+backslash --release exec --no-startup-id rofi -show combi -modes combi
+# run rofi calc mode
+bindsym $m+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -no-sort
 # run dmenu
-bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $dmenufont -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
+#bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 # run passmenu
 bindsym $m+Shift+backslash exec /usr/bin/passmenu
 

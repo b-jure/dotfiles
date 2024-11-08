@@ -56,7 +56,8 @@ function Cp(color)
 
 	vim.cmd.colorscheme(color)
 	LineNumberColors()
-	-- CommentsColor("d65d0e")
+	CommentsColor("a89984")
+        vim.api.nvim_command("highlight SignColumn guibg=#282828")
 end
 
 Cp("gruvbox")

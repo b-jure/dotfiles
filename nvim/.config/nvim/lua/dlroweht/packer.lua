@@ -51,7 +51,7 @@ return require("packer").startup(function(use)
         requires = {
             { "nvim-telescope/telescope.nvim" },
         },
-        ft = {"tex", "markdown"},
+        ft = { "tex", "markdown" },
     })
 
     use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
@@ -118,4 +118,6 @@ return require("packer").startup(function(use)
     use("micangl/cmp-vimtex")
 
     use({ "folke/which-key.nvim", ft = { "org", "tex" } })
+
+    use("lewis6991/gitsigns.nvim")
 end)

@@ -61,6 +61,16 @@ abbr -a fsc sudoedit "/etc/fstab"
 abbr -a srm shred -u 
 
 
+if havebin rofi
+    abbr -a redit "$EDITOR $HOME/.config/rofi/config.rasi"
+end
+
+
+if havebin polybar
+    abbr -a pedit "$EDITOR $HOME/.config/polybar/panels/config.ini"
+end
+
+
 if havebin wget
     abbr -a wgetall wget --wait=1 \
                          --level=inf \
@@ -193,11 +203,6 @@ if havebin vifm
 
     abbr -a vf vicd
     abbr -a vimrc vicd "$HOME/.config/nvim"
-end
-
-
-if havebin polybar
-    abbr -a pedit $EDITOR "$HOME/.config/polybar/config.ini"
 end
 
 

@@ -5,7 +5,7 @@ export QT_STYLE_OVERRIDE="Adwaita-Dark"
 export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
 
 [[ "$USER_WM" == "dwm" ]] && slstatus &
-command -v picom && picom &
+command -v picom && picom --config "$HOME/.config/picom/picom.conf" &
 command -v dunst && dunst &
 command -v transmission-daemon && transmission-daemon -f --log-level=error &
 command -v element-desktop && element-desktop --hidden &
