@@ -48,7 +48,11 @@ vim.lsp.handlers["textDocument/hover"] =
 vim.lsp.handlers["textDocument/signatureHelp"] =
     vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
-require("lspconfig").lua_ls.setup({
+local lspconfig = require("lspconfig")
+lspconfig.ts_ls.setup({
+    filetypes = { "typescript", "javascript" },
+})
+lspconfig.lua_ls.setup({
     autostart = false,
     settings = {
         Lua = {
@@ -76,7 +80,7 @@ require("lspconfig").lua_ls.setup({
     },
 })
 
-require("lspconfig").clangd.setup({
+lspconfig.clangd.setup({
     cmd = {
         "clangd",
         "--enable-config",
@@ -86,7 +90,7 @@ require("lspconfig").clangd.setup({
     autostart = false,
 })
 
-require("lspconfig").texlab.setup({
+lspconfig.texlab.setup({
     cmd = { "texlab", "run" },
     settings = {
         texlab = {
@@ -120,7 +124,7 @@ require("lspconfig").texlab.setup({
     },
 })
 
-require("lspconfig").rust_analyzer.setup({
+lspconfig.rust_analyzer.setup({
     cmd = { "rust-analyzer" },
     filetypes = { "rust" },
     single_file_support = true,
@@ -128,8 +132,8 @@ require("lspconfig").rust_analyzer.setup({
         ["rust-analyzer"] = {
             diagnostics = {
                 enable = true,
-            }
-        }
+            },
+        },
     },
 })
 

@@ -4,6 +4,9 @@ function M.setup(wezterm, config)
     -- remove default key binds
     config.disable_default_key_bindings = true
 
+    -- increase scrollback line limit
+    config.scrollback_lines = 10000
+
     -- enable hot reload
     config.automatically_reload_config = true
 
@@ -14,8 +17,8 @@ function M.setup(wezterm, config)
     config.color_scheme = "Gruvbox Dark (Gogh)"
     config.front_end = "OpenGL"
     config.animation_fps = 1
-    config.cursor_blink_rate = 350
-    config.default_cursor_style = "BlinkingBlock"
+    config.cursor_blink_rate = 0
+    config.default_cursor_style = "SteadyBlock"
     config.hide_mouse_cursor_when_typing = true
     config.window_decorations = "TITLE | RESIZE"
     config.enable_scroll_bar = false

@@ -11,6 +11,7 @@ command -v transmission-daemon && transmission-daemon -f --log-level=error &
 command -v element-desktop && element-desktop --hidden &
 command -v flameshot && flameshot &
 command -v nm-applet && nm-applet &
+command -v signal-desktop && signal-desktop &
 systemctl --user start change-wallpaper.timer
 xset r rate 150 60
 setxkbmap -option ''

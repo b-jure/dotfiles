@@ -86,6 +86,10 @@ local opencfgfiles = function()
     builtin.find_files({ cwd = vim.fn.stdpath("config") })
 end
 
+local openrfc = function()
+    builtin.find_files({ cwd = "/home/dlroweht/docs/rfc" })
+end
+
 local grepregstring = function()
     return builtin.grep_string({ search = vim.fn.getreg('""') })
 end
@@ -104,3 +108,4 @@ keymap("n", "<leader>ps", builtin.live_grep)
 keymap("n", "<leader>pr", grepregstring)
 keymap("n", "<leader>pm", openmanpages)
 keymap("n", "<leader>pc", "<cmd>Telescope bibtex<CR>")
+keymap("n", "<M-r>", openrfc)

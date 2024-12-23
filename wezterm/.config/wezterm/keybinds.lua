@@ -1,6 +1,5 @@
 local M = {}
 
-
 function M.setup(wezterm, config)
     local act = wezterm.action
 
@@ -12,7 +11,6 @@ function M.setup(wezterm, config)
             act.CopyMode("Close"),
         })
     end
-
 
     local function finish_close(activate)
         return wezterm.action_callback(function(window, pane, _)
@@ -27,9 +25,13 @@ function M.setup(wezterm, config)
     -- Leader key
     config.leader =
         { key = "Space", mods = "CTRL", timeout_milliseconds = 2000 }
-
     -- Keybinds
     config.keys = {
+        {
+            key = "f",
+            mods = "LEADER",
+            action = wezterm.action.ToggleFullScreen,
+        },
         {
             key = "r",
             mods = "LEADER",
@@ -39,12 +41,24 @@ function M.setup(wezterm, config)
             }),
         },
         {
-            key = "a",
+            key = "j",
             mods = "LEADER",
-            action = act.ActivateKeyTable({
-                name = "activate_pane",
-                timeout_milliseconds = 1000,
-            }),
+            action = act.ActivatePaneDirection("Left"),
+        },
+        {
+            key = ";",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection("Right"),
+        },
+        {
+            key = "l",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection("Up"),
+        },
+        {
+            key = "k",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection("Down"),
         },
         {
             key = "c",
@@ -90,12 +104,6 @@ function M.setup(wezterm, config)
             { key = "l", action = act.AdjustPaneSize({ "Up", 5 }) },
             { key = "k", action = act.AdjustPaneSize({ "Down", 5 }) },
             { key = "Escape", action = "PopKeyTable" },
-        },
-        activate_pane = {
-            { key = "j", action = act.ActivatePaneDirection("Left") },
-            { key = ";", action = act.ActivatePaneDirection("Right") },
-            { key = "l", action = act.ActivatePaneDirection("Up") },
-            { key = "k", action = act.ActivatePaneDirection("Down") },
         },
         search_mode = {
             {
@@ -178,8 +186,8 @@ function M.setup(wezterm, config)
                 mods = "NONE",
                 action = act.Multiple({
                     act.CopyTo("ClipboardAndPrimarySelection"),
-                    act.CopyMode("ClearSelectionMode")
-                })
+                    act.CopyMode("ClearSelectionMode"),
+                }),
             },
             {
                 key = "Enter",
@@ -205,6 +213,11 @@ function M.setup(wezterm, config)
                 key = "$",
                 mods = "SHIFT",
                 action = act.CopyMode("MoveToEndOfLineContent"),
+            },
+            {
+                key = "0",
+                mods = "NONE",
+                action = act.CopyMode("MoveToStartOfLine"),
             },
             {
                 key = "G",

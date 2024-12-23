@@ -61,6 +61,22 @@ abbr -a fsc sudoedit "/etc/fstab"
 abbr -a srm shred -u 
 
 
+if havebin magick
+    function conv -a infile -a infmt -a outfmt
+        set --local outfile
+        set outfile (basename -s ".$infmt" $infile)
+        set outfile "$outfile.$outfmt"
+        magick $infile $outfile
+    end
+    function png2ico -a infile
+        conv $infile "png" "ico"
+    end
+    function ico2png -a infile
+        conv $infile "ico" "png"
+    end
+end
+
+
 if havebin rofi
     abbr -a redit "$EDITOR $HOME/.config/rofi/config.rasi"
 end
@@ -91,6 +107,11 @@ function memtop
     $psout | awk '{if ($2 ~ /^[0-9]+$/ && $6/1024 >= 1) {\\
         printf "PID: %s, PPID: %s, Memory consumed (RSS): %.2f MB, Command: ",\\
         $2, $3, $6/1024; for (i=4; i<=NF; i++) printf "%s ", $i; printf "\n"}}' | head
+end
+
+
+if havebin make
+    abbr -a make make -j12
 end
 
 
@@ -280,14 +301,6 @@ if havebin rg
     set FZFOPTS 'fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up'
     function fnote
         $EDITOR $(rg -n --type=org -l ".*" "$HOME/notes/org" |
-        fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
-    end
-    function rfc
-        $EDITOR $(rg -n -l ".*" "/usr/share/doc/rfc/txt" |
-        fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
-    end
-    function rfcp
-        open $(rg -n -l ".*" "/usr/share/doc/rfc/pdf" |
         fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
     end
 end
