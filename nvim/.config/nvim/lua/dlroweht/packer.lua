@@ -60,7 +60,10 @@ return require("packer").startup(function(use)
 
     use("nvim-tree/nvim-web-devicons")
 
-    use("stevearc/oil.nvim")
+    use({
+        "stevearc/oil.nvim",
+        commit = "3c2de37accead0240fbe812f5ccdedfe0b973557",
+    })
 
     use("norcalli/nvim-colorizer.lua")
 

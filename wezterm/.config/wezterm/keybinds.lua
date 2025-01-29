@@ -70,8 +70,8 @@ function M.setup(wezterm, config)
             mods = "LEADER",
             action = act.CloseCurrentPane({ confirm = true }),
         },
-        { key = "b", mods = "LEADER", action = act.ActivateTabRelative(-1) },
-        { key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
+        { key = "p", mods = "ALT", action = act.ActivateTabRelative(-1) },
+        { key = "n", mods = "ALT", action = act.ActivateTabRelative(1) },
         {
             key = "\\",
             mods = "LEADER",

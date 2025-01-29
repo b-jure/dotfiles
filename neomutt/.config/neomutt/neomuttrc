@@ -3,8 +3,9 @@ set from = "jurebagic99@gmail.com"
 set real_name = "Jure Bagić"
 set ssl_starttls = yes
 set ssl_force_tls = yes
-#set header_cache = "$HOME/.cache/mutt/headers"
-#set message_cachedir = "$HOME/.cache/mutt/bodies"
+set header_cache = "$HOME/.cache/mutt/headers"
+set message_cachedir = "$HOME/.cache/mutt/bodies"
+set edit_headers = no
 set pager_index_lines = 5
 set pager_context = 3
 set pager_stop
@@ -26,7 +27,13 @@ set reverse_name
 set include
 set text_flowed
 set sig_dashes
+unset help
 unset markers
+unset mark_old
+set pipe_decode
+set thorough_search
+set timeout = 0
+set beep_new
 set charset = "utf-8"
 set uncollapse_jump
 set sort_re
@@ -126,6 +133,8 @@ bind pager k next-line
 bind pager l previous-line
 bind pager K next-entry
 bind pager L previous-entry
+bind attach k next-entry
+bind attach l previous-entry
 bind index,pager \Ck sidebar-next
 bind index,pager \Cl sidebar-prev
 bind index,pager \Ce sidebar-open

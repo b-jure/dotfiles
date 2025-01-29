@@ -74,8 +74,8 @@ bindsym $m+a focus parent
 bindsym $m+d focus child
 
 # switch to workspace
-bindsym Ctrl+bracketleft workspace $ws1
-bindsym Ctrl+bracketright workspace $ws2
+bindsym $m+bracketleft workspace $ws1
+bindsym $m+bracketright workspace $ws2
 bindsym $m+2 workspace $ws3
 bindsym $m+3 workspace $ws4
 bindsym $m+4 workspace $ws5
@@ -111,7 +111,7 @@ bindsym $m+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-
 # run dmenu
 #bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 # run passmenu
-bindsym $m+Shift+backslash exec /usr/bin/passmenu
+bindsym $m+Shift+backslash exec /usr/bin/passmenu -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 
 # sound volume control
 bindsym $m+comma exec /usr/local/bin/pavc down 10 $sinkdev
@@ -139,7 +139,7 @@ bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
 bindsym $win+r exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
 bindsym $win+$m+r exec pkill ffmpeg
 bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
-bindsym $win+Shift+l --release exec /usr/local/bin/slock
+#bindsym $win+Shift+l --release exec /usr/local/bin/slock
 
 workspace_layout tabbed
 title_align center
