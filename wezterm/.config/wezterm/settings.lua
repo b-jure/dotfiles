@@ -69,13 +69,16 @@ function M.setup(wezterm, config)
     config.default_prog = { "fish" }
 
     -- font
-    config.font_size = 13
+    config.font_size = 10
     config.warn_about_missing_glyphs = false
     config.font = wezterm.font_with_fallback({
         { family = "Iosevka", weight = "Regular" },
         { family = "Berkeley Mono", weight = "Regular" },
         { family = "FiraCode Nerd Font Ret", weight = "Regular" },
     })
+
+    -- disable ligatures
+    config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
     -- multiplexing
     config.unix_domains = {

@@ -35,7 +35,6 @@ if havebin nvim
     setenv MANPAGER "nvim +Man!"
     abbr -a e $EDITOR
     abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
-    abbr -a vim $EDITOR
     abbr -a vimrc "$EDITOR $HOME/.config/nvim"
 
     set orgfile "$HOME/notes/org/refile.org"
@@ -239,7 +238,7 @@ end
 
 if havebin fzf
     and havebin locate
-    setenv FZF_DEFAULT_COMMAND "command locate $HOME"
+    setenv FZF_DEFAULT_COMMAND "command locate --regexp $HOME/[^.].\*"
     setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up"
     setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
     setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND

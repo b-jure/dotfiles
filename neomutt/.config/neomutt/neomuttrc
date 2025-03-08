@@ -139,3 +139,4 @@ bind index,pager \Ck sidebar-next
 bind index,pager \Cl sidebar-prev
 bind index,pager \Ce sidebar-open
 bind index,pager \Ch sidebar-toggle-visible
+bind index G imap-fetch-mail

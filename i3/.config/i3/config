@@ -66,7 +66,7 @@ bindsym $m+minus move scratchpad
 bindsym $m+plus scratchpad show
 
 # change focus between tiling/floating windows
-bindsym Mod1+Shift+space floating toggle
+bindsym Mod1+space floating toggle
 # bindsym $m+space focus mode_toggle
 
 # focus parent/child container
@@ -124,7 +124,7 @@ bindsym Control+period exec /usr/bin/playerctl -a next
 bindsym Control+slash exec /usr/bin/playerctl -a play-pause
 
 # toggle keyboard layout (hr/us)
-bindsym $m+0 exec /home/dlroweht/.config/linux-scripts/togglelayout.sh
+bindsym F12 exec /home/dlroweht/.config/linux-scripts/togglelayout.sh
 
 # windows key binds
 bindsym $m+Pause exec /usr/bin/shutdown -h now
@@ -132,7 +132,7 @@ bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
 bindsym $win+n exec /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec /usr/bin/dunstctl close
 bindsym $win+s exec /usr/bin/flameshot gui
-bindsym $win+f exec GTK_CSD=0 /usr/bin/firefox-developer-edition
+bindsym $win+f exec GTK_CSD=0 /usr/bin/librewolf
 bindsym $win+d exec /usr/bin/discord
 bindsym $win+m exec /usr/bin/element-desktop
 bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
