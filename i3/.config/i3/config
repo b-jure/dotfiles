@@ -107,7 +107,7 @@ bindsym $m+Return exec /usr/bin/wezterm
 # run rofi
 bindsym $m+backslash --release exec --no-startup-id rofi -show combi -modes combi
 # run rofi calc mode
-bindsym $m+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -no-sort
+bindsym $m+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -terse -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard"
 # run dmenu
 #bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 # run passmenu
@@ -139,7 +139,7 @@ bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
 bindsym $win+r exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
 bindsym $win+$m+r exec pkill ffmpeg
 bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
-#bindsym $win+Shift+l --release exec /usr/local/bin/slock
+bindsym $win+Shift+l --release exec /usr/local/bin/slock
 
 workspace_layout tabbed
 title_align center

@@ -10,10 +10,10 @@ vim.g.mapleader = " "
 map_key("n", "<C-f>", ":<C-s>i")
 
 -- resize panes
-map_key({ "n", "i" }, "<M-U>", "<Esc>:vertical resize +10<CR>")
-map_key({ "n", "i" }, "<M-P>", "<Esc>:vertical resize -10<CR>")
-map_key({ "n", "i" }, "<M-O>", "<Esc>:horizontal resize +6<CR>")
-map_key({ "n", "i" }, "<M-I>", "<Esc>:horizontal resize -6<CR>")
+map_key({ "n", "i" }, "<M-U>", "<Esc>:vertical resize +5<CR>")
+map_key({ "n", "i" }, "<M-P>", "<Esc>:vertical resize -5<CR>")
+map_key({ "n", "i" }, "<M-O>", "<Esc>:horizontal resize +5<CR>")
+map_key({ "n", "i" }, "<M-I>", "<Esc>:horizontal resize -5<CR>")
 
 -- go to next/prev quickfix list item
 map_key("n", "[q", "<cmd>cn<CR>")
@@ -105,12 +105,21 @@ map_key("n", "dk", "dj")
 -- swap between 2 most recent buffers
 map_key("n", "<leader><leader>", "<C-6>")
 
--- pane navigation
+-- better command mode navigation
+map_key("c", "<C-a>", "<Cmd>normal! ^<CR>")
+map_key("c", "<C-e>", "<Cmd>normal! $<CR>")
+map_key("c", "<C-p>", "<Cmd>call feedkeys('<Up>')<CR>")
+map_key("c", "<C-n>", "<Cmd>call feedkeys('<Down>')<CR>")
+map_key("c", "<C-b>", "<Cmd>call feedkeys('<Left>')<CR>")
+map_key("c", "<C-f>", "<Cmd>call feedkeys('<Right>')<CR>")
+map_key("c", "<C-j>", "<Cmd>call feedkeys('<S-Left>')<CR>")
+map_key("c", "<C-;>", "<Cmd>call feedkeys('<S-Right>')<CR>")
+
+-- pane navigation/manipulation
 map_key({ "n", "v", "i" }, "<C-j>", "<Esc><C-w>h")
 map_key({ "n", "v", "i" }, "<C-k>", "<Esc><C-w>j")
 map_key({ "n", "v", "i" }, "<C-l>", "<Esc><C-w>k")
 map_key({ "n", "v", "i" }, "<C-;>", "<Esc><C-w>l")
-
 map_key({ "n", "v" }, "<C-w>j", "<C-w>H")
 map_key({ "n", "v" }, "<C-w>k", "<C-w>J")
 map_key({ "n", "v" }, "<C-w>l", "<C-w>K")

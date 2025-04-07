@@ -22,20 +22,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Define the ctags command with options
-local ctags_command = {
-  cmd = "ctags",
-  args = {"-R", "--exclude=.git", "--exclude=node_modules", "*.c", "*.h"},
-}
-
--- Function to run ctags silently
-local function run_ctags()
-  local full_command = table.concat(vim.tbl_flatten({ctags_command.cmd, ctags_command.args}), " ")
-  vim.fn.system(full_command)
-end
-
-
-vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "BufWritePost"}, {
-    pattern = {"*.c", "*.h"},
-    callback = run_ctags,
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  pattern = { "*.c", "*.h", "*.lua", "*.js", "*.py" },
+  callback = function()
+    local is_git = vim.fn.trim(vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null"))
+    if is_git == "true" then -- in git repository?
+      local root = vim.fn.trim(vim.fn.system("git rev-parse --show-toplevel"))
+      local path = root .. "/.git/hooks/ctags"
+      if vim.loop.fs_stat(path) then -- .git_config is setup correctly?
+        vim.fn.system(path)
+      end
+    end
+  end,
 })

@@ -62,7 +62,7 @@ o.splitbelow = true
 
 o.jumpoptions = "view"
 
-o.autochdir = true
+o.autochdir = false
 
 g.netrw_special_syntax = true
 g.netrw_browse_split = 0
@@ -79,3 +79,11 @@ g.title = true
 o.termsync = true
 
 o.signcolumn = "auto"
+
+o.errorformat = "%f:%l: %m"
+
+o.makeprg = "make -j12"
+
+if vim.fn.executable("rg") == 1 then
+    g.gutentags_file_list_command = "rg --files --glob=!doc/ --glob=!editor/"
+end

@@ -8,6 +8,6 @@
 --]]
 
 require("dlroweht.settings")
-require("dlroweht.packer")
+require("dlroweht.lazy")
 require("dlroweht.remap")
 require("dlroweht.autocmd")
