@@ -70,7 +70,6 @@ g.netrw_banner = 0
 g.netrw_winsize = 25
 g.netrw_liststyle = 1
 
-
 -- Fix Identation of switch statement in c
 o.cinoptions = "l1"
 
@@ -85,5 +84,6 @@ o.errorformat = "%f:%l: %m"
 o.makeprg = "make -j12"
 
 if vim.fn.executable("rg") == 1 then
-    g.gutentags_file_list_command = "rg --files --glob=!doc/ --glob=!editor/"
+  g.gutentags_ctags_exclude = { "editor/**", "doc/**", "test[s]?/**" }
+  g.gutentags_trace = 0
 end

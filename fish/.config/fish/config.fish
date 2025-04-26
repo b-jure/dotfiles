@@ -240,10 +240,11 @@ if havebin fzf
     and havebin locate
     setenv FZF_DEFAULT_COMMAND "command locate --regexp $HOME/[^.].\*"
     setenv FZF_DEFAULT_OPTS "--layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up"
-    setenv FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+    setenv FZF_CTRL_T_COMMAND "command locate --regexp /[^.].\*"
     setenv FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
     fzf_key_bindings
 end
+
 
 if test -z "$WAYLAND_DISPLAY" &>/dev/null
     abbr -a xinit "$EDITOR $HOME/.xinit"
@@ -303,6 +304,10 @@ if havebin rg
         fzf -i --layout=reverse --inline-info --height 50% --bind=ctrl-n:down,ctrl-p:up)
     end
 end
+
+setenv STEAM_COMPAT_CLIENT_INSTALL_PATH ~/.local/share/Steam/
+setenv STEAM_COMPAT_DATA_PATH ~/.local/share/Steam/steamapps/compatdata
+abbr -a proton "\"/home/dlroweht/.local/share/Steam/steamapps/common/Proton 9.0 (Beta)/proton\""
 
 
 fish_vi_key_bindings

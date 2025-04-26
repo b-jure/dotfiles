@@ -107,7 +107,7 @@ bindsym $m+Return exec /usr/bin/wezterm
 # run rofi
 bindsym $m+backslash --release exec --no-startup-id rofi -show combi -modes combi
 # run rofi calc mode
-bindsym $m+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -terse -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard"
+bindsym $win+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -terse -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard"
 # run dmenu
 #bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 # run passmenu
