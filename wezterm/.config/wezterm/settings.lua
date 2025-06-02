@@ -69,7 +69,7 @@ function M.setup(wezterm, config)
     config.default_prog = { "fish" }
 
     -- font
-    config.font_size = 10
+    config.font_size = 8
     config.warn_about_missing_glyphs = false
     config.font = wezterm.font_with_fallback({
         { family = "Iosevka", weight = "Regular" },

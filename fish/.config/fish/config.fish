@@ -31,6 +31,10 @@ if havebin nvim
         set -x MANPAGER "/usr/local/bin/nvr -c 'Man!' -o -"
     end
 
+    if havebin vim
+        abbr -a vim nvim
+    end
+
     setenv EDITOR nvim
     setenv MANPAGER "nvim +Man!"
     abbr -a e $EDITOR

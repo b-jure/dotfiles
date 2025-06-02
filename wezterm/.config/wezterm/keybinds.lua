@@ -26,6 +26,8 @@ function M.setup(wezterm, config)
   config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 2000 }
   -- Keybinds
   config.keys = {
+    { key = "n", mods = "ALT|SHIFT", action = act.MoveTabRelative(-1) },
+    { key = "m", mods = "ALT|SHIFT", action = act.MoveTabRelative(1) },
     {
       key = "8",
       mods = "CTRL",
@@ -50,26 +52,6 @@ function M.setup(wezterm, config)
         name = "resize_pane",
         one_shot = false,
       }),
-    },
-    {
-      key = "j",
-      mods = "LEADER",
-      action = act.ActivatePaneDirection("Left"),
-    },
-    {
-      key = ";",
-      mods = "LEADER",
-      action = act.ActivatePaneDirection("Right"),
-    },
-    {
-      key = "l",
-      mods = "LEADER",
-      action = act.ActivatePaneDirection("Up"),
-    },
-    {
-      key = "k",
-      mods = "LEADER",
-      action = act.ActivatePaneDirection("Down"),
     },
     {
       key = "c",

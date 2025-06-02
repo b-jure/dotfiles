@@ -50,7 +50,7 @@ syn match   cscriptSpecialEsc       contained /\\e/
 " highlight control chars
 syn match   cscriptSpecialControl   contained /\\[\\abtnvfr'"]/
 " highlight decimal escape sequence \ddd
-syn match   cscriptSpecialDec       contained /\\[[:digit:]]\{3}/
+syn match   cscriptSpecialDec       contained /\\[[:digit:]]\{1,3}/
 " highlight hexadecimal escape sequence \xhh
 syn match   cscriptSpecialHex       contained /\\x[[:xdigit:]]\{2}/
 " highlight utf8 \u{xxxxxxxx} or \u[xxxxxxxx]
@@ -62,11 +62,6 @@ syn match   cscriptSpecialControlError  /\\[\\abtnvfr'"]/
 syn match   cscriptSpecialDecError      /\\[[:digit:]]\{3}/
 syn match   cscriptSpecialHexError      /\\x[[:xdigit:]]\{2}/
 syn match   cscriptSpecialUtfError      /\\u\%({[[:xdigit:]]\{1,8}}\|\[[[:xdigit:]]\{1,8}\]\)/
-"-----------------}
-
-"-Strings---------{
-syn region  cscriptString       start=/"/ skip=/\\"/ end=/"/ contains=@cscriptSpecial,@Spell
-syn region  cscriptLongString   start=/"""/ end=/"""/ contains=@Spell
 "-----------------}
 
 "-Characters-----{
@@ -104,7 +99,6 @@ syn match cscriptIdentifier /\<\h\w*\>/
 "-----------------}
 
 "-Keywords--------{
-"syn keyword     cscriptLocal            local
 syn keyword     cscriptStatement        break return continue
 syn keyword     cscriptConditional      if else
 syn keyword     cscriptLabel            case default switch
@@ -123,16 +117,19 @@ endif
 
 "-Parens---------{
 syn cluster cscriptParenGroup   contains=@cscriptSpecial,@cscriptCommentGroup,cscriptCommentStartError,cscriptOctalZero,cscriptNumber,cscriptFloat,cscriptOctal,cscriptOctalError
-syn region  cscriptParen        transparent start=/(/ end=/)/ contains=ALLBUT,cscriptAttribute,cscriptStatement,cscriptIf,cscriptParenError,cscriptStatement,cscriptConditional,cscriptLabel,cscriptForEach,cscriptRepeat,@cscriptParenGroup,@Spell
-syn match   cscriptParenError   display /)/
+syn region  cscriptParen        transparent start=/(/ end=/)/ contains=ALLBUT,cscriptAttribute,cscriptIf,cscriptLabel,cscriptRepeat,@cscriptParenGroup,@Spell
 syn match   cscriptErrorInParen display contained /]/
 "---------------}
 
 "-Bracket-------{
-syn region  cscriptBracket  transparent matchgroup=cscriptBracket start="\[" end="]" contains=TOP,cscriptStatement,cscriptIf,cscriptBracketError,@cscriptParenGroup,cscriptForEach,cscriptConditional,cscriptLabel,cscriptRepeat,cscriptClass,@Spell
-syn match   cscriptBracketError     display /]/
+syn region  cscriptBracket  transparent matchgroup=cscriptBracket start="\[" end="]" contains=TOP,cscriptIf,@cscriptParenGroup,cscriptLabel,cscriptRepeat,cscriptClass,@Spell
 syn match   cscriptErrorInBracket   display contained /]/
 "---------------}
+
+"-Strings---------{
+syn region cscriptString start=/"/ skip=/\\"/ end=/"/ contains=@cscriptSpecial,@Spell
+syn region cscriptLongString start=/\[\z(=\+\)\[/ end=/\]\z1\]/ contains=@Spell
+"-----------------}
 
 "-Foreach---------{
 syn region  cscriptForEach  transparent matchgroup=cscriptRepeat start=/\<foreach\>\ze\_s\+\%(\h\w*\%(,\_s*\h\w*\)*\)\_s\<in\>/ end=/\h\w*\_s\+\zs\<in\>/me=e-2 contains=TOP,cscriptInError skipwhite skipempty
@@ -182,10 +179,10 @@ syn match       cscriptFunc             /\<string\.swapupper\>/
 syn match       cscriptFunc             /\<string\.swaplower\>/
 "-----------------}
 
-syn match cscriptComma /,/
 syn match cscriptSemicolon /;/
+syn match cscriptComma /,/
 
-syn region cscriptLocalStatement transparent start=/\<local\_s*\h\w*\_s*/ end=/\ze\%(;\|=\|{\)/ contains=cscriptLocal,cscriptAttribute,cscriptClassDefinition,cscriptFunction,cscriptFn,cscriptFunctionCall
+syn region cscriptLocalStatement transparent start=/\<local\_s*\h\w*\_s*/ end=/\ze\%(;\|=\|{\)/ contains=cscriptComma,cscriptLocal,cscriptAttribute,cscriptClassDefinition,cscriptFunction,cscriptFn,cscriptFunctionCall
 syn keyword cscriptLocal local contained
 syn match cscriptAttribute /<\_s*\%(close\|final\)\_s*>/ contained
 
@@ -202,7 +199,6 @@ syn keyword cscriptFn fn
 
 hi def link cscriptAttribute            StorageClass
 hi def link cscriptFn                   cscriptStatement
-hi def link cscriptComma                NONE
 hi def link cscriptSemicolon            cscriptStatement
 hi def link cscriptLocal                cscriptStatement
 hi def link cscriptIdentifier           NONE
@@ -237,8 +233,6 @@ hi def link cscriptSymbolOperator       cscriptOperator
 hi def link cscriptOperator             Operator
 hi def link cscriptComment              Comment
 hi def link cscriptConstant             Constant
-hi def link cscriptParenError           cscriptError 
-hi def link cscriptBracketError         cscriptError
 hi def link cscriptCurlyError           cscriptError
 hi def link cscriptErrorInParen         cscriptError
 hi def link cscriptErrorInBracket       cscriptError
@@ -254,9 +248,8 @@ hi def link cscriptSpecialUtfError      cscriptError
 hi def link cscriptInError              cscriptError
 hi def link cscriptError                Error
 
-
-let b:current_syntax = "cscript"
-
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+let b:current_syntax = "cscript"
 " vim: et ts=8 sw=2

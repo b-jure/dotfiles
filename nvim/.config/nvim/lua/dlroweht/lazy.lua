@@ -105,6 +105,9 @@ require("lazy").setup({
     { -- TREESITTERAUTOTAG (HTML)
       "windwp/nvim-ts-autotag",
     },
+    { -- SMARTSPLITS
+        'mrjones2014/smart-splits.nvim',
+    },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

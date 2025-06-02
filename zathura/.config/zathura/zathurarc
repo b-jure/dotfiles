@@ -6,19 +6,32 @@ map [normal] j scroll left
 map [normal] ; scroll right
 map [normal] k scroll down
 map [normal] l scroll up
-
 map [normal] K navigate next
 map [normal] L navigate previous
-
 map [normal] n search forward
 map [normal] N search backward
-
-map [normal] <C-v> toggle_fullscreen
-
+map [normal] f toggle_fullscreen
 map [normal] p print
-
-unmap q
+map [normal] <C-=> zoom in
+map [normal] <C--> zoom out
+unmap [normal] q
 map [normal] q quit
+
+# Mappings (fullscreen mode)
+map [fullscreen] j scroll left
+map [fullscreen] ; scroll right
+map [fullscreen] k scroll down
+map [fullscreen] l scroll up
+map [fullscreen] K navigate next
+map [fullscreen] L navigate previous
+map [fullscreen] n search forward
+map [fullscreen] N search backward
+map [fullscreen] f toggle_fullscreen
+map [fullscreen] p print
+map [fullscreen] <C-=> zoom in
+map [fullscreen] <C--> zoom out
+unmap [fullscreen] q
+map [fullscreen] q quit
 
 # Mappings (index mode)
 map [index] j navigate_index collapse
