@@ -69,11 +69,13 @@ function M.setup(wezterm, config)
     config.default_prog = { "fish" }
 
     -- font
-    config.font_size = 8
+    config.font_size = 9
     config.warn_about_missing_glyphs = false
     config.font = wezterm.font_with_fallback({
-        { family = "Iosevka", weight = "Regular" },
-        { family = "Berkeley Mono", weight = "Regular" },
+        --{ family = "DejaVuSansM Nerd Font Mono", weight = "Regular" },
+        --{ family = "Iosevka", weight = "Regular" },
+        { family = "TX-02", weight = "Medium" },
+        --{ family = "Berkeley Mono", weight = "Regular" },
         { family = "FiraCode Nerd Font Ret", weight = "Regular" },
     })
 

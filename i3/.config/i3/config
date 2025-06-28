@@ -13,9 +13,9 @@ set $sinkdev "alsa_output.pci-0000_0b_00.4.analog-stereo"
 # workspaces
 set $ws1 1:code
 set $ws2 2:www
-set $ws3 3:1
-set $ws4 4:2
-set $ws5 5:3
+set $ws3 3:workspace1
+set $ws4 4:workspace2
+set $ws5 5:workspace3
 
 # font formats
 set $myfont pango:Iosevka Custom Medium 11
@@ -108,8 +108,6 @@ bindsym $m+Return exec /usr/bin/wezterm
 bindsym $m+backslash --release exec --no-startup-id rofi -show combi -modes combi
 # run rofi calc mode
 bindsym $win+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -terse -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard"
-# run dmenu
-#bindsym $m+backslash exec /usr/local/bin/dmenu_run -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 # run passmenu
 bindsym $m+Shift+backslash exec /usr/bin/passmenu -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 
@@ -124,44 +122,44 @@ bindsym Control+period exec /usr/bin/playerctl -a next
 bindsym Control+slash exec /usr/bin/playerctl -a play-pause
 
 # toggle keyboard layout (hr/us)
-bindsym F12 exec /home/dlroweht/.config/linux-scripts/togglelayout.sh
+bindsym F12 exec ~/.config/linux-scripts/togglelayout.sh
 
 # windows key binds
 bindsym $m+Pause exec /usr/bin/shutdown -h now
 bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
+bindsym $win+a exec ~/.config/linux-scripts/audiostream.sh
 bindsym $win+n exec /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec /usr/bin/dunstctl close
 bindsym $win+s exec /usr/bin/flameshot gui
 bindsym $win+f exec GTK_CSD=0 /usr/bin/librewolf
 bindsym $win+d exec /usr/bin/discord
-bindsym $win+m exec /usr/bin/element-desktop
 bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
-bindsym $win+r exec /home/dlroweht/.config/linux-scripts/screenrecord.sh
-bindsym $win+$m+r exec pkill ffmpeg
 bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
-bindsym $win+Shift+l --release exec /usr/local/bin/slock
 
 workspace_layout tabbed
 title_align center
 default_border pixel 2
 smart_borders on
 
-# i3status
-bar {
-	colors {
-		background #282828
-        	statusline #282828
-        	separator #fabd2f
+# use polybar instead of i3status bar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-        	focused_workspace  #282828 #282828 #ff8700
-        	active_workspace   #282828 #282828 #ffffff
-        	inactive_workspace #282828 #282828 #888888
-        	urgent_workspace   #282828 #fb4934 #ffffff
-        	binding_mode       #282828 #fb4934 #ffffff
-	}
-	font $myfont
-	mode dock
-	workspace_buttons yes
-	strip_workspace_numbers yes
-	status_command i3blocks
-}
+# i3status
+#bar {
+#    colors {
+#        background #282828
+#        statusline #282828
+#        separator #fabd2f
+#
+#        focused_workspace  #282828 #282828 #ff8700
+#        active_workspace   #282828 #282828 #ffffff
+#        inactive_workspace #282828 #282828 #888888
+#        urgent_workspace   #282828 #fb4934 #ffffff
+#        binding_mode       #282828 #fb4934 #ffffff
+#    }
+#    font $myfont
+#    mode dock
+#    workspace_buttons yes
+#    strip_workspace_numbers yes
+#    status_command i3blocks
+#}

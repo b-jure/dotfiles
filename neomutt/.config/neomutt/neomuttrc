@@ -5,27 +5,26 @@ set ssl_starttls = yes
 set ssl_force_tls = yes
 set header_cache = "$HOME/.cache/mutt/headers"
 set message_cachedir = "$HOME/.cache/mutt/bodies"
-set edit_headers = no
+set edit_headers = yes
 set pager_index_lines = 5
 set pager_context = 3
-set pager_stop
-set menu_scroll
+set pager_stop = yes
+set menu_scroll = yes
 set move = no
-set mail_check = 30
-set imap_keepalive = 900
+set mail_check = 5
+set imap_keepalive = 300
 set sleep_time = 0
 set wait_key = no
-set fast_reply
-set fcc_attach
+set fast_reply = yes
+set fcc_attach = yes
 set forward_format = "Fwd: %s"
-set forward_decode
-set forward_quote
-set mime_forward
+set forward_decode = yes
+set forward_quote = yes
+set mime_forward = yes
 set attribution = "On %d, %n wrote:"
-set reply_to
-set reverse_name
-set include
-set text_flowed
+set reply_to = yes
+set include = yes
+#set text_flowed
 set sig_dashes
 unset help
 unset markers
@@ -60,6 +59,11 @@ set crypt_verify_sig = yes
 set crypt_opportunistic_encrypt = no
 set query_command="khard email --parsable '%s'"
 
+set abort_key = "<Esc>"
+
+# Show date in year/month/day hour:minute format
+set date_format="%y/%m/%d %I:%M%p"
+
 # startup-hook 'echo `/home/dlroweht/.config/neomutt/sync.sh`'
 
 auto_view application/pgp-encrypted
@@ -84,23 +88,12 @@ named-mailboxes Inbox "+Inbox"
 named-mailboxes Sent "+[Gmail]/Sent Mail"
 named-mailboxes Drafts "+[Gmail]/Drafts"
 named-mailboxes Trash "+[Gmail]/Trash"
-named-mailboxes Linux-Kernel "+/Linux-Kernel"
+named-mailboxes Linux-GCC "+/Linux-GCC"
 named-mailboxes Lua "+/Lua"
 named-mailboxes Isync-devel "+/Isync-devel"
 
-
-# Keybinds
-macro index O "<shell-escape>mbsync -Va<enter>" "run mbsync to sync all mail"
-macro index A \
-    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
-    "mark all new as read"
-macro attach s '<save-entry> <bol>~/docs/attachments/<eol>' 'save attachment'
-# urlscan
-macro index,pager \cb "<pipe-message> urlscan<Enter>" \
-          "call urlscan to extract URLs out of a message"
-macro attach,compose \cb "<pipe-entry> urlscan<Enter>" \
-          "call urlscan to extract URLs out of a message"
-# unbind
+#Keybinds
+#unbind
 bind editor <Tab> complete-query
 bind index,pager i noop
 bind index,pager g noop
@@ -125,8 +118,8 @@ bind index l previous-entry
 bind index \; select-entry
 bind pager gg top
 bind index gg first-entry
-bind pager G bottom
 bind index G last-entry
+bind pager G bottom
 bind index,pager \Cu half-up
 bind index,pager \Cd half-down
 bind pager k next-line
@@ -135,8 +128,29 @@ bind pager K next-entry
 bind pager L previous-entry
 bind attach k next-entry
 bind attach l previous-entry
-bind index,pager \Ck sidebar-next
-bind index,pager \Cl sidebar-prev
-bind index,pager \Ce sidebar-open
+bind index,pager K sidebar-next
+bind index,pager L sidebar-prev
+bind index,pager E sidebar-open
 bind index,pager \Ch sidebar-toggle-visible
-bind index G imap-fetch-mail
+#bind index G imap-fetch-mail
+
+macro compose \Cp "<shell-escape>xclip -o -selection clipboard<enter>"
+
+
+
+#Macros
+macro index O "<shell-escape>mbsync -Va<enter>" "run mbsync to sync all mail"
+
+macro index A \
+    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "mark all new as read"
+
+macro attach s '<save-entry> <bol>~/docs/attachments/<eol>' 'save attachment'
+
+
+# urlscan
+macro index,pager \cb "<pipe-message> urlscan<Enter>" \
+          "call urlscan to extract URLs out of a message"
+
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" \
+          "call urlscan to extract URLs out of a message"

@@ -34,6 +34,26 @@ border_right=0
 border_bottom=0
 border_left=0
 
+[swap]
+command=free -m | awk 'NR>2{ printf "%5.0f<span color=\"#fb4934\">M]</span>\n", $3 }'
+interval=2
+label=<span color="#fb4934">SWP[</span>
+border=#fb4934
+border_top=0
+border_right=0
+border_bottom=0
+border_left=0
+
+[swap_free]
+command=free -m | awk 'NR>2{ printf "%5.0f<span color=\"#fb4934\">M]</span>\n", $4 }'
+interval=2
+label=<span color="#fb4934">SWP_FREE[</span>
+border=#fb4934
+border_top=0
+border_right=0
+border_bottom=0
+border_left=0
+
 #[arch_update]
 #command=checkupdates | wc -l
 #interval=once

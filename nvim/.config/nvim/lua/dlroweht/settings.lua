@@ -44,7 +44,7 @@ o.shiftwidth = 4
 o.softtabstop = 4
 o.list = false
 
-o.clipboard = "unnamedplus"
+o.clipboard = "unnamedplus,unnamed"
 
 o.ignorecase = true
 o.smartcase = true

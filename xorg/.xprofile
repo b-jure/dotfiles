@@ -3,16 +3,24 @@
 export GTK_THEME="Adwaita:dark"
 export QT_STYLE_OVERRIDE="Adwaita-Dark"
 export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
+export XPROFILE_LOG="/tmp/xprofile_startup.log"
 
-[[ "$USER_WM" == "dwm" ]] && slstatus &
-command -v picom && picom --config "$HOME/.config/picom/picom.conf" &
-command -v dunst && dunst &
+
+LOGSIZE=$(stat --printf="%B" $XPROFILE_LOG)
+if [ $LOGSIZE -gt 1000000 ]; then # log file size >1MiB ?
+    truncate -s0 $XPROFILE_LOG
+fi
+
+
+[ "$USER_WM" == "dwm" ] && slstatus &
+command -v picom && picom --config "$HOME/.config/picom/picom.conf" 2>>$XPROFILE_LOG &
+command -v dunst && dunst 2>>$XPROFILE_LOG &
 command -v transmission-daemon && transmission-daemon -f --log-level=error &
 #command -v element-desktop && element-desktop --hidden &
-command -v flameshot && flameshot &
-command -v nm-applet && nm-applet &
-command -v signal-desktop && signal-desktop &
-systemctl --user start change-wallpaper.timer
+command -v flameshot && flameshot 2>>$XPROFILE_LOG &
+command -v nm-applet && nm-applet 2>>$XPROFILE_LOG &
+command -v signal-desktop && signal-desktop 2>>$XPROFILE_LOG &
+systemctl --user start change-wallpaper.timer 2>>$XPROFILE_LOG
 xset r rate 150 60
 setxkbmap -option ''
 xset -dpms

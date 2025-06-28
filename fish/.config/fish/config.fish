@@ -86,7 +86,7 @@ end
 
 
 if havebin polybar
-    abbr -a pedit "$EDITOR $HOME/.config/polybar/panels/config.ini"
+    abbr -a pedit "$EDITOR $HOME/.config/polybar/config.ini"
 end
 
 
