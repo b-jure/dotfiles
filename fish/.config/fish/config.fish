@@ -80,6 +80,12 @@ if havebin magick
 end
 
 
+if havebin alarm
+    setenv ALARM_PLAYER mpv
+    setenv ALARM_AUDIO ~/.config/linux-scripts/alarm/alarm.mp3
+end
+
+
 if havebin rofi
     abbr -a redit "$EDITOR $HOME/.config/rofi/config.rasi"
 end
@@ -251,7 +257,7 @@ end
 
 
 if test -z "$WAYLAND_DISPLAY" &>/dev/null
-    abbr -a xinit "$EDITOR $HOME/.xinit"
+    abbr -a xinit "$EDITOR $HOME/.xinitrc"
 end
 
 

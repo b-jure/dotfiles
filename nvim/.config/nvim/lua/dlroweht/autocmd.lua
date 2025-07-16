@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = { "*.c", "*.h", "*.lua", "*.js", "*.py" },
+  pattern = { "*.c", "*.h", "*.lua", "*.py" },
   callback = function()
     local is_git = vim.fn.trim(vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null"))
     if is_git == "true" then -- in git repository?

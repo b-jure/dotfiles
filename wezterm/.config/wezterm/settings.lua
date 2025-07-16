@@ -77,6 +77,10 @@ function M.setup(wezterm, config)
         { family = "TX-02", weight = "Medium" },
         --{ family = "Berkeley Mono", weight = "Regular" },
         { family = "FiraCode Nerd Font Ret", weight = "Regular" },
+        { family = "Noto Sans CJK JP", weight = "Regular" },
+        { family = "Noto Sans CJK KR", weight = "Regular" },
+        { family = "Noto Sans CJK HK", weight = "Regular" },
+        { family = "Noto Sans CJK TC", weight = "Regular" },
     })
 
     -- disable ligatures

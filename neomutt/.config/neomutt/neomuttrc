@@ -134,6 +134,8 @@ bind index,pager E sidebar-open
 bind index,pager \Ch sidebar-toggle-visible
 #bind index G imap-fetch-mail
 
+folder-hook INBOX 'push "<limit>~N\n"'
+
 macro compose \Cp "<shell-escape>xclip -o -selection clipboard<enter>"
 
 
