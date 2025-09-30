@@ -5,7 +5,7 @@ function M.setup(wezterm, config)
     config.disable_default_key_bindings = true
 
     -- increase scrollback line limit
-    config.scrollback_lines = 10000
+    config.scrollback_lines = 100000
 
     -- enable hot reload
     config.automatically_reload_config = true

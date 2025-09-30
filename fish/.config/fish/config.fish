@@ -62,6 +62,7 @@ abbr -a se sudoedit
 abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
 abbr -a fsc sudoedit "/etc/fstab"
 abbr -a srm shred -u 
+abbr -a c clear
 
 
 if havebin magick
@@ -328,7 +329,7 @@ set fish_cursor_visual block blink
 set fish_vi_force_cursor 1
 
 # INSERT MODE
-bind -M insert -m default \ce forward-char -m insert
+bind -M insert -m default ctrl-e forward-char -m insert
 
 # DEFAULT MODE
 bind -M default j backward-char

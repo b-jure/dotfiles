@@ -143,76 +143,70 @@ syn keyword cscriptSuper super
 
 "-Operators-------{
 syn keyword cscriptOperator and or
-" greater than
-syn match cscriptSymbolOperator />\ze\%([^>=]\|\n\)/
-" shift right
-syn match cscriptSymbolOperator />>\ze\%([^>=]\|\n\)/
-" less than
-syn match cscriptSymbolOperator /<\ze\%([^<=]\|\n\)/
-" shift left
-syn match cscriptSymbolOperator /<<\ze\%([^<=]\|\n\)/
-" float division
-syn match cscriptSymbolOperator /\/\ze\%([^/=\*]\|\n\)/
-" integer division
-syn match cscriptSymbolOperator /\/\/\ze\%([^/=\*]\|\n\)/
-" multiplication
-syn match cscriptSymbolOperator /\*\ze\%([^\*=]\|\n\)/
-" exponentiation
-syn match cscriptSymbolOperator /\*\*\ze\%([^\*=]\|\n\)/
-" bitwise and
-syn match cscriptSymbolOperator /&\ze\%([^&=]\|\n\)/
-" bitwise or
-syn match cscriptSymbolOperator /|\ze\%([^|=]\|\n\)/
-" bitwise xor
-syn match cscriptSymbolOperator /\^\ze\%([^\^=]\|\n\)/
-" bitwise not
-syn match cscriptSymbolOperator /\~\+\ze\%([^=]\|\n\)/
-" logical not
-syn match cscriptSymbolOperator /!\+\ze\%([^=]\|\n\)/
-" modulo
-syn match cscriptSymbolOperator /%\ze\%([^%=]\|\n\)/
-" addition
-syn match cscriptSymbolOperator /+\ze\%([^+=]\|\n\)/
-" subtraction
-syn match cscriptSymbolOperator /-\ze\%([^-=]\|\n\)/
-" unary minus
-syn match cscriptSymbolOperator /-\+\ze\%([^=]\|\n\)/
-" assignment
-syn match cscriptSymbolOperator /=\ze\%([^=]\|\n\)/
-" equal
-syn match cscriptSymbolOperator /==\ze\%([^=]\|\n\)/
-" not equal
-syn match cscriptSymbolOperator /!=\ze\%([^=]\|\n\)/
-" less equal
-syn match cscriptSymbolOperator /<=\ze\%([^=]\|\n\)/
-" greater equal
-syn match cscriptSymbolOperator />=\ze\%([^=]\|\n\)/
-" concatenation
-syn match cscriptSymbolOperator /\.\.\ze\%([^\.=]\|\n\)/
-" varargs
-syn match cscriptSymbolOperator /\.\.\.\ze\%([^\.=]\|\n\)/
+syn match cscriptSymbolOperator />\ze\%([^>=,]\|\n\)/
+syn match cscriptSymbolOperator />>\ze\%([^>=,]\|\n\)/
+syn match cscriptSymbolOperator /<\ze\%([^<=,]\|\n\)/
+syn match cscriptSymbolOperator /<<\ze\%([^<=,]\|\n\)/
+syn match cscriptSymbolOperator /\/\ze\%([^/=\*,]\|\n\)/
+syn match cscriptSymbolOperator /\/\/\ze\%([^/=\*,]\|\n\)/
+syn match cscriptSymbolOperator /\*\ze\%([^\*=,]\|\n\)/
+syn match cscriptSymbolOperator /\*\*\ze\%([^\*=,]\|\n\)/
+syn match cscriptSymbolOperator /&\ze\%([^&=,]\|\n\)/
+syn match cscriptSymbolOperator /|\ze\%([^|=,]\|\n\)/
+syn match cscriptSymbolOperator /\^\ze\%([^\^=,]\|\n\)/
+syn match cscriptSymbolOperator /\~\+\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /!\+\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /%\ze\%([^%=,]\|\n\)/
+syn match cscriptSymbolOperator /+\ze\%([^+=,]\|\n\)/
+syn match cscriptSymbolOperator /-\ze\%([^-=,]\|\n\)/
+syn match cscriptSymbolOperator /-\+\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /=\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /==\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /!=\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /<=\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator />=\ze\%([^=,]\|\n\)/
+syn match cscriptSymbolOperator /\.\.\ze\%([^\.=,]\|\n\)/
+syn match cscriptSymbolOperator /\.\.\.\ze\%([^\.=,]\|\n\)/
+syn match cscriptSymbolOperator /,/
+" compound assignments
+syn match cscriptSymbolOperator /+=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /-=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /*=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /%=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /\/=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /&=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /|=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /\/\/=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /\*\*=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /<<=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator />>=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /\.\.=\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /++\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
+syn match cscriptSymbolOperator /--\ze\%([^,=+&%|\/><\*\.-]\|\n\)/
 "-----------------}
 
 "-Other----------_{
 syn match cscriptFunctionCall /\k\+\_s*(\@=/
 syn match cscriptSemicolon /;/
-syn match cscriptComma /,/
 syn match cscriptAttribute /<\_s*\%(close\|final\)\_s*>/
+syn match cscriptEmptyClosure /|\_s*|/
+syn region cscriptClosure transparent matchgroup=cscriptStatement start=/|\ze\_s*\h\+\_s*\%(,\_s*\h\+\_s*\)*/ end=/|/
 "-----------------}
 
 "-Metamethods-----{
 syn keyword cscriptMetaTag __getidx __setidx __gc __close __call __init
 syn keyword cscriptMetaTag __concat __mod __pow __add __sub __mul __div
 syn keyword cscriptMetaTag __shl __shr __band __bor __bxor __unm __bnot
-syn keyword cscriptMetaTag __eq __lt __le __name
+syn keyword cscriptMetaTag __eq __lt __le __name __metalist
 "-----------------}
 
 "-Basic library---{{
 syn keyword cscriptFunc error assert gc load loadfile runfile getmetalist
-syn keyword cscriptFunc setmetalist nextfield pairs ipairs pcall xpcall
-syn keyword cscriptFunc print printf warn len rawequal rawget rawset getargs
-syn keyword cscriptFunc tonum tostr typeof getclass getsuper range
-syn keyword cscriptFunc __G __ENV __VERSION
+syn keyword cscriptFunc setmetalist getmethods setmethods nextfield pairs
+syn keyword cscriptFunc ipairs pcall xpcall print printf warn len rawequal
+syn keyword cscriptFunc rawget rawset getargs tonum tostr typeof getclass
+syn keyword cscriptFunc clone unwrapmethod getsuper range
+syn keyword cscriptFunc __POSIX __WINDOWS __G __ENV __VERSION
 " metatag table keys
 syn match cscriptFunc /\<__MT>\ze[^\.]/
 syn match cscriptFunc /\<__MT\.getidx\>/
@@ -239,6 +233,7 @@ syn match cscriptFunc /\<__MT\.eq\>/
 syn match cscriptFunc /\<__MT\.lt\>/
 syn match cscriptFunc /\<__MT\.le\>/
 syn match cscriptFunc /\<__MT\.name\>/
+syn match cscriptFunc /\<__MT\.metalist\>/
 syn match cscriptFunc /\<__MT\.tostring\>/
 "-Package library-}{
 syn keyword cscriptFunc import
@@ -363,6 +358,7 @@ syn match cscriptFunc /\<debug\.cstacklimit\>/
 syn match cscriptFunc /\<debug\.maxstack\>/
 "-List library----}{
 syn match cscriptFunc /\<list\.len\>/
+syn match cscriptFunc /\<list\.enumerate\>/
 syn match cscriptFunc /\<list\.insert\>/
 syn match cscriptFunc /\<list\.remove\>/
 syn match cscriptFunc /\<list\.move\>/
@@ -370,8 +366,8 @@ syn match cscriptFunc /\<list\.new\>/
 syn match cscriptFunc /\<list\.flatten\>/
 syn match cscriptFunc /\<list\.concat\>/
 syn match cscriptFunc /\<list\.sort\>/
+syn match cscriptFunc /\<list\.shrink\>/
 syn match cscriptFunc /\<list\.isordered\>/
-syn match cscriptFunc /\<list\.enumerate\>/
 syn match cscriptFunc /\<list\.maxindex\>/
 "-UTF8 library----}{
 syn match cscriptFunc /\<utf8\.offset\>/
@@ -382,6 +378,7 @@ syn match cscriptFunc /\<utf8\.codes\>/
 syn match cscriptFunc /\<utf8\.charpattern\>/
 "-----------------}}
 
+hi def link cscriptEmptyClosure         cscriptClosure
 hi def link cscriptAttribute            StorageClass
 hi def link cscriptSemicolon            cscriptStatement
 hi def link cscriptIdentifier           NONE

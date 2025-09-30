@@ -79,7 +79,7 @@ require("smart-splits").setup({
 })
 
 -- moving between splits
-vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_left)
-vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_down)
-vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_up)
-vim.keymap.set("n", "<C-;>", require("smart-splits").move_cursor_right)
+vim.keymap.set({ "n", "x" }, "<C-j>", require("smart-splits").move_cursor_left)
+vim.keymap.set({ "n", "x" }, "<C-k>", require("smart-splits").move_cursor_down)
+vim.keymap.set({ "n", "x" }, "<C-l>", require("smart-splits").move_cursor_up)
+vim.keymap.set({ "n", "x" }, "<C-;>", require("smart-splits").move_cursor_right)

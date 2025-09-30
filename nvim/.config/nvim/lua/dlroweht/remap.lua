@@ -6,7 +6,6 @@ end
 vim.g.mapleader = " "
 
 -- enter command mode but in neovim window
--- WARNING: LSP bugg upon entering the window second time
 map_key("n", "<C-f>", ":<C-s>i")
 
 -- resize panes
@@ -84,9 +83,6 @@ map_key("n", "M", "q")
 -- no highlight
 map_key({ "n", "x", "v" }, "<leader>h", ":noh<CR>")
 
--- write (save)
-map_key("n", "<leader>w", ":w<CR>")
-
 -- Fix * (cursor stays stays on the first match)
 map_key("n", "*", "*N")
 
@@ -101,6 +97,9 @@ map_key("n", "<leader>u", "guiwe")
 -- remap directional delete
 map_key("n", "dl", "dk")
 map_key("n", "dk", "dj")
+
+-- save
+map_key("n", "<leader>w", "<Cmd>w<CR>")
 
 -- better command mode navigation
 map_key("c", "<C-a>", "<Cmd>normal! ^<CR>")

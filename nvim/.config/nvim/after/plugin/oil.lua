@@ -183,7 +183,7 @@ oil.setup({
   },
 })
 
-local uv = vim.uv;
+local uv = vim.uv
 
 local function isexec(fname)
   return uv.fs_access(fname, "x")
@@ -194,25 +194,29 @@ local function oil_err(msg)
 end
 
 local function run_file()
-  local cwd = oil.get_current_dir(0)
-  if not cwd then
-    oil_err("could not retrieve the current working directory")
-    return
+  local startdir = vim.fn.getcwd()
+  if not startdir then
+    oil_err("could not retrieve the starting directory")
+  else
+    local cwd = oil.get_current_dir(0)
+    if not cwd then
+      return oil_err("could not retrieve the current working directory")
+    end
+    if not uv.chdir(cwd) then
+      return oil_err("could not change current working directory")
+    end
+    local entry = oil.get_cursor_entry()
+    if not entry then
+      return oil_err("could not retrieve the entry under the cursor")
+    end
+    if not isexec(entry.name) then
+      return oil_err("file is not executable")
+    end
+    os.execute("./" .. entry.name)
+    if not uv.chdir(startdir) then
+      oil_error("could not go back to the starting directory")
+    end
   end
-  if not uv.chdir(cwd) then
-      oil_err("could not change current working directory")
-      return
-  end
-  local entry = oil.get_cursor_entry()
-  if not entry then
-    oil_err("could not retrieve the entry under the cursor")
-    return
-  end
-  if not isexec(entry.name) then
-    oil_err("file is not executable")
-    return
-  end
-  os.execute("./" .. entry.name)
 end
 
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

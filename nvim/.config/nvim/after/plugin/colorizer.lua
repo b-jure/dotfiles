@@ -1,4 +1,4 @@
 require("colorizer").setup({
-	"*",
-	"!oil",
+  "*",
+  "!oil",
 })

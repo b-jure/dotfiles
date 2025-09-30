@@ -1,10 +1,10 @@
-bind -M default \cN history-search-forward
-bind -M default \cP history-search-backward
+bind -M default ctrl-N history-search-forward
+bind -M default ctrl-P history-search-backward
 
-bind -M insert \cN history-search-forward
-bind -M insert \cP history-search-backward
+bind -M insert ctrl-N history-search-forward
+bind -M insert ctrl-P history-search-backward
 
-bind -k ic true
-bind -M default -k ic true
-bind -M insert -k ic true
-bind -M visual -k ic true
+#bind -K ic true
+#bind -M default -k ic true
+#bind -M insert -k ic true
+#bind -M visual -k ic true

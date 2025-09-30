@@ -109,6 +109,11 @@ require("lazy").setup({
         -- refer to the configuration section below
       },
     },
+    { -- CORDPRESENCE
+      "vyfor/cord.nvim",
+      build = ":Cord update",
+      -- opts = {}
+    },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

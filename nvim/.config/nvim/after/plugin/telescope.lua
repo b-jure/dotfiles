@@ -117,11 +117,19 @@ local function grep_c_headers()
   })
 end
 
+local function live_grep_sensitive()
+  builtin.live_grep({
+    additional_args = function()
+      return { "--case-sensitive" }
+    end,
+  })
+end
+
 keymap("n", "<leader>pp", open_cfg_files)
 keymap("n", "<leader>pk", builtin.keymaps)
 keymap("n", "<C-p>", builtin.find_files)
 keymap("n", "<leader>ph", builtin.help_tags)
-keymap("n", "<leader>ps", builtin.live_grep)
+keymap("n", "<leader>ps", live_grep_sensitive)
 keymap("n", "<leader>pr", grep_reg_string)
 keymap("n", "<leader>pm", open_man_pages)
 keymap("n", "<leader>pc", open_c_headers)

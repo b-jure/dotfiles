@@ -105,14 +105,14 @@ function fzf_key_bindings
         end
     end
 
-    bind -M default \ct fzf-cd-widget
-    bind -M default \cr fzf-history-widget
-    bind -M default \cf fzf-file-widget
+    bind -M default ctrl-t fzf-cd-widget
+    bind -M default ctrl-r fzf-history-widget
+    bind -M default ctrl-f fzf-file-widget
 
     if bind -M insert >/dev/null 2>&1
-        bind -M insert \ct fzf-cd-widget
-        bind -M insert \cr fzf-history-widget
-        bind -M insert \cf fzf-file-widget
+        bind -M insert ctrl-t fzf-cd-widget
+        bind -M insert ctrl-r fzf-history-widget
+        bind -M insert ctrl-f fzf-file-widget
     end
 
     function __fzf_parse_commandline -d 'Parse the current command line token and return split of existing filepath, fzf query, and optional -option= prefix'

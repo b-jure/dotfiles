@@ -56,10 +56,7 @@ bindsym $m+f fullscreen toggle
 bindsym $m+q kill
 
 # change/toggle layouts
-bindsym $m+s layout stacking
-bindsym $m+w layout tabbed
-bindsym $m+e layout default
-bindsym $m+x layout toggle stacking tabbed splith
+bindsym $m+y layout toggle stacking tabbed splith
 
 # scratchpad
 bindsym $m+minus move scratchpad
@@ -94,8 +91,8 @@ bindsym $m+Control+l resize grow up 10
 bindsym $m+Control+semicolon resize grow right 10
 
 # mark/goto
-bindsym $m+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
-bindsym $m+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+#bindsym $m+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+#bindsym $m+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 # reload/restart/exit i3
 bindsym $m+Shift+c reload
@@ -132,7 +129,7 @@ bindsym $win+n exec /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec /usr/bin/dunstctl close
 bindsym $win+s exec /usr/bin/flameshot gui
 bindsym $win+f exec GTK_CSD=0 /usr/bin/librewolf
-bindsym $win+d exec /usr/bin/discord
+bindsym $win+d exec /usr/bin/vesktop
 bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
 bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
 
@@ -141,25 +138,4 @@ title_align center
 default_border pixel 2
 smart_borders on
 
-# use polybar instead of i3status bar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-
-# i3status
-#bar {
-#    colors {
-#        background #282828
-#        statusline #282828
-#        separator #fabd2f
-#
-#        focused_workspace  #282828 #282828 #ff8700
-#        active_workspace   #282828 #282828 #ffffff
-#        inactive_workspace #282828 #282828 #888888
-#        urgent_workspace   #282828 #fb4934 #ffffff
-#        binding_mode       #282828 #fb4934 #ffffff
-#    }
-#    font $myfont
-#    mode dock
-#    workspace_buttons yes
-#    strip_workspace_numbers yes
-#    status_command i3blocks
-#}
