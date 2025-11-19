@@ -66,10 +66,6 @@ bindsym $m+plus scratchpad show
 bindsym Mod1+space floating toggle
 # bindsym $m+space focus mode_toggle
 
-# focus parent/child container
-bindsym $m+a focus parent
-bindsym $m+d focus child
-
 # switch to workspace
 bindsym $m+bracketleft workspace $ws1
 bindsym $m+bracketright workspace $ws2
@@ -129,7 +125,7 @@ bindsym $win+n exec /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec /usr/bin/dunstctl close
 bindsym $win+s exec /usr/bin/flameshot gui
 bindsym $win+f exec GTK_CSD=0 /usr/bin/librewolf
-bindsym $win+d exec /usr/bin/vesktop
+bindsym $win+d exec GTK_CSD=0 /usr/bin/vesktop
 bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
 bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
 

@@ -18,6 +18,10 @@ map_key({ "n", "i" }, "<M-I>", "<Esc>:horizontal resize -5<CR>")
 map_key("n", "[q", "<cmd>cn<CR>")
 map_key("n", "]q", "<cmd>cp<CR>")
 
+-- go to next/prev diagnostic (+ display the message window)
+map_key("n", "[d", vim.diagnostic.goto_next)
+map_key("n", "]d", vim.diagnostic.goto_prev)
+
 -- set/unset spelling
 map_key("n", "[os", "<cmd>set spell<CR>")
 map_key("n", "]os", "<cmd>set nospell<CR>")

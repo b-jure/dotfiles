@@ -12,7 +12,6 @@ require("telescope").setup({
       "--with-filename",
       "--line-number",
       "--column",
-      "-s",
     },
     mappings = {
       i = { ["<c-t>"] = open_with_trouble },
@@ -75,9 +74,7 @@ require("telescope").load_extension("fzf")
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "*.tex", "*.md" },
-  callback = function()
-    require("telescope").load_extension("bibtex")
-  end,
+  callback = function() require("telescope").load_extension("bibtex") end,
 })
 
 local builtin = require("telescope.builtin")
@@ -99,7 +96,7 @@ local function grep_reg_string()
 end
 
 local function open_man_pages()
-  return builtin.man_pages({ sections = { "2", "3" } })
+  return builtin.man_pages({ sections = { "ALL" } })
 end
 
 local function open_c_headers()
@@ -119,9 +116,13 @@ end
 
 local function live_grep_sensitive()
   builtin.live_grep({
-    additional_args = function()
-      return { "--case-sensitive" }
-    end,
+    additional_args = function() return { "--case-sensitive" } end,
+  })
+end
+
+local function live_grep_nonsensitive()
+  builtin.live_grep({
+    additional_args = function() return { "--ignore-case" } end,
   })
 end
 
@@ -130,6 +131,7 @@ keymap("n", "<leader>pk", builtin.keymaps)
 keymap("n", "<C-p>", builtin.find_files)
 keymap("n", "<leader>ph", builtin.help_tags)
 keymap("n", "<leader>ps", live_grep_sensitive)
+keymap("n", "<leader>pS", live_grep_nonsensitive)
 keymap("n", "<leader>pr", grep_reg_string)
 keymap("n", "<leader>pm", open_man_pages)
 keymap("n", "<leader>pc", open_c_headers)

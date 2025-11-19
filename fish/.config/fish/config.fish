@@ -273,7 +273,7 @@ end
 
 
 if havebin picom
-    abbr -a pcf sudoedit "/etc/xdg/picom.conf"
+    abbr -a pcf "$EDITOR $HOME/.config/picom/picom.conf"
 end
 
 
@@ -318,8 +318,6 @@ end
 
 setenv STEAM_COMPAT_CLIENT_INSTALL_PATH ~/.local/share/Steam/
 setenv STEAM_COMPAT_DATA_PATH ~/.local/share/Steam/steamapps/compatdata
-abbr -a proton "\"/home/dlroweht/.local/share/Steam/steamapps/common/Proton 9.0 (Beta)/proton\""
-
 
 fish_vi_key_bindings
 set fish_cursor_default block blink

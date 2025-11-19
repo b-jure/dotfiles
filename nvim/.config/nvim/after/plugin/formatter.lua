@@ -40,8 +40,8 @@ require("formatter").setup({
     js = {
       function()
         return {
-          exe = "clang-format",
-          args = { "-i" },
+          exe = "prettier",
+          args = { "-w" },
           stdin = false,
         }
       end,

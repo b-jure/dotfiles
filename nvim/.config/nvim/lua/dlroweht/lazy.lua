@@ -109,10 +109,13 @@ require("lazy").setup({
         -- refer to the configuration section below
       },
     },
-    { -- CORDPRESENCE
-      "vyfor/cord.nvim",
-      build = ":Cord update",
-      -- opts = {}
+    { -- MARKDOWN-PREVIEW
+      "iamcco/markdown-preview.nvim",
+      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+      ft = { "markdown" },
+      build = function()
+        vim.fn["mkdp#util#install"]()
+      end,
     },
   },
   -- Configure any other settings here. See the documentation for more details.
