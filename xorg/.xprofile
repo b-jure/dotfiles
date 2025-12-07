@@ -21,6 +21,7 @@ command -v flameshot && flameshot 2>>$XPROFILE_LOG &
 command -v nm-applet && nm-applet 2>>$XPROFILE_LOG &
 command -v signal-desktop && signal-desktop 2>>$XPROFILE_LOG &
 command -v xrandr && xrandr --refresh 120
+command -v twitch-indicator && twitch-indicator &
 feh --no-fehbg --bg-fill ~/pics/batman.jpg
 #systemctl --user start change-wallpaper.timer 2>>$XPROFILE_LOG
 xset r rate 150 60

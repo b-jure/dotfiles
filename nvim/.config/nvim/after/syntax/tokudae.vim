@@ -85,15 +85,15 @@ syn match tokudaeOctal /\<0\o[0-7_]*\>/ contains=tokudaeOctalZero
 syn match tokudaeOctalZero contained /\<0/
 
 " decimal floating point number, with dot, optional exponent
-syn match tokudaeFloat /\<\d[[:digit:]_]*\.\d*\%([eE][-+]\=\d[[:digit:]_]*\)\=\>/
+syn match tokudaeFloat /\<\d[[:digit:]_]*\.\d*\%([eE][-+]\?\d[[:digit:]_]*\)\?\>/
 " decimal floating point number, starting with a dot, optional exponent
-syn match tokudaeFloat /\.\d\+\%([eE][-+]\=\d[[:digit:]_]*\)\=\>/
+syn match tokudaeFloat /\.\d\+\%([eE][-+]\?\d[[:digit:]_]*\)\?\>/
 " decimal floating point number, without dot, with exponent
-syn match tokudaeFloat /\<\d[_0-9]*[eE][-+]\=\d[[:digit:]_]*\>/
+syn match tokudaeFloat /\<\d[[:digit:]_]*[eE][-+]\?\d[[:digit:]_]*\>/
 " hexadecimal foating point number, optional leading digits, with dot, with exponent
-syn match tokudaeFloat /\<0[xX]\x[[:xdigit:]_]*\.\x\+[pP][-+]\=\d[[:digit:]_]*\>/
+syn match tokudaeFloat /\<0[xX]\%(\x[[:xdigit:]_]*\)\?\.\x\+[pP][-+]\?\d[[:digit:]_]*\>/
 " hexadecimal floating point number, with leading digits, optional dot, with exponent
-syn match tokudaeFloat /\<0x\x[[:digit:]_]*\.\=[pP][-+]\=\d[[:digit:]_]*\>/
+syn match tokudaeFloat /\<0[xX]\x[[:xdigit:]_]*\.\?[pP][-+]\?\d[[:digit:]_]*\>/
 "-----------------}
 
 "-Keywords--------{
@@ -203,13 +203,16 @@ syn keyword tokudaeMetaTag __shl __shr __band __bor __bxor __unm __bnot
 syn keyword tokudaeMetaTag __eq __lt __le __name
 "-----------------}
 
+"-Environment-----{
+syn keyword tokudaeMetaTag __ENV
+"-----------------}
+
 "-Basic library---{{
-syn keyword tokudaeFunc error assert gc load loadfile runfile getmetatable
-syn keyword tokudaeFunc setmetatable getmethods setmethods nextfield fields
-syn keyword tokudaeFunc indices pcall xpcall print printf warn len rawequal
+syn keyword tokudaeFunc clone error assert gc load loadfile runfile getmetatable
+syn keyword tokudaeFunc setmetatable unwrapmethod getmethods setmethods nextfield
+syn keyword tokudaeFunc fields indices pcall xpcall print printf warn len rawequal
 syn keyword tokudaeFunc rawget rawset getargs tonum tostr typeof getclass
-syn keyword tokudaeFunc clone unwrapmethod getsuper range
-syn keyword tokudaeFunc __POSIX __WINDOWS __G __ENV __VERSION
+syn keyword tokudaeFunc getsuper range __G __VERSION __POSIX __WINDOWS
 "-Package library-}{
 syn keyword tokudaeFunc import
 syn match tokudaeFunc /\<package\.loadlib\>/
@@ -242,6 +245,10 @@ syn match tokudaeFunc /\<string\.byte\>/
 syn match tokudaeFunc /\<string\.bytes\>/
 syn match tokudaeFunc /\<string\.char\>/
 syn match tokudaeFunc /\<string\.cmp\>/
+syn match tokudaeFunc /\<string\.dump\>/
+syn match tokudaeFunc /\<string\.pack\>/
+syn match tokudaeFunc /\<string\.packsize\>/
+syn match tokudaeFunc /\<string\.unpack\>/
 syn match tokudaeFunc /\<string\.ascii_uppercase\>/
 syn match tokudaeFunc /\<string\.ascii_lowercase\>/
 syn match tokudaeFunc /\<string\.ascii_letters\>/
@@ -329,11 +336,8 @@ syn match tokudaeFunc /\<debug\.setlocal\>/
 syn match tokudaeFunc /\<debug\.setupvalue\>/
 syn match tokudaeFunc /\<debug\.traceback\>/
 syn match tokudaeFunc /\<debug\.stackinuse\>/
-syn match tokudaeFunc /\<debug\.cstacklimit\>/
 syn match tokudaeFunc /\<debug\.maxstack\>/
 "-List library----}{
-syn match tokudaeFunc /\<list\.len\>/
-syn match tokudaeFunc /\<list\.enumerate\>/
 syn match tokudaeFunc /\<list\.insert\>/
 syn match tokudaeFunc /\<list\.remove\>/
 syn match tokudaeFunc /\<list\.move\>/
@@ -341,9 +345,8 @@ syn match tokudaeFunc /\<list\.new\>/
 syn match tokudaeFunc /\<list\.flatten\>/
 syn match tokudaeFunc /\<list\.concat\>/
 syn match tokudaeFunc /\<list\.sort\>/
-syn match tokudaeFunc /\<list\.shrink\>/
 syn match tokudaeFunc /\<list\.isordered\>/
-syn match tokudaeFunc /\<list\.maxindex\>/
+syn match tokudaeFunc /\<list\.shrink\>/
 "-UTF8 library----}{
 syn match tokudaeFunc /\<utf8\.offset\>/
 syn match tokudaeFunc /\<utf8\.codepoint\>/
@@ -355,7 +358,7 @@ syn match tokudaeFunc /\<utf8\.charpattern\>/
 
 syn match tokudaeOptionalSeparator /::/
 
-hi def link tokudaeOptionalSeparator    NONE
+hi def link tokudaeOptionalSeparator    PreProc
 hi def link tokudaeClosurePipe          tokudaeStatement 
 hi def link tokudaeAttribute            StorageClass
 hi def link tokudaeSemicolon            tokudaeStatement

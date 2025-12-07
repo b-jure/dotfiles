@@ -1,6 +1,3 @@
-vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
-vim.cmd("autocmd FileType * set cindent")
-
 local function get_visual_selection_range()
   local start_pos = vim.fn.getpos("v")
   local end_pos = vim.fn.getpos(".")

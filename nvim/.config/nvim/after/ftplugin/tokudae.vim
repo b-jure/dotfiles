@@ -31,7 +31,7 @@ setlocal fo-=t fo+=croql
 
 " Set 'comments' to format dashed lists in comments.
 " Also include ///, used for Doxygen.
-setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://,:#
+setlocal comments=s1:/*,mb:*,ex:*/,:///,b:#
 
 if (has("gui_win32") || has("gui_gtk")) && !exists("b:browsefilter")
     let b:browsefilter = "Tokudae Source Files (*.toku)\t*.toku\n"

@@ -2,7 +2,14 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  local out = vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--branch=stable",
+    lazyrepo,
+    lazypath,
+  })
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
@@ -111,10 +118,27 @@ require("lazy").setup({
     },
     { -- MARKDOWN-PREVIEW
       "iamcco/markdown-preview.nvim",
-      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+      cmd = {
+        "MarkdownPreviewToggle",
+        "MarkdownPreview",
+        "MarkdownPreviewStop",
+      },
       ft = { "markdown" },
-      build = function()
-        vim.fn["mkdp#util#install"]()
+      build = function() vim.fn["mkdp#util#install"]() end,
+    },
+    { -- COMPILE-MODE
+      "ej-shafran/compile-mode.nvim",
+      branch = "latest",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        { "m00qek/baleia.nvim", tag = "v1.3.0" },
+      },
+      config = function()
+        vim.g.compile_mode = {
+          default_command = "make -B -j12",
+          recompile_no_fail = true,
+          baleia_setup = true,
+        }
       end,
     },
   },

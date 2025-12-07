@@ -19,12 +19,13 @@ o.signcolumn = "number"
 o.cursorline = false
 o.cursorlineopt = "screenline"
 o.cedit = "<C-s>"
+o.cursorline = true
 
 -- indentation
 o.cindent = true
 o.cinkeys = "0{,0},0),0],:,!^F,o,O,e"
 o.indentkeys = "0{,0},0),0],:,!^F,o,O,e"
-o.cinoptions = "l1,(0,W2,#1"
+o.cinoptions = "l1,W2,#0"
 o.autoindent = false
 
 -- tabs/look

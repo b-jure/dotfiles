@@ -56,7 +56,7 @@ bindsym $m+f fullscreen toggle
 bindsym $m+q kill
 
 # change/toggle layouts
-bindsym $m+y layout toggle stacking tabbed splith
+bindsym $m+y layout toggle tabbed splith
 
 # scratchpad
 bindsym $m+minus move scratchpad
