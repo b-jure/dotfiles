@@ -1,0 +1,3 @@
+# Give GPU temp a stable device path
+# AMD Navi 10 (Radeon RX 5600 OEM/5600 XT / 5700/5700 XT]
+ACTION=="add", SUBSYSTEM=="hwmon", ATTRS{vendor}=="0x1002", ATTRS{device}=="0x731f", RUN+="/bin/sh -c 'ln -s /sys$devpath/temp2_input /dev/gpu_temp'"

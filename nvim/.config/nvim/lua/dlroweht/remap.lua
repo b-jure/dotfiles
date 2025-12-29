@@ -1,5 +1,5 @@
 local function map_key(modes, k, v)
-    vim.keymap.set(modes, k, v, { noremap = true, silent = true })
+  vim.keymap.set(modes, k, v, { noremap = true, silent = true })
 end
 
 -- <leader> key
@@ -102,19 +102,17 @@ map_key("n", "<leader>u", "guiwe")
 map_key("n", "dl", "dk")
 map_key("n", "dk", "dj")
 
--- save
-map_key("n", "<leader>w", "<Cmd>w<CR>")
+-- save and format
+map_key("n", "<leader>w", "<Cmd>w<CR><Cmd>Format<CR>")
 
 -- better command mode navigation
-map_key("c", "<C-a>", "<Cmd>normal! ^<CR>")
-map_key("c", "<C-e>", "<Cmd>normal! $<CR>")
 map_key("c", "<C-b>", "<Cmd>call feedkeys('<Left>')<CR>")
 map_key("c", "<C-f>", "<Cmd>call feedkeys('<Right>')<CR>")
 map_key("c", "<C-j>", "<Cmd>call feedkeys('<S-Left>')<CR>")
 map_key("c", "<C-;>", "<Cmd>call feedkeys('<S-Right>')<CR>")
 
 -- insert newline without leaving normal mode
-map_key("n", "<leader>n", "o<Esc>");
+map_key("n", "<leader>n", "o<Esc>")
 
 -- pane manipulation
 map_key({ "n", "v" }, "<C-w>j", "<C-w>H")
@@ -123,7 +121,7 @@ map_key({ "n", "v" }, "<C-w>l", "<C-w>K")
 map_key({ "n", "v" }, "<C-w>;", "<C-w>L")
 
 -- wildmenu selection confirmation
-vim.keymap.set('c', '<Space>', function()
+vim.keymap.set("c", "<Space>", function()
   if vim.fn.wildmenumode() == 1 then
     return "<C-y>"
   else
@@ -136,7 +134,7 @@ local function revchars(lines, start_pos, end_pos)
   local first_line = start_pos[2]
   local nlines = #lines
   for i = 1, nlines do
-    local linenr = (first_line-1) + i
+    local linenr = (first_line - 1) + i
     local line = lines[i]
     local revpart, suffix, prefix
     if i == 1 then -- first line?
@@ -170,7 +168,7 @@ local function revlines(lines, start_pos)
   local first_line = start_pos[2]
   local nlines = #lines
   for i = 1, nlines do
-    vim.fn.setline((first_line-1) + i, lines[i]:reverse())
+    vim.fn.setline((first_line - 1) + i, lines[i]:reverse())
   end
 end
 
@@ -179,7 +177,7 @@ local function revcharsbox(lines, start_pos, end_pos)
   local first_line = start_pos[2]
   local nlines = #lines
   for i = 1, nlines do
-    local linenr = (first_line-1) + i
+    local linenr = (first_line - 1) + i
     local line = lines[i]
     local scol = (start_pos[3] > #line) and #line or start_pos[3]
     local ecol = (end_pos[3] > #line) and #line or end_pos[3]
@@ -190,41 +188,40 @@ local function revcharsbox(lines, start_pos, end_pos)
   end
 end
 
-
 local function get_positions_and_mode()
-    local mode = vim.fn.mode()
-    local start_pos = vim.fn.getpos("v")
-    local end_pos = vim.fn.getpos(".")
+  local mode = vim.fn.mode()
+  local start_pos = vim.fn.getpos("v")
+  local end_pos = vim.fn.getpos(".")
 
-    -- Swap positions in case selection start line is greater then the
-    -- cursor position, or the lines are same but selection start column
-    -- is greater than the cursor column
-    if (start_pos[2] > end_pos[2]) or
-       (start_pos[2] == end_pos[2] and start_pos[3] > end_pos[3]) then
-      local temp = start_pos
-      start_pos = end_pos
-      end_pos = temp
-    end
+  -- Swap positions in case selection start line is greater then the
+  -- cursor position, or the lines are same but selection start column
+  -- is greater than the cursor column
+  if
+    (start_pos[2] > end_pos[2])
+    or (start_pos[2] == end_pos[2] and start_pos[3] > end_pos[3])
+  then
+    local temp = start_pos
+    start_pos = end_pos
+    end_pos = temp
+  end
 
-    return mode, start_pos, end_pos
+  return mode, start_pos, end_pos
 end
 
 function vim.g.dlroweht_revchars()
-    local mode, start_pos, end_pos = get_positions_and_mode()
-    local lines = vim.fn.getline(start_pos[2], end_pos[2])
-    if mode == "v" then -- visual mode?
-        revchars(lines, start_pos, end_pos)
-    elseif mode == "V" then -- visual line mode?
-        revlines(lines, start_pos)
-    elseif mode == "\22" then -- visual block mode?
-        revcharsbox(lines, start_pos, end_pos)
-    end
+  local mode, start_pos, end_pos = get_positions_and_mode()
+  local lines = vim.fn.getline(start_pos[2], end_pos[2])
+  if mode == "v" then -- visual mode?
+    revchars(lines, start_pos, end_pos)
+  elseif mode == "V" then -- visual line mode?
+    revlines(lines, start_pos)
+  elseif mode == "\22" then -- visual block mode?
+    revcharsbox(lines, start_pos, end_pos)
+  end
 end
 
 vim.api.nvim_set_keymap("v", "<Space>r", "", {
-  callback = function()
-    vim.g.dlroweht_revchars()
-  end
+  callback = function() vim.g.dlroweht_revchars() end,
 })
 
 function vim.g.dlroweht_terminate()
@@ -233,16 +230,14 @@ function vim.g.dlroweht_terminate()
     local lines = vim.fn.getline(start_pos[2], end_pos[2])
     local nlines = #lines
     for i = 1, nlines do
-      vim.fn.setline((start_pos[2]-1) + i, lines[i] .. ";")
+      vim.fn.setline((start_pos[2] - 1) + i, lines[i] .. ";")
     end
     local key = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
     vim.api.nvim_feedkeys(key, "v", false)
-    vim.api.nvim_win_set_cursor(0, {start_pos[2], start_pos[3]})
+    vim.api.nvim_win_set_cursor(0, { start_pos[2], start_pos[3] })
   end
 end
 
 vim.api.nvim_set_keymap("v", "<Space>;", "", {
-  callback = function()
-    vim.g.dlroweht_terminate()
-  end
+  callback = function() vim.g.dlroweht_terminate() end,
 })

@@ -1,0 +1,3 @@
+# Give CPU temp a stable device path
+# AMD Ryzen 5 3600 (Matisse Device 24: Function 3)
+ACTION=="add", SUBSYSTEM=="hwmon", ATTRS{vendor}=="0x1022", ATTRS{device}=="0x1443", RUN+="/bin/sh -c 'ln -s /sys$devpath/temp1_input /dev/cpu_temp'"

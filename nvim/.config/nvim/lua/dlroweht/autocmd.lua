@@ -16,7 +16,9 @@ local function remove_qf_item()
   local qf_all = vim.fn.getqflist()
   table.remove(qf_all, cur_qf_idx)
   vim.fn.setqflist(qf_all, "r")
-  if cur_qf_idx > 1 then vim.fn.execute(tostring(cur_qf_idx) .. "cfirst") end
+  if cur_qf_idx > 1 then
+    vim.fn.execute(tostring(cur_qf_idx) .. "cfirst")
+  end
   vim.cmd("copen")
 end
 
@@ -30,7 +32,9 @@ local function remove_qf_visual()
       table.remove(qf_all, s)
     end
     vim.fn.setqflist(qf_all, "r")
-    if s > 1 then vim.fn.execute(tostring(s) .. "cfirst") end
+    if s > 1 then
+      vim.fn.execute(tostring(s) .. "cfirst")
+    end
     vim.cmd("copen")
   end
 end
@@ -59,6 +63,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("User", {
+  pattern = "CompilationFinished",
+  callback = function(ev)
+    if ev.code ~= 0 then -- compilation failed?
+      require("compile-mode").first_error({ count = 1 }) -- jump to first error
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   pattern = { "*.c", "*.h", "*.lua", "*.py" },
   callback = function()
@@ -73,4 +86,10 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
       end
     end
   end,
+})
+
+-- set filetype to 'systemd' for systemd timers and services
+vim.api.nvim_create_autocmd({ "BufRead" }, {
+  pattern = { "*.timer", "*.service" },
+  callback = function() vim.bo[0].filetype = "systemd" end,
 })

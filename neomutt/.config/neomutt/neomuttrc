@@ -88,9 +88,7 @@ named-mailboxes Inbox "+Inbox"
 named-mailboxes Sent "+[Gmail]/Sent Mail"
 named-mailboxes Drafts "+[Gmail]/Drafts"
 named-mailboxes Trash "+[Gmail]/Trash"
-named-mailboxes Linux-GCC "+/Linux-GCC"
 named-mailboxes Lua "+/Lua"
-named-mailboxes Isync-devel "+/Isync-devel"
 
 #Keybinds
 #unbind

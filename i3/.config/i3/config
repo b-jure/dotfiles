@@ -95,39 +95,42 @@ bindsym $m+Shift+c reload
 bindsym $m+Shift+r restart
 bindsym $m+Shift+e exit
 # spawn new terminal
-bindsym $m+Return exec /usr/bin/wezterm
+bindsym $m+Return exec --no-startup-id /usr/bin/wezterm
 
 # run rofi
 bindsym $m+backslash --release exec --no-startup-id rofi -show combi -modes combi
 # run rofi calc mode
 bindsym $win+c --release exec rofi --no-startup-id -show calc -modi calc -no-show-match -terse -no-sort -calc-command "echo -n '{result}' | xclip -selection clipboard"
 # run passmenu
-bindsym $m+Shift+backslash exec /usr/bin/passmenu -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
+bindsym $m+Shift+backslash exec --no-startup-id /usr/bin/passmenu -fn $font -nb "#282828" -nf "#a89984" -sb "#282828" -sf "#ff8700"
 
 # sound volume control
-bindsym $m+comma exec /usr/local/bin/pavc down 10 $sinkdev
-bindsym $m+period exec /usr/local/bin/pavc up 10 $sinkdev
-bindsym $m+slash exec /usr/local/bin/pavc toggle $sinkdev
+bindsym $m+comma exec --no-startup-id /usr/local/bin/pavc down 10 $sinkdev
+bindsym $m+period exec --no-startup-id /usr/local/bin/pavc up 10 $sinkdev
+bindsym $m+slash exec --no-startup-id /usr/local/bin/pavc toggle $sinkdev
 
 # playback control
-bindsym Control+comma exec /usr/bin/playerctl -a previous
-bindsym Control+period exec /usr/bin/playerctl -a next
-bindsym Control+slash exec /usr/bin/playerctl -a play-pause
+bindsym Control+comma exec --no-startup-id /usr/bin/playerctl -a previous
+bindsym Control+period exec --no-startup-id /usr/bin/playerctl -a next
+bindsym Control+slash exec --no-startup-id /usr/bin/playerctl -a play-pause
 
 # toggle keyboard layout (hr/us)
-bindsym F12 exec ~/.config/linux-scripts/togglelayout.sh
+bindsym F12 exec --no-startup-id ~/.config/linux-scripts/togglelayout.sh
 
 # windows key binds
-bindsym $m+Pause exec /usr/bin/shutdown -h now
-bindsym $m+Scroll_Lock exec /usr/bin/shutdown -h -r now
-bindsym $win+a exec ~/.config/linux-scripts/audiostream.sh
-bindsym $win+n exec /usr/bin/dunstctl history-pop
-bindsym $win+$m+n exec /usr/bin/dunstctl close
-bindsym $win+s exec /usr/bin/flameshot gui
+bindsym $m+Pause exec --no-startup-id /usr/bin/shutdown -h now
+bindsym $m+Scroll_Lock exec --no-startup-id /usr/bin/shutdown -h -r now
+#bindsym $win+a exec ~/.config/linux-scripts/audiostream.sh
+bindsym $win+n exec --no-startup-id /usr/bin/dunstctl history-pop
+bindsym $win+$m+n exec --no-startup-id /usr/bin/dunstctl close
+bindsym $win+s exec --no-startup-id /usr/bin/flameshot gui
 bindsym $win+f exec GTK_CSD=0 /usr/bin/librewolf
 bindsym $win+d exec GTK_CSD=0 /usr/bin/vesktop
 bindsym $win+g exec sudo /usr/bin/corectrl --toggle-window-visibility
 bindsym $win+l exec GTK_CSD=0 /usr/bin/lutris
+bindsym $win+t exec --no-startup-id /usr/bin/xsct -t
+bindsym $win+b exec --no-startup-id /usr/bin/xsct -d 0 0.05
+bindsym $win+v exec --no-startup-id /usr/bin/xsct -d 0 -0.05
 
 workspace_layout tabbed
 title_align center

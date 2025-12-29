@@ -15,11 +15,18 @@ end
 
 setenv SHELL /usr/bin/fish
 setenv ASAN_OPTIONS "log_path=stderr"
+setenv GAMES_DIR "$HOME/games/"
 
 
 # helper
 function havebin -a bin
     return (command -v $bin >/dev/null)
+end
+
+
+function reporterr -a msg
+    set -l currline "$(commandline -L)"
+    echo "fish:$currline: $msg"
 end
 
 
@@ -37,7 +44,7 @@ if havebin nvim
 
     setenv EDITOR nvim
     setenv MANPAGER "nvim +Man!"
-    abbr -a e $EDITOR
+    abbr -a e "$EDITOR"
     abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
     abbr -a vimrc "$EDITOR $HOME/.config/nvim"
 
@@ -48,21 +55,13 @@ if havebin nvim
         end
         $EDITOR $orgfile
     end
-    abbr -a rmnote rm $orgfile
+    abbr -a rmnote "rm $orgfile"
 
     set texdir "$HOME/tex"
     set texfile "$HOME/tex/new.tex"
-    abbr -a texf nvim $texfile
-    abbr -a rmtexf rm $texfile
+    abbr -a texf "nvim $texfile"
+    abbr -a rmtexf "rm $texfile"
 end
-
-
-abbr --add dotdot --regex '^\.\.+$' --function multicd
-abbr -a se sudoedit
-abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
-abbr -a fsc sudoedit "/etc/fstab"
-abbr -a srm shred -u 
-abbr -a c clear
 
 
 if havebin magick
@@ -98,17 +97,17 @@ end
 
 
 if havebin wget
-    abbr -a wgetall wget --wait=1 \
-                         --level=inf \
-                         --limit-rate=20M \
-                         --recursive \
-                         --page-requisite \
-                         --user-agent=Mozilla \
-                         --no-parent \
-                         --convert-links \
-                         --adjust-extension \
-                         --no-clobber \
-                         -e robots=off
+    abbr -a wgetall "wget --wait=1
+                         --level=inf
+                         --limit-rate=20M
+                         --recursive
+                         --page-requisite
+                         --user-agent=Mozilla
+                         --no-parent
+                         --convert-links
+                         --adjust-extension
+                         --no-clobber
+                         -e robots=off"
 end
 
 
@@ -121,12 +120,7 @@ end
 
 
 if havebin make
-    abbr -a make make -j12
-end
-
-
-if havebin wine
-    set MYGAMESDIR "$HOME/.wine/drive_c/users/$USER/Games"
+    abbr -a make "make -j12"
 end
 
 
@@ -144,7 +138,7 @@ end
 # Run ssh-agent and avoid running multiple agents
 function sshauth
     if not havebin ssh-agent
-        echo "Can't find ssh-agent!"
+        reporterr "have 'sshauth' but could not find 'ssh-agent'"
         return
     end
     set sshdir "$HOME/.ssh"
@@ -165,7 +159,7 @@ end
 
 
 if havebin dunst
-    abbr -a dunstrc $EDITOR "$HOME/.config/dunst/dunstrc"
+    abbr -a dunstrc "$EDITOR $HOME/.config/dunst/dunstrc"
 end
 
 
@@ -175,35 +169,33 @@ end
 
 
 if havebin xclip
-    abbr -a xp xclip -selection cliboard -o
-    abbr -a xc xclip -selection clipboard
+    abbr -a xp "xclip -selection cliboard -o"
+    abbr -a xc "xclip -selection clipboard"
 end
 
 
 if havebin eza
     abbr -a l eza
-    abbr -a ls eza -a
+    abbr -a ls "eza -a"
     # only dirs
-    abbr -a lsd eza -alD
+    abbr -a lsd "eza -alD"
     # only files
-    abbr -a lsf eza -alf
-    abbr -a lsa eza -al
-    abbr -a tree eza -T
-    abbr -a treeg eza -T --git-ignore
-    abbr -a lsg eza -al --git-ignore
+    abbr -a lsf "eza -alf"
+    abbr -a lsa "eza -al"
+    abbr -a tree "eza -T"
+    abbr -a treeg "eza -T --git-ignore"
+    abbr -a lsg "eza -al --git-ignore"
 end
 
 
 if havebin git
     abbr -a g git
-    abbr -a gs git status
-    abbr -a ga git add
-    abbr -a gc git commit
-    abbr -a gp git push
-    abbr -a ge git config --global --edit
-    abbr -a gco git checkout
-    abbr -a gd git difftool
-    abbr -a gdl git difftool HEAD^ HEAD
+    abbr -a gs "git status"
+    abbr -a ga "git add"
+    abbr -a gc "git commit"
+    abbr -a gp "git push"
+    abbr -a gcf "git config --global --edit"
+    abbr -a gco "git checkout"
 end
 
 
@@ -219,7 +211,6 @@ end
 
 if havebin vifm
     abbr -a vfrc "$EDITOR $HOME/.config/vifm/vifmrc"
-
     # change shell directory when leaving vifm
     function vicd --argument-names 'startdir'
         if ! test -n "$startdir" >/dev/null
@@ -233,7 +224,7 @@ if havebin vifm
     end
 
     abbr -a vf vicd
-    abbr -a vimrc vicd "$HOME/.config/nvim"
+    abbr -a vimrc "vicd $HOME/.config/nvim"
 end
 
 
@@ -241,6 +232,15 @@ if havebin tmux
     abbr -a tedit $EDITOR "$HOME/.config/tmux/tmux.conf"
 end
 
+if havebin xsct
+    abbr -a sct xsct
+    if [ -z $XSCT_TEMPERATURE_DAY ]
+        setenv XSCT_TEMPERATURE_DAY 6500
+    end
+    if [ -z $XSCT_TEMPERATURE_NIGHT ]
+        setenv XSCT_TEMPERATURE_NIGHT 3500
+    end
+end
 
 if havebin alacritty
     abbr -a acf $EDITOR "$HOME/.config/alacritty/alacritty.toml"
@@ -279,9 +279,9 @@ end
 
 if havebin transmission-remote
     abbr -a trs transmission-remote
-    abbr -a trst transmission-remote -t
-    abbr -a trsl transmission-remote -l
-    abbr -a trss transmission-remote -tall --start
+    abbr -a trst "transmission-remote -t"
+    abbr -a trsl "transmission-remote -l"
+    abbr -a trss "transmission-remote -tall --start"
     abbr -a trsr transmission_rm_finished
 end
 
@@ -300,11 +300,11 @@ if havebin emacs
     fish_add_path -a "$HOME/.config/emacs/bin"
 end
 
-
-# personal stuff
-fish_add_path -a "$HOME/.config/linux-scripts"
-set MUSIC $HOME/.config/personal/music
-abbr -a music "$EDITOR $MUSIC"
+if havebin paru
+    complete --command paru --wraps pacman
+    abbr -a p "paru"
+    abbr -a up "paru -Syu"
+end
 
 
 if havebin rg
@@ -316,8 +316,22 @@ if havebin rg
     end
 end
 
-setenv STEAM_COMPAT_CLIENT_INSTALL_PATH ~/.local/share/Steam/
-setenv STEAM_COMPAT_DATA_PATH ~/.local/share/Steam/steamapps/compatdata
+
+if havebin steam
+    set -l steampath "$HOME/.local/share/Steam"
+    setenv STEAM_COMPAT_CLIENT_INSTALL_PATH "$steampath"
+    setenv STEAM_COMPAT_DATA_PATH "$steampath/steamapps/compatdata"
+    setenv PROTON_PATH "$steampath/steamapps/common/Proton 9.0 (Beta)/proton"
+    if not [ -e "$PROTON_PATH" ] # no proton?
+        set -e -Ug PROTON_PATH # remove PROTON_PATH
+    end
+end
+
+# personal stuff
+fish_add_path -a "$HOME/.config/linux-scripts"
+set MUSIC $HOME/.config/personal/music
+abbr -a music "$EDITOR $MUSIC"
+
 
 fish_vi_key_bindings
 set fish_cursor_default block blink
@@ -394,6 +408,12 @@ set -U fish_color_host_remote
 set -U fish_color_keyword
 set -U fish_pager_color_selected_description
 
+abbr --add dotdot --regex '^\.\.+$' --function multicd
+abbr -a se sudoedit
+abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
+abbr -a fsc sudoedit "/etc/fstab"
+abbr -a srm shred -u 
+abbr -a c clear
 
 if status is-interactive
     sshauth

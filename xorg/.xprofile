@@ -5,12 +5,15 @@ export QT_STYLE_OVERRIDE="Adwaita-Dark"
 export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
 export XPROFILE_LOG="/tmp/xprofile_startup.log"
 
-
 LOGSIZE=$(stat --printf="%B" $XPROFILE_LOG)
 if [ $LOGSIZE -gt 1000000 ]; then # log file size >1MiB ?
-    truncate -s0 $XPROFILE_LOG
+	truncate -s0 $XPROFILE_LOG
 fi
 
+if [ command -v /usr/bin/xsct ] >/dev/null; then
+	export XSCT_TEMPERATURE_DAY=6500
+	export XSCT_TEMPERATURE_NIGHT=3500
+fi
 
 [ "$USER_WM" == "dwm" ] && slstatus &
 command -v picom && picom --config "$HOME/.config/picom/picom.conf" 2>>$XPROFILE_LOG &
@@ -19,7 +22,7 @@ command -v transmission-daemon && transmission-daemon -f --log-level=error &
 #command -v element-desktop && element-desktop --hidden &
 command -v flameshot && flameshot 2>>$XPROFILE_LOG &
 command -v nm-applet && nm-applet 2>>$XPROFILE_LOG &
-command -v signal-desktop && signal-desktop 2>>$XPROFILE_LOG &
+command -v signal-desktop && signal-desktop --trace-deprecation 2>>$XPROFILE_LOG &
 command -v xrandr && xrandr --refresh 120
 command -v twitch-indicator && twitch-indicator &
 feh --no-fehbg --bg-fill ~/pics/batman.jpg

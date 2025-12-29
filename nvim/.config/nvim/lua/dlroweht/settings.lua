@@ -2,7 +2,7 @@ local o = vim.o
 local g = vim.g
 
 vim.api.nvim_set_hl(0, "ColorColumn", { fg = "#505050", bg = "#505050" })
-vim.opt.colorcolumn = "79"
+vim.opt.colorcolumn = "80"
 
 g.c_syntax_for_h = true
 g.c_no_curly_error = true
@@ -26,7 +26,7 @@ o.cindent = true
 o.cinkeys = "0{,0},0),0],:,!^F,o,O,e"
 o.indentkeys = "0{,0},0),0],:,!^F,o,O,e"
 o.cinoptions = "l1,W2,#0"
-o.autoindent = false
+o.autoindent = true
 
 -- tabs/look
 o.wrap = true
