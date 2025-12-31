@@ -5,28 +5,36 @@ export QT_STYLE_OVERRIDE="Adwaita-Dark"
 export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
 export XPROFILE_LOG="/tmp/xprofile_startup.log"
 
+log_() {
+	echo "$(date -u "+%H:%M:%S"): $1" >>$XPROFILE_LOG
+}
+
+runprog() {
+	log_ $1
+	$@ 2>>$XPROFILE_LOG &
+}
+
 LOGSIZE=$(stat --printf="%B" $XPROFILE_LOG)
 if [ $LOGSIZE -gt 1000000 ]; then # log file size >1MiB ?
 	truncate -s0 $XPROFILE_LOG
 fi
 
-if [ command -v /usr/bin/xsct ] >/dev/null; then
+if command -v xsct >/dev/null 2>&1; then
 	export XSCT_TEMPERATURE_DAY=6500
 	export XSCT_TEMPERATURE_NIGHT=3500
+else
+	log_ "XSCT environment not set as xsct could not be found"
 fi
 
-[ "$USER_WM" == "dwm" ] && slstatus &
-command -v picom && picom --config "$HOME/.config/picom/picom.conf" 2>>$XPROFILE_LOG &
-command -v dunst && dunst 2>>$XPROFILE_LOG &
-command -v transmission-daemon && transmission-daemon -f --log-level=error &
-#command -v element-desktop && element-desktop --hidden &
-command -v flameshot && flameshot 2>>$XPROFILE_LOG &
-command -v nm-applet && nm-applet 2>>$XPROFILE_LOG &
-command -v signal-desktop && signal-desktop --trace-deprecation 2>>$XPROFILE_LOG &
-command -v xrandr && xrandr --refresh 120
-command -v twitch-indicator && twitch-indicator &
-feh --no-fehbg --bg-fill ~/pics/batman.jpg
-#systemctl --user start change-wallpaper.timer 2>>$XPROFILE_LOG
+command -v picom && runprog picom --config "$HOME/.config/picom/picom.conf"
+command -v dunst && runprog dunst
+command -v transmission-daemon && runprog transmission-daemon -f --log-level=error
+command -v flameshot && runprog flameshot
+command -v nm-applet && runprog nm-applet
+command -v signal-desktop && runprog signal-desktop --trace-deprecation
+command -v feh && runprog feh --no-fehbg --bg-fill ~/pics/batman.jpg
+
+xrandr --refresh 120
 xset r rate 150 60
 setxkbmap -option ''
 xset -dpms
