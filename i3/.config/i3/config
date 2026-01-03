@@ -95,7 +95,7 @@ bindsym $m+Shift+c reload
 bindsym $m+Shift+r restart
 bindsym $m+Shift+e exit
 # spawn new terminal
-bindsym $m+Return exec --no-startup-id /usr/bin/wezterm
+bindsym $m+Return exec --no-startup-id /usr/bin/alacritty
 
 # run rofi
 bindsym $m+backslash --release exec --no-startup-id rofi -show combi -modes combi

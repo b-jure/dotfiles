@@ -80,6 +80,11 @@ if havebin magick
 end
 
 
+if havebin khard
+    abbr -a khardcf "$EDITOR $HOME/.config/khard/khard.config"
+end
+
+
 if havebin alarm
     setenv ALARM_PLAYER mpv
     setenv ALARM_AUDIO ~/.config/linux-scripts/alarm/alarm.mp3
