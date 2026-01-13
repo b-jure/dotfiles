@@ -32,6 +32,7 @@ end
 
 if havebin nvim
     # set vimrc path
+    setenv VIMRCDIR "$HOME/.config/nvim"
     setenv MYVIMRC "$HOME/.config/nvim/init.lua"
 
     if test -n "$NVIM_LISTEN_ADDRESS"

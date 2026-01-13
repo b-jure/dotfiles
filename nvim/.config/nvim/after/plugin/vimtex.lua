@@ -24,7 +24,5 @@ end
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "VimtexEventView",
-  callback = function()
-    TexFocusVim()
-  end,
+  callback = function() TexFocusVim() end,
 })

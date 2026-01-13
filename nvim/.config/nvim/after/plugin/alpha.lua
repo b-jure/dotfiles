@@ -19,7 +19,11 @@ dashboard.section.header.opts.hl = "Title"
 dashboard.section.buttons.val = {
   dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
   dashboard.button("r", "󰈚  > Recent", ":Telescope oldfiles <CR>"),
-  dashboard.button("f", "󰈞  > Find file", ":cd $HOME/prog | Telescope find_files<CR>"),
+  dashboard.button(
+    "f",
+    "󰈞  > Find file",
+    ":cd $HOME/prog | Telescope find_files<CR>"
+  ),
   dashboard.button(
     "s",
     "  > Config",

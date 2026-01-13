@@ -72,6 +72,8 @@ auto_view text/html
 # Colors
 source colors.neomuttrc
 
+mime_lookup application/octet-stream
+
 # Gmail
 source "gpg -dq ~/.config/neomutt/passwords.gpg |" # for encrypted smtp_pass
 set smtp_url    = "smtps://jurebagic99@gmail.com@smtp.gmail.com:465"

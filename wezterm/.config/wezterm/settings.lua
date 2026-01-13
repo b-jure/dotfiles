@@ -77,7 +77,6 @@ function M.setup(wezterm, config)
     --{ family = "DejaVuSansM Nerd Font Mono", weight = "Regular" },
     { family = "Iosevka", weight = "Medium" },
     --{ family = "TX-02", weight = "Medium" },
-    --{ family = "Berkeley Mono", weight = "Regular" },
     { family = "FiraCode Nerd Font Ret", weight = "Regular" },
     { family = "Noto Sans CJK JP", weight = "Regular" },
     { family = "Noto Sans CJK KR", weight = "Regular" },
