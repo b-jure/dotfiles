@@ -1,0 +1,13 @@
+### 
+### Begin Red Hat Mailcap
+###
+
+audio/*; /usr/bin/mpv %s
+
+image/*; /usr/bin/feh %s
+
+application/msword; /usr/bin/libreoffice %s
+application/pdf; /usr/bin/zathura %s
+application/postscript ; /usr/bin/xdg-open %s
+
+text/html; /usr/bin/librewolf %s ; copiousoutput

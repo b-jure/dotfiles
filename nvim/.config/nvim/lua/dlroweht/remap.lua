@@ -18,6 +18,9 @@ map_key({ "n", "i" }, "<M-I>", "<Esc>:horizontal resize -5<CR>")
 map_key("n", "[q", "<cmd>cn<CR>")
 map_key("n", "]q", "<cmd>cp<CR>")
 
+-- re-run previous command
+map_key("n", "<CR>", ":<up>")
+
 -- go to next/prev diagnostic (+ display the message window)
 map_key("n", "[d", vim.diagnostic.goto_next)
 map_key("n", "]d", vim.diagnostic.goto_prev)

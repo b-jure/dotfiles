@@ -180,24 +180,24 @@ require("no-neck-pain").setup({
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 NoNeckPain.bufferOptionsWo = {
-    ---@type boolean
-    cursorline = false,
-    ---@type boolean
-    cursorcolumn = false,
-    ---@type string
-    colorcolumn = "0",
-    ---@type boolean
-    number = false,
-    ---@type boolean
-    relativenumber = false,
-    ---@type boolean
-    foldenable = false,
-    ---@type boolean
-    list = false,
-    ---@type boolean
-    wrap = true,
-    ---@type boolean
-    linebreak = true,
+  ---@type boolean
+  cursorline = false,
+  ---@type boolean
+  cursorcolumn = false,
+  ---@type string
+  colorcolumn = "0",
+  ---@type boolean
+  number = false,
+  ---@type boolean
+  relativenumber = false,
+  ---@type boolean
+  foldenable = false,
+  ---@type boolean
+  list = false,
+  ---@type boolean
+  wrap = true,
+  ---@type boolean
+  linebreak = true,
 }
 
 --- NoNeckPain's buffer `vim.bo` options.
@@ -207,16 +207,16 @@ NoNeckPain.bufferOptionsWo = {
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 NoNeckPain.bufferOptionsBo = {
-    ---@type string
-    filetype = "no-neck-pain",
-    ---@type string
-    buftype = "nofile",
-    ---@type string
-    bufhidden = "hide",
-    ---@type boolean
-    buflisted = false,
-    ---@type boolean
-    swapfile = false,
+  ---@type string
+  filetype = "no-neck-pain",
+  ---@type string
+  buftype = "nofile",
+  ---@type string
+  bufhidden = "hide",
+  ---@type boolean
+  buflisted = false,
+  ---@type boolean
+  swapfile = false,
 }
 
 --- NoNeckPain's scratchPad buffer options.
@@ -228,28 +228,28 @@ NoNeckPain.bufferOptionsBo = {
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 NoNeckPain.bufferOptionsScratchPad = {
-    -- When `true`, automatically sets the following options to the side buffers:
-    -- - `autowriteall`
-    -- - `autoread`.
-    ---@type boolean
-    enabled = false,
-    -- The name of the generated file. See `location` for more information.
-    -- /!\ deprecated /!\ use `pathToFile` instead.
-    ---@type string
-    ---@example: `no-neck-pain-left.norg`
-    ---@deprecated: use `pathToFile` instead.
-    fileName = "no-neck-pain",
-    -- By default, files are saved at the same location as the current Neovim session.
-    -- note: filetype is defaulted to `norg` (https://github.com/nvim-neorg/neorg), but can be changed in `buffers.bo.filetype` or |NoNeckPain.bufferOptions| for option scoped to the `left` and/or `right` buffer.
-    -- /!\ deprecated /!\ use `pathToFile` instead.
-    ---@type string?
-    ---@example: `no-neck-pain-left.norg`
-    ---@deprecated: use `pathToFile` instead.
-    location = nil,
-    -- The path to the file to save the scratchPad content to and load it in the buffer.
-    ---@type string?
-    ---@example: `~/notes.norg`
-    pathToFile = "",
+  -- When `true`, automatically sets the following options to the side buffers:
+  -- - `autowriteall`
+  -- - `autoread`.
+  ---@type boolean
+  enabled = false,
+  -- The name of the generated file. See `location` for more information.
+  -- /!\ deprecated /!\ use `pathToFile` instead.
+  ---@type string
+  ---@example: `no-neck-pain-left.norg`
+  ---@deprecated: use `pathToFile` instead.
+  fileName = "no-neck-pain",
+  -- By default, files are saved at the same location as the current Neovim session.
+  -- note: filetype is defaulted to `norg` (https://github.com/nvim-neorg/neorg), but can be changed in `buffers.bo.filetype` or |NoNeckPain.bufferOptions| for option scoped to the `left` and/or `right` buffer.
+  -- /!\ deprecated /!\ use `pathToFile` instead.
+  ---@type string?
+  ---@example: `no-neck-pain-left.norg`
+  ---@deprecated: use `pathToFile` instead.
+  location = nil,
+  -- The path to the file to save the scratchPad content to and load it in the buffer.
+  ---@type string?
+  ---@example: `~/notes.norg`
+  pathToFile = "",
 }
 
 --- NoNeckPain's buffer color options.
@@ -258,35 +258,35 @@ NoNeckPain.bufferOptionsScratchPad = {
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 NoNeckPain.bufferOptionsColors = {
-    -- Hexadecimal color code to override the current background color of the buffer. (e.g. #24273A)
-    -- Transparent backgrounds are supported by default.
-    -- popular theme are supported by their name:
-    -- - catppuccin-frappe
-    -- - catppuccin-frappe-dark
-    -- - catppuccin-latte
-    -- - catppuccin-latte-dark
-    -- - catppuccin-macchiato
-    -- - catppuccin-macchiato-dark
-    -- - catppuccin-mocha
-    -- - catppuccin-mocha-dark
-    -- - github-nvim-theme-dark
-    -- - github-nvim-theme-dimmed
-    -- - github-nvim-theme-light
-    -- - rose-pine
-    -- - rose-pine-dawn
-    -- - rose-pine-moon
-    -- - tokyonight-day
-    -- - tokyonight-moon
-    -- - tokyonight-night
-    -- - tokyonight-storm
-    ---@type string?
-    background = nil,
-    -- Brighten (positive) or darken (negative) the side buffers background color. Accepted values are [-1..1].
-    ---@type integer
-    blend = 0,
-    -- Hexadecimal color code to override the current text color of the buffer. (e.g. #7480c2)
-    ---@type string?
-    text = nil,
+  -- Hexadecimal color code to override the current background color of the buffer. (e.g. #24273A)
+  -- Transparent backgrounds are supported by default.
+  -- popular theme are supported by their name:
+  -- - catppuccin-frappe
+  -- - catppuccin-frappe-dark
+  -- - catppuccin-latte
+  -- - catppuccin-latte-dark
+  -- - catppuccin-macchiato
+  -- - catppuccin-macchiato-dark
+  -- - catppuccin-mocha
+  -- - catppuccin-mocha-dark
+  -- - github-nvim-theme-dark
+  -- - github-nvim-theme-dimmed
+  -- - github-nvim-theme-light
+  -- - rose-pine
+  -- - rose-pine-dawn
+  -- - rose-pine-moon
+  -- - tokyonight-day
+  -- - tokyonight-moon
+  -- - tokyonight-night
+  -- - tokyonight-storm
+  ---@type string?
+  background = nil,
+  -- Brighten (positive) or darken (negative) the side buffers background color. Accepted values are [-1..1].
+  ---@type integer
+  blend = 0,
+  -- Hexadecimal color code to override the current text color of the buffer. (e.g. #7480c2)
+  ---@type string?
+  text = nil,
 }
 
 --- NoNeckPain's buffer side buffer option.
@@ -295,17 +295,17 @@ NoNeckPain.bufferOptionsColors = {
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 NoNeckPain.bufferOptions = {
-    -- When `false`, the buffer won't be created.
-    ---@type boolean
-    enabled = true,
-    ---@see NoNeckPain.bufferOptionsColors `:h NoNeckPain.bufferOptionsColors`
-    colors = NoNeckPain.bufferOptionsColors,
-    ---@see NoNeckPain.bufferOptionsBo `:h NoNeckPain.bufferOptionsBo`
-    bo = NoNeckPain.bufferOptionsBo,
-    ---@see NoNeckPain.bufferOptionsWo `:h NoNeckPain.bufferOptionsWo`
-    wo = NoNeckPain.bufferOptionsWo,
-    ---@see NoNeckPain.bufferOptionsScratchPad `:h NoNeckPain.bufferOptionsScratchPad`
-    scratchPad = NoNeckPain.bufferOptionsScratchPad,
+  -- When `false`, the buffer won't be created.
+  ---@type boolean
+  enabled = true,
+  ---@see NoNeckPain.bufferOptionsColors `:h NoNeckPain.bufferOptionsColors`
+  colors = NoNeckPain.bufferOptionsColors,
+  ---@see NoNeckPain.bufferOptionsBo `:h NoNeckPain.bufferOptionsBo`
+  bo = NoNeckPain.bufferOptionsBo,
+  ---@see NoNeckPain.bufferOptionsWo `:h NoNeckPain.bufferOptionsWo`
+  wo = NoNeckPain.bufferOptionsWo,
+  ---@see NoNeckPain.bufferOptionsScratchPad `:h NoNeckPain.bufferOptionsScratchPad`
+  scratchPad = NoNeckPain.bufferOptionsScratchPad,
 }
 
 vim.keymap.set("n", "<leader>pv", "<cmd>NoNeckPain<CR>", { silent = true })

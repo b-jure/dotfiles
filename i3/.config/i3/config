@@ -53,10 +53,10 @@ bindsym $m+t split toggle
 bindsym $m+f fullscreen toggle
 
 # kill window
-bindsym $m+q kill
+bindsym Control+Shift+c kill
 
 # change/toggle layouts
-bindsym $m+y layout toggle tabbed splith
+bindsym $win+y layout toggle tabbed splith
 
 # scratchpad
 bindsym $m+minus move scratchpad

@@ -33,9 +33,8 @@ require("lazy").setup({
   spec = { -- https://lazy.folke.io/spec
     { -- TREESITTER
       "nvim-treesitter/nvim-treesitter",
-      build = function()
-        require("nvim-treesitter.install").update({ with_sync = true })()
-      end,
+      lazy = false,
+      build = ":TSUpdate",
     },
     { -- TELESCOPE
       "nvim-telescope/telescope.nvim",
@@ -116,7 +115,7 @@ require("lazy").setup({
         -- refer to the configuration section below
       },
     },
-    { -- MARKDOWN-PREVIEW
+    { -- MARKDOWNPREVIEW
       "iamcco/markdown-preview.nvim",
       cmd = {
         "MarkdownPreviewToggle",
@@ -126,8 +125,9 @@ require("lazy").setup({
       ft = { "markdown" },
       build = function() vim.fn["mkdp#util#install"]() end,
     },
-    { -- COMPILE-MODE
-      "ej-shafran/compile-mode.nvim",
+    { -- COMPILEMODE
+      --"ej-shafran/compile-mode.nvim",
+      dir = "/home/dlroweht/probe/lua/compile-mode.nvim",
       branch = "latest",
       dependencies = {
         "nvim-lua/plenary.nvim",
@@ -141,7 +141,7 @@ require("lazy").setup({
         }
       end,
     },
-    {
+    { -- NVIMTMUXNAVIGATOR
       "alexghergh/nvim-tmux-navigation",
       config = function()
         require("nvim-tmux-navigation").setup({

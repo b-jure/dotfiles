@@ -32,7 +32,7 @@ command -v transmission-daemon && runprog transmission-daemon -f --log-level=err
 command -v flameshot && runprog flameshot
 command -v nm-applet && runprog nm-applet
 command -v signal-desktop && runprog signal-desktop --trace-deprecation
-command -v feh && runprog feh --no-fehbg --bg-fill ~/pics/batman.jpg
+command -v feh && runprog feh --no-fehbg --bg-fill ~/pics/archlinux.jpg
 
 xrandr --refresh 120
 xset r rate 150 60

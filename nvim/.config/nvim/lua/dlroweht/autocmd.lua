@@ -49,6 +49,13 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.api.nvim_buf_set_keymap(
       0,
       "n",
+      "<CR>",
+      "<CR>",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      0,
+      "n",
       "dd",
       ":RemoveQFItem<CR>",
       { noremap = true, silent = true }
@@ -60,15 +67,6 @@ vim.api.nvim_create_autocmd("FileType", {
       "",
       { noremap = true, silent = true, callback = remove_qf_visual }
     )
-  end,
-})
-
-vim.api.nvim_create_autocmd("User", {
-  pattern = "CompilationFinished",
-  callback = function(ev)
-    if ev.code ~= 0 then -- compilation failed?
-      require("compile-mode").first_error({ count = 1 }) -- jump to first error
-    end
   end,
 })
 
