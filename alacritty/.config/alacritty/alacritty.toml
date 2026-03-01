@@ -75,31 +75,31 @@ blink_timeout = 0
 [font]
 size = 10.0
 
-#[font.normal]
-#family = "Iosevka Custom"
-#style = "Medium"
-#[font.italic]
-#family = "Iosevka Custom"
-#style = "Italic"
-#[font.bold]
-#family = "Iosevka Custom"
-#style = "Bold"
-#[font.bold_italic]
-#family = "Iosevka Custom"
-#style = "Bold Italic"
-
 [font.normal]
-family = "TX-02"
+family = "Iosevka Custom"
 style = "Medium"
 [font.italic]
-family = "TX-02"
-style = "Oblique"
+family = "Iosevka Custom"
+style = "Italic"
 [font.bold]
-family = "TX-02"
+family = "Iosevka Custom"
 style = "Bold"
 [font.bold_italic]
-family = "TX-02"
-style = "Bold Oblique"
+family = "Iosevka Custom"
+style = "Bold Italic"
+
+#[font.normal]
+#family = "TX-02"
+#style = "Medium"
+#[font.italic]
+#family = "TX-02"
+#style = "Oblique"
+#[font.bold]
+#family = "TX-02"
+#style = "Bold"
+#[font.bold_italic]
+#family = "TX-02"
+#style = "Bold Oblique"
 
 
 [font.glyph_offset]

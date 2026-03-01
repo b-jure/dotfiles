@@ -1,4 +1,12 @@
-;{{==Function====================================
+;{{=Variable=====================================
+
+(global_variable_declaration 
+  (variable_list name: (identifier) @definition.variable))
+
+(local_variable_declaration
+  (variable_list name: (identifier) @definition.variable))
+
+;}{==Function====================================
 
 (function_declaration name: (identifier) @name) @definition.function
 
@@ -90,16 +98,11 @@
   (#eq? @reference.class "self")
   (#has-ancestor? @reference.class method))
 
-((super) @reference.class
-  (#has-ancestor? @reference.class function_definition)
-  (#has-ancestor? @reference.class metafield))
-
-((super) @reference.class
-  (#has-ancestor? @reference.class method))
-
 (final_call
   name: [
     (identifier) @name
     (dot_index_expression
       field: (identifier) @name)
   ]) @reference.call
+
+;}}==============================================

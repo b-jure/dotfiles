@@ -14,12 +14,12 @@ map_key({ "n", "i" }, "<M-P>", "<Esc>:vertical resize -5<CR>")
 map_key({ "n", "i" }, "<M-O>", "<Esc>:horizontal resize +5<CR>")
 map_key({ "n", "i" }, "<M-I>", "<Esc>:horizontal resize -5<CR>")
 
+-- save
+map_key("n", "<leader>w", "<Cmd>w<CR>")
+
 -- go to next/prev quickfix list item
 map_key("n", "[q", "<cmd>cn<CR>")
 map_key("n", "]q", "<cmd>cp<CR>")
-
--- re-run previous command
-map_key("n", "<CR>", ":<up>")
 
 -- go to next/prev diagnostic (+ display the message window)
 map_key("n", "[d", vim.diagnostic.goto_next)
@@ -105,14 +105,9 @@ map_key("n", "<leader>u", "guiwe")
 map_key("n", "dl", "dk")
 map_key("n", "dk", "dj")
 
--- save and format
-map_key("n", "<leader>w", "<Cmd>w<CR><Cmd>Format<CR>")
-
--- better command mode navigation
+-- command mode navigation
 map_key("c", "<C-b>", "<Cmd>call feedkeys('<Left>')<CR>")
 map_key("c", "<C-f>", "<Cmd>call feedkeys('<Right>')<CR>")
-map_key("c", "<C-j>", "<Cmd>call feedkeys('<S-Left>')<CR>")
-map_key("c", "<C-;>", "<Cmd>call feedkeys('<S-Right>')<CR>")
 
 -- insert newline without leaving normal mode
 map_key("n", "<leader>n", "o<Esc>")

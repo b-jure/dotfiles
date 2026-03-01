@@ -72,8 +72,9 @@ require("lazy").setup({
     { -- GRUVBOXTHEME
       "ellisonleao/gruvbox.nvim",
     },
-    { -- FORMATTER
-      "mhartington/formatter.nvim",
+    { -- CONFORM (formatter)
+      "stevearc/conform.nvim",
+      opts = {},
     },
     { -- VIMGUTENTAGS
       "ludovicchabant/vim-gutentags",

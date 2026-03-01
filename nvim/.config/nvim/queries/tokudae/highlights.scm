@@ -1,11 +1,10 @@
 ;{{==Ignore======================================
 
 ["case" "default" "in" "inherits" "else"] @ignore
-
-["," "." "?"] @ignore
-
+["," "."] @ignore
 ["{" "}"] @ignore
-
+(call_check_symbol) @ignore
+(raw_access_symbol) @ignore
 (super) @ignore
 
 ;}{==Separator===================================
@@ -14,7 +13,7 @@
 
 ;}{==Keyword=====================================
 
-["break" "continue" "local" ";"] @keyword
+["break" "continue" "local" "global" ";"] @keyword
 
 (return_statement "return" @keyword.return)
 
@@ -40,11 +39,11 @@
 
 (loop_statement "loop" @repeat)
 
-(if_statement "if" @conditional)
+(if_statement "if" @keyword.conditional)
 
-(else_statement "else" @conditional)
+(else_statement "else" @keyword.conditional)
 
-(switch_statement "switch" @conditional)
+(switch_statement "switch" @keyword.conditional)
 
 (switch_case "case" @label)
 
@@ -61,28 +60,26 @@
 
 ((identifier) @variable.builtin
   (#any-of? @variable.builtin
-    "__ENV" "__VERSION" "__POSIX" "__WINDOWS"))
+    "__ENV" "__VERSION" "__POSIX" "__WINDOWS" "__G"))
 
 ((identifier) @module.builtin
   (#any-of? @module.builtin
-    "__G" "debug" "io" "math" "os" "package" "string" "reg" "list" "utf8" "co"))
+    "debug" "io" "math" "os" "package" "string" "reg" "list" "utf8"
+    "table" "co" "json"))
 
 (parameters (identifier) @variable.parameter)
 
-((identifier) @variable.parameter.builtin
-  (#eq? @variable.parameter.builtin "self")
-  (#has-ancestor? @variable.parameter.builtin function_definition)
-  (#has-ancestor? @variable.parameter.builtin metafield))
+(parameters
+  first: (identifier) @variable.parameter.builtin
+  (#eq? @variable.parameter.builtin "self"))
 
-((identifier) @variable.parameter.builtin
-  (#eq? @variable.parameter.builtin "self")
-  (#has-ancestor? @variable.parameter.builtin method))
+(parameters type: (identifier) @type.builtin)
+(parameters ["|" "?"] @keyword)
 
-(variable_list
-  (attribute
-    "<" @punctuation.bracket
-    (identifier) @attribute
-    ">" @punctuation.bracket))
+(attribute
+  "<" @punctuation.bracket
+  (identifier) @attribute.builtin
+  ">" @punctuation.bracket)
 
 ;}{=Punctuation==================================
 
@@ -100,11 +97,15 @@
 
 (dot_index_expression "." @punctuation.delimiter)
 
+(raw_access_symbol) @punctuation.delimiter
+
 ;}{=Bracket======================================
 
 ["(" ")"] @punctuation.bracket
 
 (bracket_index_expression ["[" "]"] @punctuation.bracket)
+
+(arrow_index_expression field: (index_field ["[" "]"] @punctuation.bracket))
 
 ;}{=List=========================================
 
@@ -112,9 +113,11 @@
 
 ;}{=Table========================================
 
-(field name: (identifier) @property)
-
 (dot_index_expression field: (identifier) @variable.member)
+
+(arrow_index_expression
+  (raw_access_symbol)
+  field: (identifier) @variable.member)
 
 (table_constructor ["{" "}"] @constructor)
 
@@ -138,15 +141,28 @@
 
 (unary_expression operator: _ @operator)
 
-(function_call "?" @operator)
+(call_check_symbol) @operator
 
 ["and" "or"] @keyword.operator
+
+(table_constructor (field ["[" "]"] @operator))
+
+; this must be after '*' operator
+(global_variable_declaration glob: "*" @variable.builtin)
 
 ;}{=Constant=====================================
 
 ((identifier) @constant (#match? @constant "^[A-Z][A-Z_0-9]*$"))
 
+; override identifier constants
+(field name: (identifier) @property)
+
 (vararg_expression) @constant
+
+; override regular vararg expression
+(vararg
+  (vararg_expression) @variable.parameter
+  vararg_list: (identifier) @variable.parameter)
 
 (nil) @constant.builtin
 
@@ -154,7 +170,12 @@
 
 ;}{=Class========================================
 
-(variable_declaration
+(local_variable_declaration
+  (assignment
+    (variable_list . name: (identifier) @type)
+    (expression_list . value: (class_definition))))
+
+(global_variable_declaration
   (assignment
     (variable_list . name: (identifier) @type)
     (expression_list . value: (class_definition))))
@@ -166,6 +187,8 @@
     (identifier) @type
     (dot_index_expression
       field: (identifier) @type)
+    (arrow_index_expression
+      field: (identifier) @type)
   ])
 
 (class_statement
@@ -173,12 +196,25 @@
     (identifier) @type
     (dot_index_expression
       field: (identifier) @type)
+    (arrow_index_expression
+      field: (identifier) @type)
+  ])
+
+(class_statement
+  superclass: [
+    (identifier) @type
+    (dot_index_expression
+      field: (identifier) @type)
+    (arrow_index_expression
+      field: (identifier) @type)
   ])
 
 (class_definition
   superclass: [
     (identifier) @type
     (dot_index_expression
+      field: (identifier) @type)
+    (arrow_index_expression
       field: (identifier) @type)
   ])
 
@@ -188,6 +224,8 @@
       name: [
         (identifier) @type
         (dot_index_expression
+          field: (identifier) @type)
+        (arrow_index_expression
           field: (identifier) @type)
       ])
     (expression_list . value: (class_definition))))
@@ -210,17 +248,24 @@
 
 ;}{=Function=====================================
 
-(variable_declaration
+(local_variable_declaration
+  (assignment
+    (variable_list . name: (identifier) @function)
+    (expression_list . value: (function_definition))))
+
+(global_variable_declaration
   (assignment
     (variable_list . name: (identifier) @function)
     (expression_list . value: (function_definition))))
       
-(function_declaration name: (identifier) @function)
+(function_declaration . name: (identifier) @function)
 
-(function_statement
+(function_statement .
   name: [
     (identifier) @function
     (dot_index_expression
+      field: (identifier) @function)
+    (arrow_index_expression
       field: (identifier) @function)
   ])
 
@@ -230,6 +275,8 @@
       name: [
         (identifier) @function
         (dot_index_expression
+          field: (identifier) @function)
+        (arrow_index_expression
           field: (identifier) @function)
       ])
     (expression_list . value: (function_definition))))
@@ -257,6 +304,7 @@
   name: [
     (identifier) @function.call
     (dot_index_expression field: (identifier) @function.call)
+    (arrow_index_expression field: (identifier) @function.call)
   ])
 
 (final_call
@@ -266,7 +314,8 @@
     "getmetatable" "setmetatable" "unwrapmethod" "getmethods"
     "setmethods" "nextfield" "fields" "indices" "pcall" "xpcall"
     "print" "printf" "warn" "len" "rawequal" "rawget" "rawset"
-    "getargs" "tonum" "tostr" "typeof" "getclass" "getsuper" "range"))
+    "getargs" "tonum" "tostr" "type" "getclass" "getsuper" "range"
+    "repeat"))
 
 ;}{==Other=======================================
 
@@ -281,9 +330,14 @@
 (escape_sequence) @string.escape
 
 (final_call
-  name: (dot_index_expression
-    field: (identifier) @_method
-    (#any-of? @_method "find" "match" "gmatch" "gsub"))
+  name: [
+    (dot_index_expression
+      field: (identifier) @function.method
+      (#any-of? @function.method "find" "match" "gmatch" "gsub"))
+    (arrow_index_expression
+      field: (identifier) @function.method
+      (#any-of? @function.method "find" "match" "gmatch" "gsub"))
+  ]
   arguments: (arguments . (_) . (string
       content: (string_content) @string.regexp)))
 

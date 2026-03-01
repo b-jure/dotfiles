@@ -30,6 +30,11 @@ function reporterr -a msg
 end
 
 
+if havebin nodemcu-tool
+  abbr -a mcu nodemcu-tool
+end
+
+
 if havebin nvim
     # set vimrc path
     setenv VIMRCDIR "$HOME/.config/nvim"
@@ -103,17 +108,17 @@ end
 
 
 if havebin wget
-    abbr -a wgetall "wget --wait=1
-                         --level=inf
-                         --limit-rate=20M
-                         --recursive
-                         --page-requisite
-                         --user-agent=Mozilla
-                         --no-parent
-                         --convert-links
-                         --adjust-extension
-                         --no-clobber
-                         -e robots=off"
+    abbr -a wgetall wget --wait=1 \
+                         --level=inf \
+                         --limit-rate=20M \
+                         --recursive \
+                         --page-requisite \
+                         --user-agent=Mozilla \
+                         --no-parent \
+                         --convert-links \
+                         --adjust-extension \
+                         --no-clobber \
+                         -e robots=off
 end
 
 
@@ -136,8 +141,8 @@ end
 
 
 if havebin neomutt
-    abbr -a mutt neomutt
-    abbr -a muttrc "$EDITOR $HOME/.config/neomutt/neomuttrc"
+    abbr -a m neomutt
+    abbr -a mrc "$EDITOR $HOME/.config/neomutt/neomuttrc"
 end
 
 
@@ -191,6 +196,11 @@ if havebin eza
     abbr -a tree "eza -T"
     abbr -a treeg "eza -T --git-ignore"
     abbr -a lsg "eza -al --git-ignore"
+end
+
+
+if havebin tree-sitter
+  abbr -a tst tree-sitter
 end
 
 
@@ -333,10 +343,8 @@ if havebin steam
     end
 end
 
-# personal stuff
+# personal scripts
 fish_add_path -a "$HOME/.config/linux-scripts"
-set MUSIC $HOME/.config/personal/music
-abbr -a music "$EDITOR $MUSIC"
 
 
 fish_vi_key_bindings
@@ -417,8 +425,8 @@ set -U fish_pager_color_selected_description
 abbr --add dotdot --regex '^\.\.+$' --function multicd
 abbr -a se sudoedit
 abbr -a fcf "$EDITOR $HOME/.config/fish/config.fish"
-abbr -a fsc sudoedit "/etc/fstab"
-abbr -a srm shred -u 
+abbr -a fsc "sudoedit /etc/fstab"
+abbr -a srm "shred -u "
 abbr -a c clear
 
 if status is-interactive

@@ -91,3 +91,13 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
   pattern = { "*.timer", "*.service" },
   callback = function() vim.bo[0].filetype = "systemd" end,
 })
+
+-- disable auto indentation for regular text files
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = "*.txt",
+  callback = function()
+    vim.o.autoindent = false
+    vim.o.smartindent = false
+    vim.o.cindent = false
+  end,
+})

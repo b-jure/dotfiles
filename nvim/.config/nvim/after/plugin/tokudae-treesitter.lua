@@ -122,7 +122,6 @@ local function checkbuild(obj)
     end
     loginfo("update complete")
     vim.g.tokudae_is_updating = false
-    vim.schedule(function() vim.treesitter.start() end)
   elseif timeout(obj.code) then
     timeouterror("update")
   else
@@ -144,10 +143,8 @@ end
 vim.api.nvim_create_user_command("TokudaeTSUpdate", function(t)
   if vim.g.tokudae_is_updating then
     return
-  else
-    vim.g.tokudae_is_updating = true
-    vim.treesitter.stop()
   end
+  vim.g.tokudae_is_updating = true
   opts.cwd = M.parser_repository_path
   vim.system({ "tree-sitter", "generate" }, opts, checkgenerate)
 end, {})
@@ -155,10 +152,6 @@ end, {})
 vim.api.nvim_create_user_command("TokudaeTSUpdateQueries", function(t)
   if install_query_files(M.parser_repository_path .. "/queries") then
     loginfo("queries updated")
-    if vim.bo.filetype == "toku" then
-      vim.treesitter.stop()
-      vim.treesitter.start()
-    end
   end
 end, {})
 
