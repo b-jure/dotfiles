@@ -1,29 +1,30 @@
 #!/bin/sh
 
+export BASH_ENV="$HOME/.bash_profile"
 export GTK_THEME="Adwaita:dark"
 export QT_STYLE_OVERRIDE="Adwaita-Dark"
 export GTK2_RC_FILES="/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc"
 export XPROFILE_LOG="/tmp/xprofile_startup.log"
 
 log_() {
-	echo "$(date -u "+%H:%M:%S"): $1" >>$XPROFILE_LOG
+  echo "$(date -u "+%H:%M:%S"): $1" >>$XPROFILE_LOG
 }
 
 runprog() {
-	log_ $1
-	$@ 2>>$XPROFILE_LOG &
+  log_ $1
+  $@ 2>>$XPROFILE_LOG &
 }
 
 LOGSIZE=$(stat --printf="%B" $XPROFILE_LOG)
 if [ $LOGSIZE -gt 1000000 ]; then # log file size >1MiB ?
-	truncate -s0 $XPROFILE_LOG
+  truncate -s0 $XPROFILE_LOG
 fi
 
 if command -v xsct >/dev/null 2>&1; then
-	export XSCT_TEMPERATURE_DAY=6500
-	export XSCT_TEMPERATURE_NIGHT=3500
+  export XSCT_TEMPERATURE_DAY=6500
+  export XSCT_TEMPERATURE_NIGHT=3500
 else
-	log_ "XSCT environment not set as xsct could not be found"
+  log_ "XSCT environment not set as xsct could not be found"
 fi
 
 command -v picom && runprog picom --config "$HOME/.config/picom/picom.conf"

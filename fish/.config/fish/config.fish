@@ -1,4 +1,4 @@
-# Override slow command-not-found handler
+# override slow command-not-found handler
 function fish_command_not_found
     echo "fish: Unknown command '$argv'" >&2
 end
@@ -7,16 +7,22 @@ end
 function fish_greeting 
 end
 
-# Override exit to automatically 'disown'
+# override exit to automatically 'disown'
 function exit
     jobs -q; and disown (jobs -p)
     builtin exit
 end
 
+# shell program
 setenv SHELL /usr/bin/fish
-setenv ASAN_OPTIONS "log_path=stderr"
-setenv GAMES_DIR "$HOME/games/"
 
+# addres sanitizer default output file
+setenv ASAN_OPTIONS "log_path=stderr"
+
+# personal paths
+setenv GAMES_DIR "$HOME/games"
+setenv VIDEOS_DIR "$HOME/videos"
+setenv MUSIC_DIR "$HOME/music"
 
 # helper
 function havebin -a bin

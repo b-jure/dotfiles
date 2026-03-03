@@ -120,7 +120,7 @@ bindsym F12 exec --no-startup-id ~/.config/linux-scripts/togglelayout.sh
 # windows key binds
 bindsym $m+Pause exec --no-startup-id /usr/bin/shutdown -h now
 bindsym $m+Scroll_Lock exec --no-startup-id /usr/bin/shutdown -h -r now
-#bindsym $win+a exec ~/.config/linux-scripts/audiostream.sh
+bindsym $win+$m+a exec ~/.config/linux-scripts/audiostream.sh
 bindsym $win+n exec --no-startup-id /usr/bin/dunstctl history-pop
 bindsym $win+$m+n exec --no-startup-id /usr/bin/dunstctl close
 bindsym $win+s exec --no-startup-id /usr/bin/flameshot gui
