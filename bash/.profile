@@ -3,6 +3,7 @@
 #
 
 EDITOR="nvim"
+MANPAGER="nvim +Man!"
 
 GAMES_DIR="${HOME}/games"
 VIDEOS_DIR="${HOME}/videos"
