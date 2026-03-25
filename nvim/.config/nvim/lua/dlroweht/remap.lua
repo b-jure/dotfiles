@@ -48,6 +48,9 @@ map_key("v", ">", ">gv")
 -- keep register clean after pasting in visual mode
 map_key("v", "p", '"_dP')
 
+-- compile
+map_key("n", "<C-c>", "<cmd>Make<CR>")
+
 -- source
 map_key("n", "<leader>vs", "<cmd>so $MYVIMRC<CR>")
 

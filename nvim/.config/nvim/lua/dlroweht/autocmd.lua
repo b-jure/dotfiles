@@ -108,6 +108,7 @@ vim.api.nvim_create_autocmd({ "BufRead" }, {
   pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
   callback = function()
     local bufnr = vim.fn.bufnr()
+    vim.cmd("compiler " .. vim.g._myvars_.compiler.c)
     vim.bo[bufnr].cindent = true
     vim.bo[bufnr].cinkeys = "0{,0},0),0],:,!^F,o,O,e"
     vim.bo[bufnr].cinoptions = "l1,W2,#0,L0"

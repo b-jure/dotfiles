@@ -61,3 +61,9 @@ o.errorformat = "%f:%l: %m"
 -- build
 o.autowrite = true
 o.makeprg = "make"
+
+vim.g._myvars_ = {
+  compiler = {
+    c = "gcc",
+  },
+}
