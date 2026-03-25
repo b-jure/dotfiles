@@ -18,18 +18,14 @@ dashboard.section.header.opts.hl = "Title"
 
 dashboard.section.buttons.val = {
   dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-  dashboard.button("r", "󰈚  > Recent", ":Telescope oldfiles <CR>"),
+  dashboard.button("r", "󰈚  > Recent", ":RecentFilesPicker<CR>"),
   dashboard.button(
     "f",
-    "󰈞  > Find file",
-    ":cd $HOME/prog | Telescope find_files<CR>"
+    "󰈞  > Find C project",
+    ":cd $HOME/probe/c | DirsPicker<CR>"
   ),
-  dashboard.button(
-    "s",
-    "  > Config",
-    ':lua require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })<CR>'
-  ),
-  dashboard.button("p", "  > Plugins", "<cmd>PackerStatus<cr>"),
+  dashboard.button("s", "  > Config", ":ConfigFilesPicker<CR>"),
+  dashboard.button("p", "  > Plugins", "<cmd>Lazy<cr>"),
   dashboard.button("h", "  > Checkhealth", "<cmd>checkhealth<cr>"),
   dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
 }

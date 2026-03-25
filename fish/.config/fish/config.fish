@@ -323,9 +323,9 @@ if havebin emacs
 end
 
 if havebin paru
-    complete --command paru --wraps pacman
-    abbr -a p "paru"
-    abbr -a up "paru -Syu"
+    complete --command yay --wraps pacman
+    abbr -a y "yay"
+    abbr -a uy "yay -Syyu"
 end
 
 

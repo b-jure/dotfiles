@@ -23,6 +23,7 @@ fi
 if command -v xsct >/dev/null 2>&1; then
   export XSCT_TEMPERATURE_DAY=6500
   export XSCT_TEMPERATURE_NIGHT=3500
+  xsct -N # night mode by default
 else
   log_ "XSCT environment not set as xsct could not be found"
 fi

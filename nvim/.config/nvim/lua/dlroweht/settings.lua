@@ -19,10 +19,7 @@ o.scrolloff = 8
 g.title = true
 o.termsync = true
 -- indentation
-o.cindent = true
-o.cinkeys = "0{,0},0),0],:,!^F,o,O,e"
 o.indentkeys = "0{,0},0),0],:,!^F,o,O,e"
-o.cinoptions = "l1,W2,#0"
 o.autoindent = true
 -- wrap text
 o.wrap = true
@@ -61,13 +58,6 @@ o.ignorecase = true
 o.smartcase = true
 o.signcolumn = "auto"
 o.errorformat = "%f:%l: %m"
+-- build
+o.autowrite = true
 o.makeprg = "make"
-
--- gutentags
-if vim.fn.executable("rg") == 1 then
-  g.gutentags_add_default_project_roots = 0
-  g.gutentags_project_root = { "package.json", ".git", "Makefile" }
-  g.gutentags_ctags_exclude = { "*.html", "*.json" }
-  g.gutentags_cache_dir = vim.fn.expand("~/.cache/vim/ctags")
-  g.gutentags_trace = 0
-end

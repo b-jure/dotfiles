@@ -70,9 +70,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+local c_compiler = "gcc"
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   pattern = { "*.c", "*.h", "*.lua", "*.py" },
   callback = function()
+    vim.cmd("compiler " .. c_compiler)
     local is_git = vim.fn.trim(
       vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null")
     )
@@ -99,5 +101,15 @@ vim.api.nvim_create_autocmd("BufRead", {
     vim.o.autoindent = false
     vim.o.smartindent = false
     vim.o.cindent = false
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufRead" }, {
+  pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
+  callback = function()
+    local bufnr = vim.fn.bufnr()
+    vim.bo[bufnr].cindent = true
+    vim.bo[bufnr].cinkeys = "0{,0},0),0],:,!^F,o,O,e"
+    vim.bo[bufnr].cinoptions = "l1,W2,#0,L0"
   end,
 })

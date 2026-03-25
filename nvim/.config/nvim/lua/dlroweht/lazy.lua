@@ -36,19 +36,6 @@ require("lazy").setup({
       lazy = false,
       build = ":TSUpdate",
     },
-    { -- TELESCOPE
-      "nvim-telescope/telescope.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
-    },
-    { -- native FZF for TELESCOPE
-      "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make",
-    },
-    { -- bibtex for TELESCOPE
-      "nvim-telescope/telescope-bibtex.nvim",
-      dependencies = { "nvim-telescope/telescope.nvim" },
-      ft = { "tex", "markdown" },
-    },
     { -- NONECKPAIN
       "shortcuts/no-neck-pain.nvim",
       version = "*",
@@ -126,21 +113,8 @@ require("lazy").setup({
       ft = { "markdown" },
       build = function() vim.fn["mkdp#util#install"]() end,
     },
-    { -- COMPILEMODE
-      --"ej-shafran/compile-mode.nvim",
-      dir = "/home/dlroweht/probe/lua/compile-mode.nvim",
-      branch = "latest",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        { "m00qek/baleia.nvim", tag = "v1.3.0" },
-      },
-      config = function()
-        vim.g.compile_mode = {
-          default_command = "make -B -j12",
-          recompile_no_fail = true,
-          baleia_setup = true,
-        }
-      end,
+    { -- DISPATCH
+      "tpope/vim-dispatch",
     },
     { -- NVIMTMUXNAVIGATOR
       "alexghergh/nvim-tmux-navigation",
@@ -155,6 +129,14 @@ require("lazy").setup({
           },
         })
       end,
+    },
+    {
+      "ibhagwan/fzf-lua",
+      -- optional for icon support
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      -- or if using mini.icons/mini.nvim
+      -- dependencies = { "nvim-mini/mini.icons" },
+      opts = {},
     },
   },
   -- Configure any other settings here. See the documentation for more details.

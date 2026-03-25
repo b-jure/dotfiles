@@ -25,7 +25,6 @@ require("conform").setup({
   },
 })
 
-local last_notified_filetype = nil
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = "*",
   callback = function(args)

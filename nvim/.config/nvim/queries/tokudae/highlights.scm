@@ -9,7 +9,7 @@
 
 ;}{==Separator===================================
 
-"::" @preproc
+"::" @keyword
 
 ;}{==Keyword=====================================
 
@@ -35,7 +35,9 @@
 
 (for_statement "for" @repeat)
 
-(foreach_statement ["foreach" "in"] @repeat)
+(foreach_statement "foreach" @repeat)
+
+(foreach_generic_clause "in" @repeat)
 
 (loop_statement "loop" @repeat)
 
@@ -130,6 +132,11 @@
 (assignment "=" @operator.assignment)
 
 (metafield "=" @operator.assignment)
+
+(foreach_numeric_clause
+  operator: "=" @operator)
+
+(foreach_numeric_clause "," @operator)
 
 (field "=" @operator.assignment)
 
@@ -327,7 +334,13 @@
 
 (string) @string
 
+(fstring) @string
+
+(interpolation_expression ["{" "}"] @punctuation.special)
+
 (escape_sequence) @string.escape
+
+(escape_sequence_interpolation) @string.escape
 
 (final_call
   name: [
